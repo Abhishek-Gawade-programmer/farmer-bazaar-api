@@ -1,0 +1,32 @@
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from .utils import generate_otp, send_otp
+
+
+class User(AbstractUser):
+    username = models.CharField("Phone Number", max_length=10, unique=True)
+    password = models.CharField(max_length=50)
+    email = models.CharField(
+        max_length=255,
+    )
+
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.username
+
+
+class PhoneOtp(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    otp_code = models.PositiveIntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.otp_code = generate_otp(min_number=10000, max_number=99999)
+        super().save(*args, **kwargs)
+
+    def send_phone_otp(self):
+        send_otp(self.otp_code, self.user.username)
+        return

@@ -1,0 +1,3759 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mf",
+				"mforeign"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"def",
+				"defs"
+			],
+			[
+				"us",
+				"username"
+			],
+			[
+				"setTi",
+				"setTime"
+			],
+			[
+				"st",
+				"script"
+			],
+			[
+				"get",
+				"getItem"
+			],
+			[
+				"lo",
+				"localStorage"
+			],
+			[
+				"cs",
+				"csrf_exempt"
+			],
+			[
+				"for",
+				"forloop"
+			],
+			[
+				"mo",
+				"model"
+			],
+			[
+				"text",
+				"textContent"
+			],
+			[
+				"re",
+				"readonly"
+			],
+			[
+				"btn",
+				"btn-block "
+			],
+			[
+				"Lise",
+				"listapiview"
+			],
+			[
+				"Mode",
+				"modelserializer"
+			],
+			[
+				"on",
+				"on_delete"
+			],
+			[
+				"mode",
+				"model"
+			],
+			[
+				"c",
+				"conf"
+			],
+			[
+				"list",
+				"list_01"
+			],
+			[
+				"lis",
+				"listcreateapiview"
+			],
+			[
+				"Lis",
+				"listapiview"
+			],
+			[
+				"ret",
+				"retrieveupdatedestroyapiview"
+			],
+			[
+				"Cre",
+				"createapiview"
+			],
+			[
+				"consol",
+				"console_log"
+			],
+			[
+				"remove",
+				"removeItem"
+			],
+			[
+				"conso",
+				"console_log"
+			],
+			[
+				"use",
+				"useContext"
+			],
+			[
+				"cons",
+				"const"
+			],
+			[
+				"vi",
+				"views"
+			],
+			[
+				"add",
+				"addTrack"
+			],
+			[
+				"tra",
+				"track"
+			],
+			[
+				"create",
+				"createOffer"
+			],
+			[
+				"fuc",
+				"function_with_name"
+			],
+			[
+				"fuct",
+				"function_with_name"
+			],
+			[
+				"func",
+				"function_with_name"
+			],
+			[
+				"cre",
+				"created_by"
+			],
+			[
+				"el",
+				"else_if"
+			],
+			[
+				"meet",
+				"meet_obj"
+			],
+			[
+				"mess",
+				"message"
+			],
+			[
+				"mes",
+				"messageList"
+			],
+			[
+				"new",
+				"new_message"
+			],
+			[
+				"els",
+				"else_if"
+			],
+			[
+				"j",
+				"text_data_json"
+			],
+			[
+				"float",
+				"float-right "
+			],
+			[
+				"in",
+				"ins"
+			],
+			[
+				"map",
+				"mapPeers"
+			],
+			[
+				"user",
+				"userKey"
+			],
+			[
+				"MESS",
+				"message"
+			],
+			[
+				"else",
+				"else_if"
+			],
+			[
+				"me",
+				"meet_obj"
+			],
+			[
+				"ge",
+				"get_object_or_404"
+			],
+			[
+				"co",
+				"console"
+			],
+			[
+				"crea",
+				"can_create_meeting"
+			],
+			[
+				"bg",
+				"bg-dark "
+			],
+			[
+				"ro",
+				"rounded "
+			],
+			[
+				"s",
+				"span"
+			],
+			[
+				"se",
+				"settings"
+			],
+			[
+				"sett",
+				"settings"
+			],
+			[
+				"au",
+				"audioTracks"
+			],
+			[
+				"ser",
+				"setLocalDescription"
+			],
+			[
+				"set",
+				"setLocalDescription"
+			],
+			[
+				"ceate",
+				"createOffer"
+			],
+			[
+				"pe",
+				"peer"
+			],
+			[
+				"ch",
+				"receive_channel_name"
+			],
+			[
+				"ad",
+				"addEventListener"
+			],
+			[
+				"ac",
+				"action"
+			],
+			[
+				"Jso",
+				"JSON_stringify"
+			],
+			[
+				"vide",
+				"videoWrapper"
+			],
+			[
+				"pa",
+				"parentNode"
+			],
+			[
+				"parent",
+				"parentNode"
+			],
+			[
+				"va",
+				"videoWrapper"
+			],
+			[
+				"funt",
+				"function_without_name"
+			],
+			[
+				"vio",
+				"videoWrapper"
+			],
+			[
+				"vido",
+				"videoContainer"
+			],
+			[
+				"crate",
+				"createElement"
+			],
+			[
+				"doc",
+				"document"
+			],
+			[
+				"appe",
+				"appendChild"
+			],
+			[
+				"doci",
+				"documentURI"
+			],
+			[
+				"local",
+				"localStream"
+			],
+			[
+				"fu",
+				"function_with_name"
+			],
+			[
+				"cha",
+				"channel_name"
+			],
+			[
+				"send",
+				"sendSignal"
+			],
+			[
+				"per",
+				"parsedData"
+			],
+			[
+				"Htt",
+				"HttpResponse"
+			],
+			[
+				"fo",
+				"forloop"
+			],
+			[
+				"clas",
+				"class"
+			],
+			[
+				"cout",
+				"count"
+			],
+			[
+				"cou",
+				"cout"
+			],
+			[
+				"cla",
+				"class"
+			],
+			[
+				"bl",
+				"block"
+			],
+			[
+				"API",
+				"apiview"
+			],
+			[
+				"requ",
+				"request"
+			],
+			[
+				"Use",
+				"UserSerializer"
+			],
+			[
+				"spr",
+				"spkr"
+			],
+			[
+				"model",
+				"modelserializer"
+			],
+			[
+				"sup",
+				"supdate"
+			],
+			[
+				"ne",
+				"nextUrl"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"serial",
+				"serializer"
+			],
+			[
+				"read",
+				"sreadonly"
+			],
+			[
+				"User",
+				"UserDroneSerializer"
+			],
+			[
+				"hyprt",
+				"shyperlinkedelated"
+			],
+			[
+				"Da",
+				"DateTimeField"
+			],
+			[
+				"Fil",
+				"FilterSet"
+			],
+			[
+				"fil",
+				"filters"
+			],
+			[
+				"Com",
+				"CompetitionList"
+			],
+			[
+				"de",
+				"destroyapiview"
+			],
+			[
+				"max_l",
+				"max_limit"
+			],
+			[
+				"rert",
+				"retrieveupdatedestroyapiview"
+			],
+			[
+				"reti",
+				"retrieveupdatedestroyapiview"
+			],
+			[
+				"retr",
+				"retrieveupdatedestroyapiview"
+			],
+			[
+				"D",
+				"DroneCategoryDetail"
+			],
+			[
+				"P",
+				"Pilot"
+			],
+			[
+				"q",
+				"queryset"
+			],
+			[
+				"pil",
+				"pilot"
+			],
+			[
+				"slugl",
+				"sslugrelated"
+			],
+			[
+				"pilo",
+				"pilot"
+			],
+			[
+				"rea",
+				"read_only"
+			],
+			[
+				"Pi",
+				"Pilot"
+			],
+			[
+				"C",
+				"ChoiceField"
+			],
+			[
+				"Drone",
+				"DroneSerializer"
+			],
+			[
+				"quer",
+				"queryset"
+			],
+			[
+				"slug",
+				"sslugrelated"
+			],
+			[
+				"SlugR",
+				"sslugrelated"
+			],
+			[
+				"S",
+				"SlugField"
+			],
+			[
+				"stude",
+				"student_list"
+			],
+			[
+				"r",
+				"rcc"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/api/models.py",
+			"settings":
+			{
+				"buffer_size": 57,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "models.py",
+			"settings":
+			{
+				"buffer_size": 618,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"paste",
+					null,
+					"AQAAAJMBAAAAAAAAiwQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAJMBAAAAAAAAkwEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					6,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAALABAAAAAAAAsQEAAAAAAAAAAAAAsQEAAAAAAAC1AQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALABAAAAAAAAsAEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					12,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Delete Line.sublime-macro"
+					},
+					"AgAAALYBAAAAAAAAtgEAAAAAAACeAAAAICAgIHBob25lX3JlZ2V4ID0gUmVnZXhWYWxpZGF0b3IoIHJlZ2V4ICAgPXInXlwrPzE/XGR7OSwxNH0kJywgbWVzc2FnZSA9IlBob25lIG51bWJlciBtdXN0IGJlIGVudGVyZWQgaW4gdGhlIGZvcm1hdDogJys5OTk5OTk5OTknLiBVcCB0byAxNCBkaWdpdHMgYWxsb3dlZC4iKQqxAQAAAAAAALEBAAAAAAAABAAAACAgICA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAN8BAAAAAAAA3wEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					17,
+					4,
+					"left_delete",
+					null,
+					"BAAAALUBAAAAAAAAtQEAAAAAAAA5AgAAIHBob25lICAgICAgID0gbW9kZWxzLkNoYXJGaWVsZCh2YWxpZGF0b3JzPVtwaG9uZV9yZWdleF0sIG1heF9sZW5ndGg9MTcsIHVuaXF1ZT1UcnVlKQogICAgb3RwICAgICAgICAgPSBtb2RlbHMuQ2hhckZpZWxkKG1heF9sZW5ndGggPSA5LCBibGFuayA9IFRydWUsIG51bGw9IFRydWUpCiAgICBjb3VudCAgICAgICA9IG1vZGVscy5JbnRlZ2VyRmllbGQoZGVmYXVsdCA9IDAsIGhlbHBfdGV4dCA9ICdOdW1iZXIgb2Ygb3RwIHNlbnQnKQogICAgbG9nZ2VkICAgICAgPSBtb2RlbHMuQm9vbGVhbkZpZWxkKGRlZmF1bHQgPSBGYWxzZSwgaGVscF90ZXh0ID0gJ0lmIG90cCB2ZXJpZmljYXRpb24gZ290IHN1Y2Nlc3NmdWwnKQogICAgZm9yZ290ICAgICAgPSBtb2RlbHMuQm9vbGVhbkZpZWxkKGRlZmF1bHQgPSBGYWxzZSwgaGVscF90ZXh0ID0gJ29ubHkgdHJ1ZSBmb3IgZm9yZ290IHBhc3N3b3JkJykKICAgIGZvcmdvdF9sb2dnZWQgPSBtb2RlbHMuQm9vbGVhbkZpZWxkKGRlZmF1bHQgPSBGYWxzZSwgaGVscF90ZXh0ID0gJ09ubHkgdHJ1ZSBpZiB2YWxpZGRhdGUgb3RwIGZvcmdvdCBnZXQgc3VjY2Vzc2ayAQAAAAAAALIBAAAAAAAAAwAAACAgILEBAAAAAAAAsQEAAAAAAAABAAAACrABAAAAAAAAsAEAAAAAAAABAAAACg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALUBAAAAAAAA7gMAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					18,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAALABAAAAAAAAsQEAAAAAAAAAAAAAsQEAAAAAAAC1AQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALABAAAAAAAAsAEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					28,
+					1,
+					"insert",
+					{
+						"characters": "\nfk"
+					},
+					"BQAAALABAAAAAAAAsQEAAAAAAAAAAAAAsQEAAAAAAAC1AQAAAAAAAAAAAAC2AQAAAAAAALYBAAAAAAAABAAAACAgICC1AQAAAAAAALYBAAAAAAAAAAAAALYBAAAAAAAAtwEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALABAAAAAAAAsAEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					29,
+					1,
+					"left_delete",
+					null,
+					"AQAAALYBAAAAAAAAtgEAAAAAAAABAAAAaw",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALcBAAAAAAAAtwEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					30,
+					1,
+					"insert",
+					{
+						"characters": "or"
+					},
+					"AgAAALYBAAAAAAAAtwEAAAAAAAAAAAAAtwEAAAAAAAC4AQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALYBAAAAAAAAtgEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					31,
+					3,
+					"left_delete",
+					null,
+					"AwAAALcBAAAAAAAAtwEAAAAAAAABAAAAcrYBAAAAAAAAtgEAAAAAAAABAAAAb7UBAAAAAAAAtQEAAAAAAAABAAAAZg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALgBAAAAAAAAuAEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					32,
+					1,
+					"insert",
+					{
+						"characters": "for"
+					},
+					"AwAAALUBAAAAAAAAtgEAAAAAAAAAAAAAtgEAAAAAAAC3AQAAAAAAAAAAAAC3AQAAAAAAALgBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALUBAAAAAAAAtQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					33,
+					3,
+					"left_delete",
+					null,
+					"AwAAALcBAAAAAAAAtwEAAAAAAAABAAAAcrYBAAAAAAAAtgEAAAAAAAABAAAAb7UBAAAAAAAAtQEAAAAAAAABAAAAZg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALgBAAAAAAAAuAEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					34,
+					1,
+					"insert",
+					{
+						"characters": "mf"
+					},
+					"AgAAALUBAAAAAAAAtgEAAAAAAAAAAAAAtgEAAAAAAAC3AQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALUBAAAAAAAAtQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					40,
+					1,
+					"insert_completion",
+					{
+						"completion": "models.ForeignKey('${1:Model}', ${2:attributes})",
+						"format": "snippet",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "mforeign"
+					},
+					"AgAAALUBAAAAAAAAtQEAAAAAAAACAAAAbWa1AQAAAAAAANsBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALcBAAAAAAAAtwEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					47,
+					1,
+					"paste",
+					null,
+					"AgAAAMcBAAAAAAAAywEAAAAAAAAAAAAAywEAAAAAAADLAQAAAAAAAAcAAAAnTW9kZWwn",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAM4BAAAAAAAAxwEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					48,
+					1,
+					"black",
+					null,
+					"AQAAAAAAAAAAAAAA2wEAAAAAAADZAQAAZnJvbSBkamFuZ28uY29udHJpYi5hdXRoLm1vZGVscyBpbXBvcnQgQWJzdHJhY3RVc2VyCmZyb20gZGphbmdvLmRiIGltcG9ydCBtb2RlbHMKCgpjbGFzcyBVc2VyKEFic3RyYWN0VXNlcik6CiAgICB1c2VybmFtZSA9IG1vZGVscy5DaGFyRmllbGQoIlBob25lIE51bWJlciIsIG1heF9sZW5ndGg9MTAsIHVuaXF1ZT1UcnVlKQogICAgcGFzc3dvcmQgPSBtb2RlbHMuQ2hhckZpZWxkKG1heF9sZW5ndGg9NTApCiAgICBlbWFpbCA9IG1vZGVscy5DaGFyRmllbGQoCiAgICAgICAgbWF4X2xlbmd0aD0yNTUsCiAgICApCgogICAgVVNFUk5BTUVfRklFTEQgPSAidXNlcm5hbWUiCiAgICBSRVFVSVJFRF9GSUVMRFMgPSBbXQoKICAgIGRlZiBfX3N0cl9fKHNlbGYpOgogICAgICAgIHJldHVybiBzZWxmLnVzZXJuYW1lCmNsYXNzIFBob25lT1RQKG1vZGVscy5Nb2RlbCk6CiAgICBtb2RlbHMuRm9yZWlnbktleShVc2VyLCBhdHRyaWJ1dGVzKQo",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMsBAAAAAAAAywEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					58,
+					1,
+					"insert",
+					{
+						"characters": "on_de"
+					},
+					"BgAAAM8BAAAAAAAA0AEAAAAAAAAAAAAA0AEAAAAAAADQAQAAAAAAAAoAAABhdHRyaWJ1dGVz0AEAAAAAAADRAQAAAAAAAAAAAADRAQAAAAAAANIBAAAAAAAAAAAAANIBAAAAAAAA0wEAAAAAAAAAAAAA0wEAAAAAAADUAQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAM8BAAAAAAAA2QEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					59,
+					1,
+					"insert_completion",
+					{
+						"completion": "on_delete",
+						"format": "text",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "on_delete"
+					},
+					"AgAAAM8BAAAAAAAAzwEAAAAAAAAFAAAAb25fZGXPAQAAAAAAANgBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAANQBAAAAAAAA1AEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					60,
+					1,
+					"insert",
+					{
+						"characters": "="
+					},
+					"AQAAANgBAAAAAAAA2QEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAANgBAAAAAAAA2AEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					61,
+					1,
+					"insert_snippet",
+					{
+						"contents": "'$0'"
+					},
+					"AQAAANkBAAAAAAAA2wEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAANkBAAAAAAAA2QEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					62,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Delete Left Right.sublime-macro"
+					},
+					"AgAAANkBAAAAAAAA2QEAAAAAAAABAAAAJ9kBAAAAAAAA2QEAAAAAAAABAAAAJw",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAANoBAAAAAAAA2gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					63,
+					1,
+					"insert",
+					{
+						"characters": "mode"
+					},
+					"BAAAANkBAAAAAAAA2gEAAAAAAAAAAAAA2gEAAAAAAADbAQAAAAAAAAAAAADbAQAAAAAAANwBAAAAAAAAAAAAANwBAAAAAAAA3QEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAANkBAAAAAAAA2QEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					64,
+					1,
+					"insert_completion",
+					{
+						"completion": "models",
+						"format": "text",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "models"
+					},
+					"AgAAANkBAAAAAAAA2QEAAAAAAAAEAAAAbW9kZdkBAAAAAAAA3wEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAN0BAAAAAAAA3QEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					65,
+					1,
+					"insert",
+					{
+						"characters": "."
+					},
+					"AQAAAN8BAAAAAAAA4AEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAN8BAAAAAAAA3wEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					66,
+					1,
+					"insert_completion",
+					{
+						"completion": "CASCADE",
+						"format": "text",
+						"keep_prefix": false,
+						"must_insert": true,
+						"trigger": "CASCADE"
+					},
+					"AQAAAOABAAAAAAAA5wEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAOABAAAAAAAA4AEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					67,
+					1,
+					"black",
+					null,
+					"AQAAAAAAAAAAAAAA6QEAAAAAAADpAQAAZnJvbSBkamFuZ28uY29udHJpYi5hdXRoLm1vZGVscyBpbXBvcnQgQWJzdHJhY3RVc2VyCmZyb20gZGphbmdvLmRiIGltcG9ydCBtb2RlbHMKCgpjbGFzcyBVc2VyKEFic3RyYWN0VXNlcik6CiAgICB1c2VybmFtZSA9IG1vZGVscy5DaGFyRmllbGQoIlBob25lIE51bWJlciIsIG1heF9sZW5ndGg9MTAsIHVuaXF1ZT1UcnVlKQogICAgcGFzc3dvcmQgPSBtb2RlbHMuQ2hhckZpZWxkKG1heF9sZW5ndGg9NTApCiAgICBlbWFpbCA9IG1vZGVscy5DaGFyRmllbGQoCiAgICAgICAgbWF4X2xlbmd0aD0yNTUsCiAgICApCgogICAgVVNFUk5BTUVfRklFTEQgPSAidXNlcm5hbWUiCiAgICBSRVFVSVJFRF9GSUVMRFMgPSBbXQoKICAgIGRlZiBfX3N0cl9fKHNlbGYpOgogICAgICAgIHJldHVybiBzZWxmLnVzZXJuYW1lCgoKY2xhc3MgUGhvbmVPVFAobW9kZWxzLk1vZGVsKToKICAgIG1vZGVscy5Gb3JlaWduS2V5KFVzZXIsIG9uX2RlbGV0ZT1tb2RlbHMuQ0FTQ0FERSkK",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAOcBAAAAAAAA5wEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					69,
+					1,
+					"insert",
+					{
+						"characters": "="
+					},
+					"AQAAALcBAAAAAAAAuAEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALcBAAAAAAAAtwEAAAAAAAAAAAAAAABRQA"
+				],
+				[
+					71,
+					1,
+					"insert",
+					{
+						"characters": "user"
+					},
+					"BAAAALcBAAAAAAAAuAEAAAAAAAAAAAAAuAEAAAAAAAC5AQAAAAAAAAAAAAC5AQAAAAAAALoBAAAAAAAAAAAAALoBAAAAAAAAuwEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALcBAAAAAAAAtwEAAAAAAAAAAAAAAABRQA"
+				],
+				[
+					73,
+					1,
+					"black",
+					null,
+					"AQAAAAAAAAAAAAAA8AEAAAAAAADuAQAAZnJvbSBkamFuZ28uY29udHJpYi5hdXRoLm1vZGVscyBpbXBvcnQgQWJzdHJhY3RVc2VyCmZyb20gZGphbmdvLmRiIGltcG9ydCBtb2RlbHMKCgpjbGFzcyBVc2VyKEFic3RyYWN0VXNlcik6CiAgICB1c2VybmFtZSA9IG1vZGVscy5DaGFyRmllbGQoIlBob25lIE51bWJlciIsIG1heF9sZW5ndGg9MTAsIHVuaXF1ZT1UcnVlKQogICAgcGFzc3dvcmQgPSBtb2RlbHMuQ2hhckZpZWxkKG1heF9sZW5ndGg9NTApCiAgICBlbWFpbCA9IG1vZGVscy5DaGFyRmllbGQoCiAgICAgICAgbWF4X2xlbmd0aD0yNTUsCiAgICApCgogICAgVVNFUk5BTUVfRklFTEQgPSAidXNlcm5hbWUiCiAgICBSRVFVSVJFRF9GSUVMRFMgPSBbXQoKICAgIGRlZiBfX3N0cl9fKHNlbGYpOgogICAgICAgIHJldHVybiBzZWxmLnVzZXJuYW1lCgoKY2xhc3MgUGhvbmVPVFAobW9kZWxzLk1vZGVsKToKICAgIHVzZXI9bW9kZWxzLkZvcmVpZ25LZXkoVXNlciwgb25fZGVsZXRlPW1vZGVscy5DQVNDQURFKQo",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAO0BAAAAAAAA7QEAAAAAAAD////////vfw"
+				],
+				[
+					75,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAO8BAAAAAAAA8AEAAAAAAAAAAAAA8AEAAAAAAAD0AQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAO8BAAAAAAAA7wEAAAAAAAD////////vfw"
+				],
+				[
+					76,
+					1,
+					"insert",
+					{
+						"characters": "opt"
+					},
+					"AwAAAPQBAAAAAAAA9QEAAAAAAAAAAAAA9QEAAAAAAAD2AQAAAAAAAAAAAAD2AQAAAAAAAPcBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAPQBAAAAAAAA9AEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					77,
+					1,
+					"insert",
+					{
+						"characters": "_"
+					},
+					"AQAAAPcBAAAAAAAA+AEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAPcBAAAAAAAA9wEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					78,
+					1,
+					"insert",
+					{
+						"characters": "vc"
+					},
+					"AgAAAPgBAAAAAAAA+QEAAAAAAAAAAAAA+QEAAAAAAAD6AQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAPgBAAAAAAAA+AEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					79,
+					1,
+					"left_delete",
+					null,
+					"AQAAAPkBAAAAAAAA+QEAAAAAAAABAAAAYw",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAPoBAAAAAAAA+gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					80,
+					1,
+					"insert",
+					{
+						"characters": "alue="
+					},
+					"BQAAAPkBAAAAAAAA+gEAAAAAAAAAAAAA+gEAAAAAAAD7AQAAAAAAAAAAAAD7AQAAAAAAAPwBAAAAAAAAAAAAAPwBAAAAAAAA/QEAAAAAAAAAAAAA/QEAAAAAAAD+AQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAPkBAAAAAAAA+QEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					82,
+					1,
+					"insert",
+					{
+						"characters": "mode."
+					},
+					"BQAAAP4BAAAAAAAA/wEAAAAAAAAAAAAA/wEAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAECAAAAAAAAAAAAAAECAAAAAAAAAgIAAAAAAAAAAAAAAgIAAAAAAAADAgAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAP4BAAAAAAAA/gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					83,
+					1,
+					"left_delete",
+					null,
+					"AQAAAAICAAAAAAAAAgIAAAAAAAABAAAALg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAMCAAAAAAAAAwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					84,
+					1,
+					"insert_completion",
+					{
+						"completion": "models",
+						"format": "text",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "models"
+					},
+					"AgAAAP4BAAAAAAAA/gEAAAAAAAAEAAAAbW9kZf4BAAAAAAAABAIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAICAAAAAAAAAgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					87,
+					1,
+					"insert",
+					{
+						"characters": ".For"
+					},
+					"BAAAAAQCAAAAAAAABQIAAAAAAAAAAAAABQIAAAAAAAAGAgAAAAAAAAAAAAAGAgAAAAAAAAcCAAAAAAAAAAAAAAcCAAAAAAAACAIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAQCAAAAAAAABAIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					88,
+					1,
+					"insert_completion",
+					{
+						"completion": "ForeignKey",
+						"format": "text",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "ForeignKey"
+					},
+					"AgAAAAUCAAAAAAAABQIAAAAAAAADAAAARm9yBQIAAAAAAAAPAgAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAgCAAAAAAAACAIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					89,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAA8CAAAAAAAAEQIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAA8CAAAAAAAADwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					101,
+					1,
+					"left_delete",
+					null,
+					"AQAAAAUCAAAAAAAABQIAAAAAAAAMAAAARm9yZWlnbktleSgp",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABECAAAAAAAABQIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					102,
+					1,
+					"insert",
+					{
+						"characters": "in"
+					},
+					"AgAAAAUCAAAAAAAABgIAAAAAAAAAAAAABgIAAAAAAAAHAgAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAUCAAAAAAAABQIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					103,
+					9,
+					"left_delete",
+					null,
+					"CQAAAAYCAAAAAAAABgIAAAAAAAABAAAAbgUCAAAAAAAABQIAAAAAAAABAAAAaQQCAAAAAAAABAIAAAAAAAABAAAALgMCAAAAAAAAAwIAAAAAAAABAAAAcwICAAAAAAAAAgIAAAAAAAABAAAAbAECAAAAAAAAAQIAAAAAAAABAAAAZQACAAAAAAAAAAIAAAAAAAABAAAAZP8BAAAAAAAA/wEAAAAAAAABAAAAb/4BAAAAAAAA/gEAAAAAAAABAAAAbQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAcCAAAAAAAABwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					104,
+					1,
+					"insert",
+					{
+						"characters": "int"
+					},
+					"AwAAAP4BAAAAAAAA/wEAAAAAAAAAAAAA/wEAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAECAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAP4BAAAAAAAA/gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					105,
+					1,
+					"insert",
+					{
+						"characters": "e"
+					},
+					"AQAAAAECAAAAAAAAAgIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAECAAAAAAAAAQIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					106,
+					1,
+					"left_delete",
+					null,
+					"AQAAAAECAAAAAAAAAQIAAAAAAAABAAAAZQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAICAAAAAAAAAgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					107,
+					1,
+					"insert",
+					{
+						"characters": "i"
+					},
+					"AQAAAAECAAAAAAAAAgIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAECAAAAAAAAAQIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					108,
+					4,
+					"left_delete",
+					null,
+					"BAAAAAECAAAAAAAAAQIAAAAAAAABAAAAaQACAAAAAAAAAAIAAAAAAAABAAAAdP8BAAAAAAAA/wEAAAAAAAABAAAAbv4BAAAAAAAA/gEAAAAAAAABAAAAaQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAICAAAAAAAAAgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					109,
+					1,
+					"insert",
+					{
+						"characters": "inte"
+					},
+					"BAAAAP4BAAAAAAAA/wEAAAAAAAAAAAAA/wEAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAECAAAAAAAAAAAAAAECAAAAAAAAAgIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAP4BAAAAAAAA/gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					110,
+					4,
+					"left_delete",
+					null,
+					"BAAAAAECAAAAAAAAAQIAAAAAAAABAAAAZQACAAAAAAAAAAIAAAAAAAABAAAAdP8BAAAAAAAA/wEAAAAAAAABAAAAbv4BAAAAAAAA/gEAAAAAAAABAAAAaQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAICAAAAAAAAAgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					111,
+					1,
+					"insert",
+					{
+						"characters": "m"
+					},
+					"AQAAAP4BAAAAAAAA/wEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAP4BAAAAAAAA/gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					112,
+					1,
+					"insert_completion",
+					{
+						"completion": "models.IntegerField(${1:attributes})",
+						"format": "snippet",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "mint"
+					},
+					"AgAAAP4BAAAAAAAA/gEAAAAAAAABAAAAbf4BAAAAAAAAHQIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAP8BAAAAAAAA/wEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					123,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AwAAAPABAAAAAAAA8gEAAAAAAAAAAAAAswEAAAAAAAC1AQAAAAAAAAAAAACVAQAAAAAAAJcBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAB0CAAAAAAAAlQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					130,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AwAAAPQBAAAAAAAA9AEAAAAAAAACAAAAIyC1AQAAAAAAALUBAAAAAAAAAgAAACMglQEAAAAAAACVAQAAAAAAAAIAAAAjIA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACMCAAAAAAAAlQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					131,
+					1,
+					"black",
+					null,
+					"AQAAAJUBAAAAAAAAHwIAAAAAAACIAAAAY2xhc3MgUGhvbmVPVFAobW9kZWxzLk1vZGVsKToKICAgIHVzZXIgPSBtb2RlbHMuRm9yZWlnbktleShVc2VyLCBvbl9kZWxldGU9bW9kZWxzLkNBU0NBREUpCiAgICBvcHRfdmFsdWU9bW9kZWxzLkludGVnZXJGaWVsZChhdHRyaWJ1dGVzKQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAB0CAAAAAAAAlQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					146,
+					1,
+					"paste",
+					null,
+					"AgAAAAcCAAAAAAAAGwIAAAAAAAAAAAAAGwIAAAAAAAAbAgAAAAAAAAwAAABJbnRlZ2VyRmllbGQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABMCAAAAAAAABwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					150,
+					1,
+					"right_delete",
+					null,
+					"AQAAABwCAAAAAAAAHAIAAAAAAAAKAAAAYXR0cmlidXRlcw",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABwCAAAAAAAAJgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					151,
+					1,
+					"black",
+					null,
+					"AQAAAAAAAAAAAAAAHgIAAAAAAAAeAgAAZnJvbSBkamFuZ28uY29udHJpYi5hdXRoLm1vZGVscyBpbXBvcnQgQWJzdHJhY3RVc2VyCmZyb20gZGphbmdvLmRiIGltcG9ydCBtb2RlbHMKCgpjbGFzcyBVc2VyKEFic3RyYWN0VXNlcik6CiAgICB1c2VybmFtZSA9IG1vZGVscy5DaGFyRmllbGQoIlBob25lIE51bWJlciIsIG1heF9sZW5ndGg9MTAsIHVuaXF1ZT1UcnVlKQogICAgcGFzc3dvcmQgPSBtb2RlbHMuQ2hhckZpZWxkKG1heF9sZW5ndGg9NTApCiAgICBlbWFpbCA9IG1vZGVscy5DaGFyRmllbGQoCiAgICAgICAgbWF4X2xlbmd0aD0yNTUsCiAgICApCgogICAgVVNFUk5BTUVfRklFTEQgPSAidXNlcm5hbWUiCiAgICBSRVFVSVJFRF9GSUVMRFMgPSBbXQoKICAgIGRlZiBfX3N0cl9fKHNlbGYpOgogICAgICAgIHJldHVybiBzZWxmLnVzZXJuYW1lCgoKY2xhc3MgUGhvbmVPVFAobW9kZWxzLk1vZGVsKToKICAgIHVzZXIgPSBtb2RlbHMuRm9yZWlnbktleShVc2VyLCBvbl9kZWxldGU9bW9kZWxzLkNBU0NBREUpCiAgICBvcHRfdmFsdWUgPSBtb2RlbHMuUG9zaXRpdmVJbnRlZ2VyRmllbGQoKQo",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABwCAAAAAAAAHAIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					154,
+					1,
+					"left_delete",
+					null,
+					"AQAAAPUBAAAAAAAA9QEAAAAAAAABAAAAcA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAPYBAAAAAAAA9gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					156,
+					1,
+					"insert",
+					{
+						"characters": "p"
+					},
+					"AQAAAPYBAAAAAAAA9wEAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAPYBAAAAAAAA9gEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					161,
+					2,
+					"right_delete",
+					null,
+					"AgAAAKEBAAAAAAAAoQEAAAAAAAABAAAAVKEBAAAAAAAAoQEAAAAAAAABAAAAUA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKEBAAAAAAAAoQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					162,
+					1,
+					"insert",
+					{
+						"characters": "yp"
+					},
+					"AgAAAKEBAAAAAAAAogEAAAAAAAAAAAAAogEAAAAAAACjAQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKEBAAAAAAAAoQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					163,
+					2,
+					"left_delete",
+					null,
+					"AgAAAKIBAAAAAAAAogEAAAAAAAABAAAAcKEBAAAAAAAAoQEAAAAAAAABAAAAeQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKMBAAAAAAAAowEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					164,
+					1,
+					"insert",
+					{
+						"characters": "tp"
+					},
+					"AgAAAKEBAAAAAAAAogEAAAAAAAAAAAAAogEAAAAAAACjAQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKEBAAAAAAAAoQEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					165,
+					1,
+					"black",
+					null,
+					"AQAAAAAAAAAAAAAAHgIAAAAAAAAeAgAAZnJvbSBkamFuZ28uY29udHJpYi5hdXRoLm1vZGVscyBpbXBvcnQgQWJzdHJhY3RVc2VyCmZyb20gZGphbmdvLmRiIGltcG9ydCBtb2RlbHMKCgpjbGFzcyBVc2VyKEFic3RyYWN0VXNlcik6CiAgICB1c2VybmFtZSA9IG1vZGVscy5DaGFyRmllbGQoIlBob25lIE51bWJlciIsIG1heF9sZW5ndGg9MTAsIHVuaXF1ZT1UcnVlKQogICAgcGFzc3dvcmQgPSBtb2RlbHMuQ2hhckZpZWxkKG1heF9sZW5ndGg9NTApCiAgICBlbWFpbCA9IG1vZGVscy5DaGFyRmllbGQoCiAgICAgICAgbWF4X2xlbmd0aD0yNTUsCiAgICApCgogICAgVVNFUk5BTUVfRklFTEQgPSAidXNlcm5hbWUiCiAgICBSRVFVSVJFRF9GSUVMRFMgPSBbXQoKICAgIGRlZiBfX3N0cl9fKHNlbGYpOgogICAgICAgIHJldHVybiBzZWxmLnVzZXJuYW1lCgoKY2xhc3MgUGhvbmVPdHAobW9kZWxzLk1vZGVsKToKICAgIHVzZXIgPSBtb2RlbHMuRm9yZWlnbktleShVc2VyLCBvbl9kZWxldGU9bW9kZWxzLkNBU0NBREUpCiAgICBvdHBfdmFsdWUgPSBtb2RlbHMuUG9zaXRpdmVJbnRlZ2VyRmllbGQoKQo",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKMBAAAAAAAAowEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					169,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAB0CAAAAAAAAHgIAAAAAAAAAAAAAHgIAAAAAAAAiAgAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAB0CAAAAAAAAHQIAAAAAAAD////////vfw"
+				],
+				[
+					170,
+					1,
+					"paste",
+					null,
+					"AQAAACICAAAAAAAAUwIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACICAAAAAAAAIgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					171,
+					1,
+					"black",
+					null,
+					"AQAAAAAAAAAAAAAAVAIAAAAAAABUAgAAZnJvbSBkamFuZ28uY29udHJpYi5hdXRoLm1vZGVscyBpbXBvcnQgQWJzdHJhY3RVc2VyCmZyb20gZGphbmdvLmRiIGltcG9ydCBtb2RlbHMKCgpjbGFzcyBVc2VyKEFic3RyYWN0VXNlcik6CiAgICB1c2VybmFtZSA9IG1vZGVscy5DaGFyRmllbGQoIlBob25lIE51bWJlciIsIG1heF9sZW5ndGg9MTAsIHVuaXF1ZT1UcnVlKQogICAgcGFzc3dvcmQgPSBtb2RlbHMuQ2hhckZpZWxkKG1heF9sZW5ndGg9NTApCiAgICBlbWFpbCA9IG1vZGVscy5DaGFyRmllbGQoCiAgICAgICAgbWF4X2xlbmd0aD0yNTUsCiAgICApCgogICAgVVNFUk5BTUVfRklFTEQgPSAidXNlcm5hbWUiCiAgICBSRVFVSVJFRF9GSUVMRFMgPSBbXQoKICAgIGRlZiBfX3N0cl9fKHNlbGYpOgogICAgICAgIHJldHVybiBzZWxmLnVzZXJuYW1lCgoKY2xhc3MgUGhvbmVPdHAobW9kZWxzLk1vZGVsKToKICAgIHVzZXIgPSBtb2RlbHMuRm9yZWlnbktleShVc2VyLCBvbl9kZWxldGU9bW9kZWxzLkNBU0NBREUpCiAgICBvdHBfdmFsdWUgPSBtb2RlbHMuUG9zaXRpdmVJbnRlZ2VyRmllbGQoKQogICAgY3JlYXRlZCA9IG1vZGVscy5EYXRlVGltZUZpZWxkKGF1dG9fbm93X2FkZD1UcnVlKQo",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAFMCAAAAAAAAUwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					172,
+					1,
+					"insert",
+					{
+						"characters": "\nac"
+					},
+					"BAAAAFMCAAAAAAAAVAIAAAAAAAAAAAAAVAIAAAAAAABYAgAAAAAAAAAAAABYAgAAAAAAAFkCAAAAAAAAAAAAAFkCAAAAAAAAWgIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAFMCAAAAAAAAUwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					173,
+					1,
+					"insert_completion",
+					{
+						"completion": "action",
+						"format": "text",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "action"
+					},
+					"AgAAAFgCAAAAAAAAWAIAAAAAAAACAAAAYWNYAgAAAAAAAF4CAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAFoCAAAAAAAAWgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					174,
+					3,
+					"left_delete",
+					null,
+					"AwAAAF0CAAAAAAAAXQIAAAAAAAABAAAAblwCAAAAAAAAXAIAAAAAAAABAAAAb1sCAAAAAAAAWwIAAAAAAAABAAAAaQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAF4CAAAAAAAAXgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					175,
+					1,
+					"insert",
+					{
+						"characters": "tive"
+					},
+					"BAAAAFsCAAAAAAAAXAIAAAAAAAAAAAAAXAIAAAAAAABdAgAAAAAAAAAAAABdAgAAAAAAAF4CAAAAAAAAAAAAAF4CAAAAAAAAXwIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAFsCAAAAAAAAWwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					176,
+					4,
+					"left_delete",
+					null,
+					"BAAAAF4CAAAAAAAAXgIAAAAAAAABAAAAZV0CAAAAAAAAXQIAAAAAAAABAAAAdlwCAAAAAAAAXAIAAAAAAAABAAAAaVsCAAAAAAAAWwIAAAAAAAABAAAAdA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAF8CAAAAAAAAXwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					177,
+					1,
+					"insert",
+					{
+						"characters": "ive="
+					},
+					"BAAAAFsCAAAAAAAAXAIAAAAAAAAAAAAAXAIAAAAAAABdAgAAAAAAAAAAAABdAgAAAAAAAF4CAAAAAAAAAAAAAF4CAAAAAAAAXwIAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAFsCAAAAAAAAWwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					180,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"BQAAAFQCAAAAAAAAVgIAAAAAAAAAAAAAHgIAAAAAAAAgAgAAAAAAAAAAAADwAQAAAAAAAPIBAAAAAAAAAAAAALMBAAAAAAAAtQEAAAAAAAAAAAAAlQEAAAAAAACXAQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAGACAAAAAAAAlQEAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/rest_framework/exceptions.py",
+			"settings":
+			{
+				"buffer_size": 8043,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/django/core/exceptions.py",
+			"settings":
+			{
+				"buffer_size": 6231,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/django/contrib/auth/context_processors.py",
+			"settings":
+			{
+				"buffer_size": 1822,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/rest_framework/serializers.py",
+			"settings":
+			{
+				"buffer_size": 64792,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"ti",
+				"Convert Case: Title Case"
+			],
+			[
+				"titl",
+				"Convert Case: Title Case"
+			],
+			[
+				"dj",
+				"Set Syntax: Django HTML"
+			],
+			[
+				"h",
+				"Set Syntax: HTML"
+			],
+			[
+				"min",
+				"View: Toggle Minimap"
+			],
+			[
+				"com",
+				"Git: Commit"
+			],
+			[
+				"ad",
+				"Git: Add All"
+			],
+			[
+				"form",
+				"CoolFormat: Quick Format"
+			],
+			[
+				"forma",
+				"CoolFormat: Quick Format"
+			],
+			[
+				"js",
+				"JsPrettier: Format Code"
+			],
+			[
+				"set ",
+				"Set Syntax: Python"
+			],
+			[
+				"git log",
+				"Set Syntax: Git Log"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"",
+				"Snippet: #!/usr/bin/env"
+			],
+			[
+				"paste",
+				"SendToPasteBin: Paste Selected Text With Custom Name"
+			],
+			[
+				"pas",
+				"SendToPasteBin: Paste Selected Text With Custom Name"
+			],
+			[
+				"for",
+				"CoolFormat: Quick Format"
+			],
+			[
+				"make",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"ma",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"set js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"jspre",
+				"JsPrettier: Format Code"
+			],
+			[
+				"ter",
+				"Terminal: Open"
+			],
+			[
+				"blam",
+				"Git: Blame"
+			],
+			[
+				"co",
+				"Git: Commit"
+			],
+			[
+				"fo",
+				"CoolFormat: Quick Format"
+			],
+			[
+				"am",
+				"Git: Amend Commit"
+			],
+			[
+				"ui",
+				"UI: Customize Color Scheme"
+			],
+			[
+				"set",
+				"Set Syntax: Python"
+			],
+			[
+				"set html",
+				"Set Syntax: HTML"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Class Component"
+			],
+			[
+				"nre",
+				"Snippet: Reducer"
+			],
+			[
+				"sinpert",
+				"Snippet: Import"
+			],
+			[
+				"sen",
+				"SendToPasteBin: Paste Selected Text"
+			],
+			[
+				"send",
+				"SendToPasteBin: Paste Selected Text"
+			],
+			[
+				"pastebin",
+				"SendToPasteBin: Settings"
+			],
+			[
+				"hast",
+				"To Hastebin : send"
+			],
+			[
+				"update",
+				"Snippet: Should Component Update"
+			],
+			[
+				"plugin",
+				"Plugin Development: Profile Events"
+			],
+			[
+				"men",
+				"View: Toggle Menu"
+			],
+			[
+				"tabs",
+				"View: Toggle Tabs"
+			],
+			[
+				"distra",
+				"View: Toggle Distraction Free"
+			],
+			[
+				"set j",
+				"Set Syntax: JSON"
+			],
+			[
+				"model",
+				"Snippet: ModelSerializer"
+			],
+			[
+				"ja",
+				"Set Syntax: JavaScript (Naomi)"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"resr",
+				"RESTer: HTTP Request"
+			],
+			[
+				"gitco",
+				"Git: Commit"
+			],
+			[
+				"git",
+				"Git: Add All"
+			],
+			[
+				"git ",
+				"Set Syntax: Git Commit"
+			],
+			[
+				"gi",
+				"Git: Init"
+			],
+			[
+				"MA",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"ama",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"q",
+				"CoolFormat: Quick Format"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"jsx",
+				"Set Syntax: JSX"
+			],
+			[
+				"git push",
+				"Git: Push Current Branch"
+			],
+			[
+				"git pus",
+				"Git: Push Current Branch"
+			],
+			[
+				"git am",
+				"Git: Amend Commit"
+			],
+			[
+				"mar",
+				"Set Syntax: Markdown"
+			],
+			[
+				"ht",
+				"Set Syntax: HTML"
+			],
+			[
+				"r",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"ra",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"pyt",
+				"Set Syntax: Python"
+			],
+			[
+				"pus",
+				"Git: Push Current Branch"
+			],
+			[
+				"MIN",
+				"View: Toggle Minimap"
+			],
+			[
+				"DJ",
+				"Set Syntax: Django HTML"
+			],
+			[
+				"j",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"set c+",
+				"Set Syntax: C++"
+			],
+			[
+				"rain",
+				"RainbowBrackets: clear rainbow"
+			],
+			[
+				"pa",
+				"File: Copy Path"
+			],
+			[
+				"c",
+				"Git: Commit"
+			],
+			[
+				"m",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"md",
+				"Set Syntax: Markdown"
+			],
+			[
+				"dh",
+				"Set Syntax: Django HTML"
+			],
+			[
+				"commit",
+				"Git: Commit"
+			],
+			[
+				",a",
+				"Git: Quick Commit (repo, only already added files)"
+			],
+			[
+				"rai",
+				"RainbowBrackets: clear rainbow"
+			],
+			[
+				"rma",
+				"RainbowBrackets: make rainbow"
+			],
+			[
+				"d",
+				"Set Syntax: Django HTML"
+			],
+			[
+				"push",
+				"Git: Push Current Branch"
+			],
+			[
+				"ms",
+				"Permute Lines: Shuffle"
+			],
+			[
+				"temr",
+				"Terminal: Open"
+			],
+			[
+				"dja",
+				"Set Syntax: Django HTML"
+			],
+			[
+				"te",
+				"Terminal: Open"
+			],
+			[
+				"path",
+				"File: Copy Path"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"pate",
+				"File: Copy Path Absolute To Project Encoded"
+			],
+			[
+				"ful",
+				"View: Toggle Full Screen"
+			],
+			[
+				"git lo",
+				"Git: Log All"
+			],
+			[
+				"to",
+				"Terminal: Open"
+			],
+			[
+				"full",
+				"View: Toggle Full Screen"
+			],
+			[
+				"fuc",
+				"Snippet: Functional Component"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 366.0,
+		"history":
+		[
+			"exit",
+			"exit()",
+			"print('234')",
+			"ls",
+			"la",
+			"ls",
+			"gv",
+			"dgf",
+			"print('dfg')",
+			"python",
+			"python()",
+			"erferw"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": false,
+		"show_minimap": true,
+		"show_open_files": false,
+		"show_tabs": true,
+		"side_bar_visible": true,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/abhishek/React-Django Projects/farmer-bazer/code/backend/users/serializers.py",
+		"/home/abhishek/React-Django Projects/farmer-bazer/code/backend/backend.sublime-project",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/shop/templates/shop/paymentsuccess.html",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/shop/views.py",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/shop/templates/shop/thanks.html",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/env/lib/python3.8/site-packages/django/core/checks/messages.py",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/mac/settings.py",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/mac/urls.py",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/shop/urls.py",
+		"/home/abhishek/Documents/Git codes/MyAwesomeCart/mac/shop/templates/shop/payment_index.html",
+		"/home/abhishek/React-Django Projects/django_react_authtication/django_rest_auth/api/signals.py",
+		"/home/abhishek/React-Django Projects/django_react_authtication/django_rest_auth/django_rest_auth/settings.py",
+		"/home/abhishek/React-Django Projects/django_react_authtication/django_rest_auth/api/models.py",
+		"/home/abhishek/React-Django Projects/django_react_authtication/django_rest_auth/django_rest_auth/urls.py",
+		"/home/abhishek/React-Django Projects/django_react_authtication/django_rest_auth/env/lib/python3.8/site-packages/dj_rest_auth/urls.py",
+		"/home/abhishek/React-Django Projects/django_react_authtication/django_rest_auth/env/lib/python3.8/site-packages/django_rest_passwordreset/tokens.py",
+		"/home/abhishek/React-Django Projects/django_react_authtication/django_rest_auth/env/lib/python3.8/site-packages/django_rest_passwordreset/urls.py",
+		"/home/abhishek/Documents/Git codes/WD/env/lib/python3.8/site-packages/pip/_vendor/html5lib/_trie/_base.py",
+		"/home/abhishek/Documents/Git codes/WD/env/lib/python3.8/site-packages/pytz/zoneinfo/America/Buenos_Aires",
+		"/home/abhishek/Documents/Git codes/WD/templates/demo.html",
+		"/home/abhishek/Documents/html files/index.html",
+		"/home/abhishek/.config/sublime-text/Packages/User/Side Bar.sublime-settings",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/api/urls.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/django/contrib/auth/password_validation.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/api/serializers.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/rest_framework/serializers.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/django/db/backends/base/base.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/django/db/models/fields/__init__.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/rest_framework/mixins.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/django/contrib/admin/filters.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/db.sqlite3",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/rest_framework/generics.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/django/contrib/auth/models.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/advisor_network/settings.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/rest_framework_simplejwt/serializers.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/manage.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/rest_framework_simplejwt/views.py",
+		"/home/abhishek/Python Programs/django_project/apis/advisor_network/env/lib/python3.8/site-packages/rest_framework_simplejwt/exceptions.py",
+		"/home/abhishek/Documents/C++_programs/DSA/#include<iostream>.cpp",
+		"/home/abhishek/Documents/Git codes/Video-Meeting-master/src/Video.js",
+		"/home/abhishek/Python Programs/django_project/django_meet/static/js/meeting_action.js",
+		"/home/abhishek/Python Programs/django_project/django_meet/chat/consumers.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/templates/_base.html",
+		"/home/abhishek/Python Programs/django_project/django_meet/manage.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/templates/meet/room.html",
+		"/home/abhishek/Python Programs/django_project/django_meet/meet/views.py",
+		"/home/abhishek/Desktop/org.gnome.Terminal.desktop",
+		"/home/abhishek/Python Programs/django_project/django_meet/.gitignore",
+		"/home/abhishek/Python Programs/django_project/django_meet/env/bin/mailmail",
+		"/home/abhishek/Python Programs/django_project/django_meet/env/lib/python3.8/site-packages/pip/_internal/cli/req_command.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/meet/models.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/django_meet/settings.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/chat/urls.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/meet/urls.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/templates/meet/entry.html",
+		"/home/abhishek/Python Programs/django_project/django_meet/static/js/main.js",
+		"/home/abhishek/Python Programs/django_project/django_meet/db.sqlite3",
+		"/home/abhishek/Python Programs/django_project/django_meet/users/models.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/meet/forms.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/meet/admin.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/chat/models.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/templates/_base.html",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/socialfly_instagram_clone/urls.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/users/urls.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/socialfly_instagram_clone/settings.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/users/views.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/users/models.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/posts/views.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/core/views.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/chats/routing.py",
+		"/home/abhishek/Python Programs/socialfly-instagram-clone/templates/post_ajax.html",
+		"/home/abhishek/Documents/Computer Science/Python Programs1/quick_sort.py",
+		"/home/abhishek/Desktop/Zoom.desktop",
+		"/home/abhishek/Python Programs/cuecent_notes.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/templates/chat/main.html",
+		"/home/abhishek/Python Programs/django_project/django_meet/templates/navi.html",
+		"/home/abhishek/Python Programs/django_project/django_meet/templates/footer.html",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try6(RTCDataChannel sample)/index.html",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try6(RTCDataChannel sample)/main.js",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try5(output device selection)/js/main.js",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try6(RTCDataChannel sample)/main.css ",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try5(output device selection)/index.html",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try4(Select sources)/index.html",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try4(Select sources)/js/main.js",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try3(screen share)/js/main.js",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try3(screen share)/index.html",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try3/js/main.js",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try2/index.html",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try3/index.html",
+		"/home/abhishek/Documents/C++_programs/cpp_files/ooplexp4.cpp",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try2/js/main.js",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try1/index.html",
+		"/home/abhishek/Python Programs/django_project/webrtc_js/try1/js/main.js",
+		"/home/abhishek/Python Programs/ Mailchimp-Files/requirements.txt",
+		"/home/abhishek/Python Programs/ Mailchimp-Files/.env",
+		"/home/abhishek/Python Programs/ Mailchimp-Files/.gitignore",
+		"/home/abhishek/.config/sublime-text/Packages/User/always_rainbows.py",
+		"/home/abhishek/Python Programs/ Mailchimp-Files/main.py",
+		"/home/abhishek/Python Programs/ Mailchimp-Files/testing.py",
+		"/home/abhishek/Python Programs/ Mailchimp-Files/config.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/django_meet/wsgi.py",
+		"/home/abhishek/Python Programs/django_project/django_meet/chat/routing.py",
+		"/home/abhishek/Python Programs/django_project/django_htmlx/django_htmlx/settings.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/tutorial/urls.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/snippets/views.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/snippets/permissions.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/snippets/urls.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/quickstart/views.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/tutorial/settings.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/snippets/models.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/snippets/serializers.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/manage.py",
+		"/home/abhishek/Python Programs/django-rest-api/tutorial/quickstart/serializers.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/manage.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/drones/serializers.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/drones/custompermission.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/drones/models.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/env/lib/python3.8/site-packages/rest_framework/permissions.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/drones/views.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/restful01/settings.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/toys/models.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/drones/tests.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/env/lib/python3.8/site-packages/django_filters/filters.py",
+		"/home/abhishek/Documents/aws_files/socailfy ec2 instance files/temp-devlop/socialfly_instagram_clone/settings.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/drones/urls.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/restful01/urls.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/toys/urls.py",
+		"/home/abhishek/Python Programs/django-rest-api/restful01/toys/serializers.py"
+	],
+	"find":
+	{
+		"height": 47.0
+	},
+	"find_in_files":
+	{
+		"height": 613.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"isalpha",
+			"username",
+			"Digits",
+			"username",
+			"/"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": false,
+		"use_buffer2": false,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/api/models.py",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 57,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"rb_enable": true,
+							"rb_syntax": "default",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 618,
+						"regions":
+						{
+							"rb_level0":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										93,
+										94
+									],
+									[
+										106,
+										107
+									],
+									[
+										140,
+										141
+									],
+									[
+										183,
+										184
+									],
+									[
+										216,
+										217
+									],
+									[
+										230,
+										231
+									],
+									[
+										260,
+										261
+									],
+									[
+										290,
+										291
+									],
+									[
+										347,
+										348
+									],
+									[
+										348,
+										349
+									],
+									[
+										366,
+										367
+									],
+									[
+										371,
+										372
+									]
+								],
+								"scope": "level0.rb"
+							}
+						},
+						"selection":
+						[
+							[
+								404,
+								404
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/Monokai.sublime-color-scheme",
+							"rb_enable": true,
+							"rb_syntax": "default",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/rest_framework/exceptions.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8043,
+						"regions":
+						{
+							"rb_level0":
+							{
+								"flags": 272,
+								"regions": "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",
+								"scope": "level0.rb"
+							},
+							"rb_level1":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										700,
+										701
+									],
+									[
+										712,
+										713
+									],
+									[
+										762,
+										763
+									],
+									[
+										781,
+										782
+									],
+									[
+										1017,
+										1018
+									],
+									[
+										1037,
+										1038
+									],
+									[
+										1079,
+										1080
+									],
+									[
+										1080,
+										1081
+									],
+									[
+										1410,
+										1411
+									],
+									[
+										1415,
+										1416
+									],
+									[
+										1503,
+										1504
+									],
+									[
+										1509,
+										1510
+									],
+									[
+										1541,
+										1542
+									],
+									[
+										1542,
+										1543
+									],
+									[
+										1667,
+										1668
+									],
+									[
+										1672,
+										1673
+									],
+									[
+										1767,
+										1768
+									],
+									[
+										1773,
+										1774
+									],
+									[
+										1805,
+										1806
+									],
+									[
+										1806,
+										1807
+									],
+									[
+										2537,
+										2538
+									],
+									[
+										2542,
+										2543
+									],
+									[
+										2626,
+										2627
+									],
+									[
+										2631,
+										2632
+									],
+									[
+										7298,
+										7299
+									],
+									[
+										7525,
+										7526
+									]
+								],
+								"scope": "level1.rb"
+							},
+							"rb_level2":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										7349,
+										7350
+									],
+									[
+										7524,
+										7525
+									]
+								],
+								"scope": "level2.rb"
+							},
+							"rb_level3":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										7358,
+										7359
+									],
+									[
+										7523,
+										7524
+									]
+								],
+								"scope": "level3.rb"
+							},
+							"rb_level4":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										7392,
+										7393
+									],
+									[
+										7402,
+										7403
+									],
+									[
+										7471,
+										7472
+									],
+									[
+										7481,
+										7482
+									]
+								],
+								"scope": "level4.rb"
+							}
+						},
+						"selection":
+						[
+							[
+								3877,
+								3891
+							]
+						],
+						"settings":
+						{
+							"rb_enable": true,
+							"rb_syntax": "default",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4916.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/django/core/exceptions.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6231,
+						"regions":
+						{
+							"rb_level0":
+							{
+								"flags": 272,
+								"regions": "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",
+								"scope": "level0.rb"
+							},
+							"rb_level1":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										3907,
+										3908
+									],
+									[
+										3939,
+										3940
+									],
+									[
+										4486,
+										4487
+									],
+									[
+										4491,
+										4492
+									],
+									[
+										4499,
+										4500
+									],
+									[
+										4500,
+										4501
+									],
+									[
+										4503,
+										4504
+									],
+									[
+										4504,
+										4505
+									],
+									[
+										4726,
+										4727
+									],
+									[
+										4727,
+										4728
+									],
+									[
+										4815,
+										4816
+									],
+									[
+										4816,
+										4817
+									],
+									[
+										5041,
+										5042
+									],
+									[
+										5048,
+										5049
+									],
+									[
+										5351,
+										5352
+									],
+									[
+										5356,
+										5357
+									],
+									[
+										5383,
+										5384
+									],
+									[
+										5388,
+										5389
+									],
+									[
+										5702,
+										5703
+									],
+									[
+										5817,
+										5818
+									],
+									[
+										5897,
+										5898
+									],
+									[
+										5913,
+										5914
+									],
+									[
+										5941,
+										5942
+									],
+									[
+										6001,
+										6002
+									]
+								],
+								"scope": "level1.rb"
+							},
+							"rb_level2":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										3933,
+										3934
+									],
+									[
+										3934,
+										3935
+									],
+									[
+										3937,
+										3938
+									],
+									[
+										3938,
+										3939
+									],
+									[
+										5790,
+										5791
+									],
+									[
+										5802,
+										5803
+									],
+									[
+										5948,
+										5949
+									],
+									[
+										6000,
+										6001
+									]
+								],
+								"scope": "level2.rb"
+							},
+							"rb_level3":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										5989,
+										5990
+									],
+									[
+										5999,
+										6000
+									]
+								],
+								"scope": "level3.rb"
+							}
+						},
+						"selection":
+						[
+							[
+								2208,
+								2208
+							]
+						],
+						"settings":
+						{
+							"rb_enable": true,
+							"rb_syntax": "default",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3662.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/django/contrib/auth/context_processors.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1822,
+						"regions":
+						{
+							"rb_level0":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										158,
+										159
+									],
+									[
+										180,
+										181
+									],
+									[
+										252,
+										253
+									],
+									[
+										257,
+										258
+									],
+									[
+										278,
+										279
+									],
+									[
+										310,
+										311
+									],
+									[
+										332,
+										333
+									],
+									[
+										348,
+										349
+									],
+									[
+										384,
+										385
+									],
+									[
+										422,
+										423
+									],
+									[
+										441,
+										442
+									],
+									[
+										446,
+										447
+									],
+									[
+										603,
+										604
+									],
+									[
+										637,
+										638
+									],
+									[
+										656,
+										657
+									],
+									[
+										661,
+										662
+									],
+									[
+										705,
+										706
+									],
+									[
+										720,
+										721
+									],
+									[
+										759,
+										760
+									],
+									[
+										770,
+										771
+									],
+									[
+										818,
+										819
+									],
+									[
+										834,
+										835
+									],
+									[
+										866,
+										867
+									],
+									[
+										887,
+										888
+									],
+									[
+										906,
+										907
+									],
+									[
+										911,
+										912
+									],
+									[
+										981,
+										982
+									],
+									[
+										1012,
+										1013
+									],
+									[
+										1035,
+										1036
+									],
+									[
+										1051,
+										1052
+									],
+									[
+										1235,
+										1236
+									],
+									[
+										1251,
+										1252
+									],
+									[
+										1299,
+										1300
+									],
+									[
+										1306,
+										1307
+									],
+									[
+										1327,
+										1328
+									],
+									[
+										1337,
+										1338
+									],
+									[
+										1338,
+										1339
+									],
+									[
+										1348,
+										1349
+									],
+									[
+										1360,
+										1361
+									],
+									[
+										1368,
+										1369
+									],
+									[
+										1595,
+										1596
+									],
+									[
+										1611,
+										1612
+									],
+									[
+										1741,
+										1742
+									],
+									[
+										1742,
+										1743
+									],
+									[
+										1756,
+										1757
+									],
+									[
+										1820,
+										1821
+									]
+								],
+								"scope": "level0.rb"
+							},
+							"rb_level1":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										308,
+										309
+									],
+									[
+										309,
+										310
+									],
+									[
+										395,
+										396
+									],
+									[
+										421,
+										422
+									],
+									[
+										1240,
+										1241
+									],
+									[
+										1250,
+										1251
+									],
+									[
+										1808,
+										1809
+									],
+									[
+										1813,
+										1814
+									]
+								],
+								"scope": "level1.rb"
+							}
+						},
+						"selection":
+						[
+							[
+								1356,
+								1356
+							]
+						],
+						"settings":
+						{
+							"rb_enable": true,
+							"rb_syntax": "default",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1297.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/abhishek/React-Django Projects/farmer-bazer/code/backend/env/lib/python3.8/site-packages/rest_framework/serializers.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 64792,
+						"regions":
+						{
+							"rb_level0":
+							{
+								"flags": 272,
+								"regions": "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",
+								"scope": "level0.rb"
+							},
+							"rb_level1":
+							{
+								"flags": 272,
+								"regions": "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",
+								"scope": "level1.rb"
+							},
+							"rb_level2":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										5941,
+										5942
+									],
+									[
+										5942,
+										5943
+									],
+									[
+										10898,
+										10899
+									],
+									[
+										10909,
+										10910
+									],
+									[
+										10969,
+										10970
+									],
+									[
+										10970,
+										10971
+									],
+									[
+										11462,
+										11463
+									],
+									[
+										11467,
+										11468
+									],
+									[
+										12321,
+										12322
+									],
+									[
+										12335,
+										12336
+									],
+									[
+										14649,
+										14650
+									],
+									[
+										14696,
+										14697
+									],
+									[
+										14756,
+										14757
+									],
+									[
+										14757,
+										14758
+									],
+									[
+										14778,
+										14779
+									],
+									[
+										14826,
+										14827
+									],
+									[
+										14925,
+										14926
+									],
+									[
+										14963,
+										14964
+									],
+									[
+										15008,
+										15009
+									],
+									[
+										15009,
+										15010
+									],
+									[
+										17369,
+										17370
+									],
+									[
+										17377,
+										17378
+									],
+									[
+										23400,
+										23401
+									],
+									[
+										23408,
+										23409
+									],
+									[
+										23635,
+										23636
+									],
+									[
+										23643,
+										23644
+									],
+									[
+										29461,
+										29462
+									],
+									[
+										29474,
+										29475
+									],
+									[
+										29477,
+										29478
+									],
+									[
+										29488,
+										29489
+									],
+									[
+										30567,
+										30568
+									],
+									[
+										30569,
+										30570
+									],
+									[
+										30621,
+										30622
+									],
+									[
+										30623,
+										30624
+									],
+									[
+										30693,
+										30694
+									],
+									[
+										30715,
+										30716
+									],
+									[
+										30718,
+										30719
+									],
+									[
+										30729,
+										30730
+									],
+									[
+										43041,
+										43042
+									],
+									[
+										43042,
+										43043
+									],
+									[
+										52563,
+										52564
+									],
+									[
+										52564,
+										52565
+									],
+									[
+										59790,
+										59791
+									],
+									[
+										59821,
+										59822
+									],
+									[
+										59854,
+										59855
+									],
+									[
+										59855,
+										59856
+									],
+									[
+										59872,
+										59873
+									],
+									[
+										59888,
+										59889
+									],
+									[
+										59894,
+										59895
+									],
+									[
+										59917,
+										59918
+									],
+									[
+										59923,
+										59924
+									],
+									[
+										59943,
+										59944
+									],
+									[
+										59949,
+										59950
+									],
+									[
+										59973,
+										59974
+									],
+									[
+										61595,
+										61596
+									],
+									[
+										61614,
+										61615
+									]
+								],
+								"scope": "level2.rb"
+							},
+							"rb_level3":
+							{
+								"flags": 272,
+								"regions":
+								[
+									[
+										14677,
+										14678
+									],
+									[
+										14695,
+										14696
+									],
+									[
+										14794,
+										14795
+									],
+									[
+										14812,
+										14813
+									],
+									[
+										14961,
+										14962
+									],
+									[
+										14962,
+										14963
+									],
+									[
+										30712,
+										30713
+									],
+									[
+										30714,
+										30715
+									],
+									[
+										61606,
+										61607
+									],
+									[
+										61613,
+										61614
+									]
+								],
+								"scope": "level3.rb"
+							}
+						},
+						"selection":
+						[
+							[
+								41253,
+								41259
+							]
+						],
+						"settings":
+						{
+							"rb_enable": true,
+							"rb_syntax": "default",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 30332.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 47.0
+	},
+	"input":
+	{
+		"height": 207.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.black":
+	{
+		"height": 246.0
+	},
+	"output.exec":
+	{
+		"height": 850.0
+	},
+	"output.find_results":
+	{
+		"height": 466.0
+	},
+	"output.git":
+	{
+		"height": 294.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 258.0
+	},
+	"pinned_build_system": "",
+	"project": "backend.sublime-project",
+	"replace":
+	{
+		"height": 90.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"back",
+				"backend.sublime-project"
+			],
+			[
+				"mode",
+				"api/models.py"
+			],
+			[
+				"url",
+				"env/lib/python3.8/site-packages/allauth/account/urls.py"
+			],
+			[
+				"set",
+				"WD/settings.py"
+			],
+			[
+				"na",
+				"templates/navi.html"
+			],
+			[
+				"demo.html",
+				"templates/demo.html"
+			],
+			[
+				"view",
+				"shop/views.py"
+			],
+			[
+				"checkout",
+				"shop/templates/shop/checkout.html"
+			],
+			[
+				"mess",
+				"env/lib/python3.8/site-packages/django/core/checks/messages.py"
+			],
+			[
+				"urls",
+				"shop/urls.py"
+			],
+			[
+				"urls dj_rest_auth",
+				"env/lib/python3.8/site-packages/dj_rest_auth/urls.py"
+			],
+			[
+				"urls ",
+				"env/lib/python3.8/site-packages/django_rest_passwordreset/urls.py"
+			],
+			[
+				"django_rest_passwordreset",
+				"env/lib/python3.8/site-packages/django_rest_passwordreset/tokens.py"
+			],
+			[
+				"tokens",
+				"env/lib/python3.8/site-packages/django_rest_passwordreset/tokens.py"
+			],
+			[
+				"nav",
+				"templates/navi.html"
+			],
+			[
+				"base",
+				"templates/base.html"
+			],
+			[
+				"_bas",
+				"env/lib/python3.8/site-packages/pip/_vendor/html5lib/_trie/_base.py"
+			],
+			[
+				"ba",
+				"env/lib/python3.8/site-packages/pytz/zoneinfo/America/Buenos_Aires"
+			],
+			[
+				"navi",
+				"templates/navi.html"
+			],
+			[
+				"mo",
+				"wordcounter/models.py"
+			],
+			[
+				"de",
+				"templates/demo.html"
+			],
+			[
+				"vie",
+				"wordcounter/views.py"
+			],
+			[
+				"sett",
+				"socialfly_instagram_clone/settings.py"
+			],
+			[
+				"forms.py",
+				"users/forms.py"
+			],
+			[
+				"_ba",
+				"templates/_base.html"
+			],
+			[
+				"dmeo",
+				"templates/demo.html"
+			],
+			[
+				"demo",
+				"templates/demo.html"
+			],
+			[
+				"l",
+				"templates/login.html"
+			],
+			[
+				"ur",
+				"api/urls.py"
+			],
+			[
+				"fo",
+				"users/forms.py"
+			],
+			[
+				"log",
+				"templates/login.html"
+			],
+			[
+				"se",
+				"notes_app_api/settings.py"
+			],
+			[
+				"u",
+				"api/urls.py"
+			],
+			[
+				"ser",
+				"api/serializers.py"
+			],
+			[
+				"man",
+				"manage.py"
+			],
+			[
+				"admin",
+				"core/admin.py"
+			],
+			[
+				"NotesLis",
+				"src/pages/NotesListPages.js"
+			],
+			[
+				"room",
+				"templates/meet/room.html"
+			],
+			[
+				"main",
+				"static/js/main.js"
+			],
+			[
+				"action",
+				"static/js/meeting_action.js"
+			],
+			[
+				"consu",
+				"chat/consumers.py"
+			],
+			[
+				"meet",
+				"static/js/meeting_action.js"
+			],
+			[
+				"ma",
+				"manage.py"
+			],
+			[
+				"",
+				"manage.py"
+			],
+			[
+				"ro",
+				"templates/meet/room.html"
+			],
+			[
+				"roo",
+				"templates/meet/room.html"
+			],
+			[
+				"mai",
+				"env/bin/mailmail"
+			],
+			[
+				"co",
+				"chat/consumers.py"
+			],
+			[
+				"romm",
+				"env/lib/python3.8/site-packages/pip/_internal/cli/req_command.py"
+			],
+			[
+				"vi",
+				"meet/views.py"
+			],
+			[
+				"cons",
+				"chat/consumers.py"
+			],
+			[
+				"me",
+				"static/js/meeting_action.js"
+			],
+			[
+				"con",
+				"chats/consumers.py"
+			],
+			[
+				"e",
+				"templates/meet/entry.html"
+			],
+			[
+				"vew",
+				"meet/views.py"
+			],
+			[
+				"meet ",
+				"static/js/meeting_action.js"
+			],
+			[
+				"model",
+				"chats/models.py"
+			],
+			[
+				"chat",
+				"templates/chat.html"
+			],
+			[
+				"n",
+				"templates/navi.html"
+			],
+			[
+				"ent",
+				"templates/meet/entry.html"
+			],
+			[
+				"ad",
+				"meet/admin.py"
+			],
+			[
+				"SETT",
+				"django_meet/settings.py"
+			],
+			[
+				"URL",
+				"meet/urls.py"
+			],
+			[
+				"UR",
+				"meet/urls.py"
+			],
+			[
+				"cha",
+				"templates/chat.html"
+			],
+			[
+				"rou",
+				"chats/routing.py"
+			],
+			[
+				"c",
+				"chats/consumers.py"
+			],
+			[
+				"_b",
+				"templates/_base.html"
+			],
+			[
+				"_",
+				"templates/_base.html"
+			],
+			[
+				"pos",
+				"templates/post_ajax.html"
+			],
+			[
+				"ex",
+				"templates/explore.html"
+			],
+			[
+				"as",
+				"socialfly_instagram_clone/asgi.py"
+			],
+			[
+				"serializers",
+				"snippets/serializers.py"
+			],
+			[
+				"com",
+				"cpp_files/complex_number.cpp"
+			],
+			[
+				"rest_framework permiis",
+				"env/lib/python3.8/site-packages/rest_framework/permissions.py"
+			],
+			[
+				"v",
+				"drones/views.py"
+			],
+			[
+				"ins",
+				"node_modules/core-js/internals/inspect-source.js"
+			],
+			[
+				"listpa",
+				"src/pages/NotesListPages.js"
+			],
+			[
+				"notepa",
+				"src/pages/NotePage.js"
+			],
+			[
+				"edi",
+				"templates/edit-profile.html"
+			],
+			[
+				"sw",
+				"templates/sw.js"
+			],
+			[
+				".e",
+				".env"
+			],
+			[
+				"s",
+				"~/Python Programs/socialfly-instagram-clone/socialfly_instagram_clone/settings.py"
+			],
+			[
+				"for",
+				"users/forms.py"
+			],
+			[
+				"asg",
+				"socialfly_instagram_clone/asgi.py"
+			],
+			[
+				"re",
+				"requirements.txt"
+			],
+			[
+				"user",
+				"static/js/user_post.js"
+			],
+			[
+				"MODE",
+				"users/models.py"
+			],
+			[
+				"VIEW",
+				"posts/views.py"
+			],
+			[
+				"V",
+				"users/views.py"
+			],
+			[
+				"user ",
+				"templates/user_activity.html"
+			],
+			[
+				"FOR",
+				"users/forms.py"
+			],
+			[
+				"login",
+				"templates/account/login.html"
+			],
+			[
+				"lolgi",
+				"env/Lib/site-packages/allauth/templates/openid/login.html"
+			],
+			[
+				"SET",
+				"socialfly_instagram_clone/settings.py"
+			],
+			[
+				"view us",
+				"users/views.py"
+			],
+			[
+				".ev",
+				".env"
+			],
+			[
+				"sign",
+				"users/signals.py"
+			],
+			[
+				"awt",
+				"env/lib/python3.8/site-packages/autobahn/wamp/types.py"
+			],
+			[
+				"LOG",
+				"templates/account/login.html"
+			],
+			[
+				"nals",
+				"users/signals.py"
+			],
+			[
+				".env",
+				".env"
+			],
+			[
+				"pro",
+				"templates/profile.html"
+			],
+			[
+				"user view",
+				"users/views.py"
+			],
+			[
+				"adm",
+				"chats/admin.py"
+			],
+			[
+				"change",
+				"templates/account/password_change.html"
+			],
+			[
+				"core urls",
+				"core/urls.py"
+			],
+			[
+				"_bah",
+				"templates/_base.html"
+			],
+			[
+				"core url",
+				"core/urls.py"
+			],
+			[
+				"urls/base.py",
+				"env/Lib/site-packages/django/urls/base.py"
+			],
+			[
+				"my",
+				"static/css/my_style.css"
+			],
+			[
+				"post",
+				"templates/post_detail.html"
+			],
+			[
+				"crea",
+				"templates/create_post.html"
+			],
+			[
+				"follow_unfollow",
+				"static/js/follow_unfollow.js"
+			],
+			[
+				"nai",
+				"env/Lib/site-packages/pytz/zoneinfo/Africa/Nairobi"
+			],
+			[
+				"ch",
+				"templates/chat.html"
+			],
+			[
+				"view core",
+				"core/views.py"
+			],
+			[
+				"use",
+				"users/user_ranking.py"
+			],
+			[
+				"chan",
+				"templates/account/password_change.html"
+			],
+			[
+				"urls use",
+				"users/urls.py"
+			],
+			[
+				"view user",
+				"users/views.py"
+			],
+			[
+				"core view",
+				"core/views.py"
+			],
+			[
+				"urls user",
+				"users/urls.py"
+			],
+			[
+				"user_",
+				"static/js/user_post.js"
+			],
+			[
+				"edit",
+				"templates/edit-profile.html"
+			],
+			[
+				"reg",
+				"static/js/registerSw.js"
+			],
+			[
+				"p",
+				"templates/profile.html"
+			],
+			[
+				"foo",
+				"templates/footer.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Python Programs/django_project/apis/advisor_network/advisor.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 309.0,
+		"last_filter": "u",
+		"selected_items":
+		[
+			[
+				"u",
+				"User"
+			],
+			[
+				"use",
+				"User"
+			],
+			[
+				"USER",
+				"User"
+			],
+			[
+				"USe",
+				"User"
+			],
+			[
+				"post",
+				"Post"
+			],
+			[
+				"user",
+				"User"
+			],
+			[
+				"de",
+				"delete_user"
+			],
+			[
+				"delete_post_function",
+				"delete_post_function"
+			],
+			[
+				"del",
+				"delete_post"
+			],
+			[
+				"rom",
+				"Room"
+			],
+			[
+				"use de",
+				"delete_user"
+			],
+			[
+				"User",
+				"User"
+			],
+			[
+				"PostActivity",
+				"PostActivity"
+			],
+			[
+				"uas",
+				"user_actions"
+			],
+			[
+				"pos",
+				"PostActivity"
+			],
+			[
+				"user ac",
+				"user_actions"
+			],
+			[
+				"r",
+				"Room"
+			],
+			[
+				"like_post",
+				"like_unlike_the_post"
+			],
+			[
+				"",
+				"User"
+			],
+			[
+				"U",
+				"User"
+			]
+		],
+		"width": 592.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 379.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
