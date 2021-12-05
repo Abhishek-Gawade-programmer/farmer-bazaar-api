@@ -13,5 +13,8 @@ class ApiRoot(generics.GenericAPIView):
                 "login_user": reverse("token_obtain_pair", request=request),
                 "user_register": reverse("user_register", request=request),
                 "token_refresh": reverse("token_refresh", request=request),
+                "user_register": reverse("user_register", request=request),
+                "send_otp_user": reverse("send_otp_user", request=request),
+                "validate_otp_user": reverse("validate_otp_user", request=request),
             }
         )

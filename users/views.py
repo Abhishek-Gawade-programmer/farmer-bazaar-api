@@ -6,8 +6,9 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserProfileSerializer
 from .models import User, PhoneOtp
 
 # Create User
@@ -135,4 +136,41 @@ class ValidateOtpView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # diff_time = timezone.now() - qs_phone_otp[0].updated
+
+class RetrieveUserView(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    # lookup_field = "user_id"
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = queryset.get(username=self.request.user.username)
+        return obj
+
+    # def perform_update(self, serializer):
+    #    serializer.save()
+
+
+# class CreatePhoneOtpView(generics.CreateAPIView):
+#     serializer_class = PhoneOtpSerializer
+
+
+# class SendPhoneOtpView(generics.CreateAPIView):
+#     serializer_class = PhoneOtpSerializer
+
+#     def create(self, request, *args, **kwargs):
+#         super().create(request, *args, **kwargs)
+#         return Response(
+#             {
+#                 "detail": "sth happen",
+#             },
+#             status=status.HTTP_201_CREATED,
+#         )
+
+
+# class SendUserOtpView(generics.GenericAPIView):
+#     serializer_class = PhoneOtpSerializer
+
+#     def post(self, request, *args, **kwargs):
+#         print(self, request, args, kwargs)

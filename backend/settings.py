@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "corsheaders",
     "users",
     "api",
 ]
@@ -31,12 +32,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = "backend.urls"
 
@@ -89,10 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # TWILIO SETTING
-TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
-TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
-TWILIO_AUTH_NUMBER = os.getenv("TWILIO_AUTH_NUMBER")
-MY_NUMBER = os.getenv("MY_NUMBER")
+FAST_API_KEY = os.getenv("FAST_API_KEY")
 
 
 # Internationalization
@@ -129,3 +129,6 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
+
+# CORS SETTINGS
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]

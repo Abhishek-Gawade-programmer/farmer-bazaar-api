@@ -4,7 +4,7 @@ from .utils import generate_otp, send_otp
 
 
 class User(AbstractUser):
-    username = models.CharField("Phone Number", max_length=10, unique=True)
+    username = models.CharField("Phone Number", max_length=10, unique = True)
     password = models.CharField(max_length=50)
     email = models.CharField(
         max_length=255,

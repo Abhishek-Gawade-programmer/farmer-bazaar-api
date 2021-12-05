@@ -1,6 +1,7 @@
 import random
 from twilio.rest import Client
 from django.conf import settings
+import requests
 
 
 def generate_otp(min_number, max_number):
@@ -9,13 +10,17 @@ def generate_otp(min_number, max_number):
 
 
 def send_otp(otp_text, phone_number):
-    account_sid = settings.TWILIO_ACCOUNT_SID
-    auth_token = settings.TWILIO_AUTH_TOKEN
-    client = Client(account_sid, auth_token)
-    message = client.messages.create(
-        body=f"OTP is {otp_text} it will be expire in 5 mins.",
-        from_=settings.TWILIO_AUTH_NUMBER,
-        to=settings.MY_NUMBER,
-    )
+    url = "https://www.fast2sms.com/dev/bulkV2"
 
-    print(message.sid)
+    querystring = {
+        "authorization": settings.FAST_API_KEY,
+        "variables_values": f"{otp_text}",
+        "route": "otp",
+        "numbers": f"{phone_number}",
+    }
+
+    headers = {"cache-control": "no-cache"}
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    print(response.text)

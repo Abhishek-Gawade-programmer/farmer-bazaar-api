@@ -1,0 +1,15 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_CANNOT_REMOVE_MISSING_DEPS",
+    "hint": "Available dependencies: prettier",
+    "err": {
+      "name": "pnpm",
+      "message": "Cannot remove 'react-router-dom': no such dependency found",
+      "code": "ERR_PNPM_CANNOT_REMOVE_MISSING_DEPS",
+      "stack": "pnpm: Cannot remove 'react-router-dom': no such dependency found\n    at Object.handler (/usr/pnpm-global/5/node_modules/.pnpm/pnpm@6.21.1/node_modules/pnpm/dist/pnpm.cjs:118381:15)\n    at async /usr/pnpm-global/5/node_modules/.pnpm/pnpm@6.21.1/node_modules/pnpm/dist/pnpm.cjs:134089:20\n    at async run (/usr/pnpm-global/5/node_modules/.pnpm/pnpm@6.21.1/node_modules/pnpm/dist/pnpm.cjs:134063:34)\n    at async runPnpm (/usr/pnpm-global/5/node_modules/.pnpm/pnpm@6.21.1/node_modules/pnpm/dist/pnpm.cjs:134275:5)\n    at async /usr/pnpm-global/5/node_modules/.pnpm/pnpm@6.21.1/node_modules/pnpm/dist/pnpm.cjs:134267:7"
+    }
+  }
+}
