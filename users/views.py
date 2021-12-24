@@ -8,12 +8,13 @@ from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import UserSerializer, UserProfileSerializer
-from .models import User, PhoneOtp
+from .serializers import CreateUserSerializer, UserSerializer, UserProfileSerializer
+from .models import User, PhoneOtp, UserProfile
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create User
 class CreateUserView(generics.CreateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = CreateUserSerializer
 
     def create(self, request, *args, **kwargs):
         super().create(request, *args, **kwargs)
@@ -140,7 +141,7 @@ class ValidateOtpView(APIView):
 class RetrieveUserView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     # lookup_field = "user_id"
-    serializer_class = UserProfileSerializer
+    serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
@@ -148,8 +149,25 @@ class RetrieveUserView(generics.RetrieveUpdateAPIView):
         obj = queryset.get(username=self.request.user.username)
         return obj
 
+    def perform_update(self, serializer):
+        print(serializer.data)
+
+
+class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
+    queryset = UserProfile.objects.all()
+    # parser_classes = [MultiPartParser, FormParser]
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = queryset.get(user=self.request.user)
+        return obj
+
     # def perform_update(self, serializer):
-    #    serializer.save()
+    #     # print(serializer.data)
+
+    #     serializer.save()
 
 
 # class CreatePhoneOtpView(generics.CreateAPIView):

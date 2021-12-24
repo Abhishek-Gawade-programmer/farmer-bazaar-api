@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, PhoneOtp
+from .models import User, PhoneOtp, UserProfile, Address
 import django.contrib.auth.password_validation as validators
 from rest_framework import exceptions
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from .validators import validate_username, validate_first_name, validate_last_na
 from rest_framework.validators import UniqueValidator
 
 
-class UserSerializer(serializers.ModelSerializer):
+class CreateUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(validators=[validate_first_name])
     last_name = serializers.CharField(validators=[validate_last_name])
     username = serializers.CharField(
@@ -50,7 +50,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(validators=[validate_first_name])
     last_name = serializers.CharField(validators=[validate_last_name])
     email = serializers.EmailField(max_length=50)
@@ -58,12 +58,76 @@ class UserProfileSerializer(serializers.ModelSerializer):
         validators=[validate_username, UniqueValidator(queryset=User.objects.all())],
         read_only=True,
     )
+    # profile_pic = serializers.ImageField(allow_empty_file=True)
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "username")
+        fields = (
+            "first_name",
+            "last_name",
+            "email",
+            "username",
+        )
         extra_kwargs = {i: {"required": True} for i in fields}
 
+    def save(self, validated_data):
+        print(validated_data)
+        return "dkfjglkd"
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = "__all__"
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    """
+    A student serializer to return the student details
+    """
+
+    user = UserSerializer()
+    location = AddressSerializer()
+
+    class Meta:
+        model = UserProfile
+        fields = ("user", "bio", "location")
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.get("user")
+        location_data = validated_data.get("location")
+        if instance.location:
+            AddressSerializer.update(
+                AddressSerializer(),
+                validated_data=location_data,
+                instance=instance.location,
+            )
+
+        else:
+            address = AddressSerializer.create(
+                AddressSerializer(),
+                validated_data=location_data,
+            )
+            instance.location = address
+
+        user = UserSerializer.update(
+            UserSerializer(), validated_data=user_data, instance=instance.user
+        )
+        instance.user = user
+        instance.save()
+        userprofile_obj = UserProfile.objects.get(user=user)
+        userprofile_obj.bio = validated_data.get("bio")
+        userprofile_obj.save()
+
+        return userprofile_obj
+
+
+# def create(self, validated_data):
+#     print("jddfhjkdfj", validated_data)
+#     return "dfkgdlfs"
+# def save(self, validated_data):
+#     print(validated_data)
+#     return "dkfjglkd"
 
 # class PhoneOtpSerializer(serializers.Serializer):
 #     phone_number = serializers.CharField()
