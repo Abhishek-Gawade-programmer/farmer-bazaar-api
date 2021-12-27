@@ -10,7 +10,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import CreateUserSerializer, UserSerializer, UserProfileSerializer
 from .models import User, PhoneOtp, UserProfile
-from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create User
 class CreateUserView(generics.CreateAPIView):

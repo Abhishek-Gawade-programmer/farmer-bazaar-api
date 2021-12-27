@@ -40,6 +40,8 @@ class Address(models.Model):
     in_words = models.CharField(max_length=250)
     longitude = models.DecimalField(max_digits=22, decimal_places=16)
     latitude = models.DecimalField(max_digits=22, decimal_places=16)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.in_words
@@ -47,12 +49,14 @@ class Address(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(blank=True, null=True, default="default.png")
+    profile_pic = models.ImageField(
+        blank=True, null=True, default="default.png", upload_to="profile_image/"
+    )
     bio = models.TextField(null=True)
     email_verified = models.BooleanField(default=False)
-    location = models.ForeignKey(
-        "Address", on_delete=models.CASCADE, blank=True, null=True
-    )
+    location = models.ForeignKey("Address", on_delete=models.CASCADE, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.user.username) + " profile"

@@ -97,7 +97,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user_data = validated_data.get("user")
         location_data = validated_data.get("location")
         if instance.location:
-            AddressSerializer.update(
+            address = AddressSerializer.update(
                 AddressSerializer(),
                 validated_data=location_data,
                 instance=instance.location,
@@ -108,7 +108,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 AddressSerializer(),
                 validated_data=location_data,
             )
-            instance.location = address
+        instance.location = address
 
         user = UserSerializer.update(
             UserSerializer(), validated_data=user_data, instance=instance.user
