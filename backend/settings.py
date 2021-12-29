@@ -125,7 +125,9 @@ MEDIA_ROOT = BASE_DIR / "media_root"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# SMS API SETTINGS
 
+FAST_API_KEY = os.getenv("FAST_API_KEY")
 # USER SETTING
 AUTH_USER_MODEL = "users.User"
 

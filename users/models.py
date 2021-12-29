@@ -54,7 +54,9 @@ class UserProfile(models.Model):
     )
     bio = models.TextField(null=True)
     email_verified = models.BooleanField(default=False)
-    location = models.ForeignKey("Address", on_delete=models.CASCADE, null=True)
+    location = models.ForeignKey(
+        "Address", on_delete=models.CASCADE, null=True, blank=True
+    )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

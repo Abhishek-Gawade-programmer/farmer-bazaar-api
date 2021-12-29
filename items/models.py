@@ -77,5 +77,5 @@ class ItemImage(models.Model):
     """
 
     image = models.ImageField(upload_to="item_images/")
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="item_images")
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="images")
     created = models.DateTimeField(auto_now_add=True)

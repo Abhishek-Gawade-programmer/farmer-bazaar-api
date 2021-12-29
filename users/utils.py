@@ -1,5 +1,4 @@
 import random
-from twilio.rest import Client
 from django.conf import settings
 import requests
 

@@ -15,39 +15,16 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
-    location = AddressSerializer()
-    images = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Item
-        fields = (
-            "category",
-            "title",
-            "description",
-            "quantity",
-            "quantity_unit",
-            "expected_price",
-            "available_date",
-            "images",
-            "location",
-        )
-
-    def get_images(self, obj):
-        request = self.context.get("request")
-        image_list = []
-        for _ in obj.item_images.all():
-            image_list.append(request.build_absolute_uri(_.image.url))
-        return image_list
-
-
-class CreateItemSerializer(serializers.ModelSerializer):
 
     images = serializers.ImageField()
     category = serializers.CharField()
-    location_in_words = serializers.CharField()
-    location_longitude = serializers.DecimalField(max_digits=22, decimal_places=16)
-    location_latitude = serializers.DecimalField(max_digits=22, decimal_places=16)
+    location_in_words = serializers.CharField(source="location.in_words")
+    location_longitude = serializers.DecimalField(
+        source="location.longitude", max_digits=22, decimal_places=16
+    )
+    location_latitude = serializers.DecimalField(
+        source="location.latitude", max_digits=22, decimal_places=16
+    )
 
     class Meta:
         model = Item
@@ -60,27 +37,32 @@ class CreateItemSerializer(serializers.ModelSerializer):
             "available_date",
             "images",
             "category",
+            "location_in_words",
             "location_longitude",
             "location_latitude",
-            "location_in_words",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 
-    # def to_representation(self, instance):
-    #     representation = super().to_representation(instance)
-    #     representation["category"] = CategorySerializer(instance.category).data
-    #     representation["location"] = AddressSerializer(instance.location).data
-    #     return representation
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if self.context["view"].__class__.__name__ == "RetrieveItemView":
+            representation["images"] = self.get_images_url(instance)
+        return representation
+
+    def get_images_url(self, obj):
+        request = self.context.get("request")
+        image_list = []
+        for _ in obj.images.all():
+            image_list.append(request.build_absolute_uri(_.image.url))
+        return image_list
 
     def create(self, validated_data):
         request = self.context.get("request")
-        location_in_words = validated_data.get("location_in_words")
-        location_longitude = validated_data.get("location_longitude")
-        location_latitude = validated_data.get("location_latitude")
+        location = validated_data.get("location")
         location_obj = Address.objects.create(
-            in_words=location_in_words,
-            longitude=location_longitude,
-            latitude=location_latitude,
+            in_words=location.get("in_words"),
+            longitude=location.get("longitude"),
+            latitude=location.get("latitude"),
         )
         location_obj.save()
 
@@ -103,6 +85,28 @@ class CreateItemSerializer(serializers.ModelSerializer):
             ItemImage.objects.create(image=item_image, item=item_obj).save()
 
         return item_obj
+
+    def update(self, instance, validated_data):
+        request = self.context.get("request")
+        location = validated_data.get("location")
+        instance.location.in_words = validated_data.get("location_in_words")
+        instance.location.longitude = validated_data.get("location_longitude")
+        instance.location.latitude = validated_data.get("location_latitude")
+        instance.location.save()
+        all_images = dict((request.data).lists())["images"]
+        get_category = Category.objects.get(name=validated_data.get("category"))
+        instance.title = validated_data.get("title")
+        instance.description = validated_data.get("description")
+        instance.quantity = validated_data.get("quantity")
+        instance.quantity_unit = validated_data.get("quantity_unit")
+        instance.expected_price = validated_data.get("expected_price")
+        instance.available_date = validated_data.get("available_date")
+
+        for _ in instance.images.all():
+            _.delete()
+        for item_image in all_images:
+            ItemImage.objects.create(image=item_image, item=instance).save()
+        instance.save()
 
     def save(self, **kwargs):
         validated_data = {**self.validated_data, **kwargs}
