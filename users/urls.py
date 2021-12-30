@@ -8,12 +8,17 @@ from .views import (
     CreateUserView,
     SendUserOtpView,
     ValidateOtpView,
-    RetrieveUserView,
     RetrieveUserProfileView,
+    RetrieveOtherUserDetailView,
 )
 
 urlpatterns = [
     path("register/", CreateUserView.as_view(), name="user_register"),
+    path(
+        "user-profile/<int:pk>/",
+        RetrieveOtherUserDetailView.as_view(),
+        name="user_profile_id",
+    ),
     path("user-profile/", RetrieveUserProfileView.as_view(), name="user_profile"),
     path("send-otp-user/", SendUserOtpView.as_view(), name="send_otp_user"),
     # path("send-otp-user-test/", SendPhoneOtpView.as_view(), name="send_otp_user"),

@@ -19,7 +19,7 @@ from .serializers import (
     ItemSerializer,
 )
 from .models import Item, ItemImage
-from .permissions import IsOwnerOrReadOnly
+from users.permissions import IsOwnerOrReadOnly
 
 
 class CreateItemView(generics.CreateAPIView):

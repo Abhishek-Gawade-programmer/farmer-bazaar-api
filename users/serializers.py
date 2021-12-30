@@ -121,6 +121,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         return userprofile_obj
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        request = self.context.get("request")
+        if request.method == "GET":
+            representation["profile_picture"] = request.build_absolute_uri(
+                instance.profile_pic.url
+            )
+
+        return representation
+
 
 # def create(self, validated_data):
 #     print("jddfhjkdfj", validated_data)

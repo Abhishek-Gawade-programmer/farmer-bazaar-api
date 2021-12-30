@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import CreateUserSerializer, UserSerializer, UserProfileSerializer
 from .models import User, PhoneOtp, UserProfile
+from .permissions import IsOwnerOrReadOnly, IsSameUserOrReadOnly
 
 # Create User
 class CreateUserView(generics.CreateAPIView):
@@ -137,36 +138,25 @@ class ValidateOtpView(APIView):
             )
 
 
-class RetrieveUserView(generics.RetrieveUpdateAPIView):
-    queryset = User.objects.all()
-    # lookup_field = "user_id"
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = queryset.get(username=self.request.user.username)
-        return obj
-
-    def perform_update(self, serializer):
-        print(serializer.data)
-
-
 class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
-    # parser_classes = [MultiPartParser, FormParser]
     serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [
+        IsAuthenticated,
+    ]
 
     def get_object(self):
         queryset = self.get_queryset()
         obj = queryset.get(user=self.request.user)
         return obj
 
-    # def perform_update(self, serializer):
-    #     # print(serializer.data)
+    def perform_update(self, serializer):
+        serializer.save()
 
-    #     serializer.save()
+
+class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
 
 
 # class CreatePhoneOtpView(generics.CreateAPIView):
