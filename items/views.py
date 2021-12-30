@@ -49,7 +49,6 @@ class UpdateItemView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
     def update(self, request, *args, **kwargs):
-        # it will call the serializer.update
         partial = kwargs.pop("partial", False)
         instance = self.get_object()
         serializer = self.get_serializer(data=request.data)
@@ -60,6 +59,11 @@ class UpdateItemView(generics.UpdateAPIView):
                 "detail": "Item is updated",
             },
         )
+
+
+class ListCreateItemView(generics.ListCreateAPIView):
+    serializer_class = ItemSerializer
+    queryset = Item.objects.all()
 
 
 class DestroyItemView(generics.DestroyAPIView):

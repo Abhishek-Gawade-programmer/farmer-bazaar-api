@@ -1,7 +1,9 @@
 from rest_framework import serializers
-from users.serializers import AddressSerializer
+from users.serializers import AddressSerializer, UserSerializer
 from .models import Item, Category, ItemImage
 from users.models import Address
+
+from rest_framework.reverse import reverse
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -45,8 +47,14 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        if self.context["view"].__class__.__name__ == "RetrieveItemView":
+        request = self.context.get("request")
+        if request.method == "GET":
             representation["images"] = self.get_images_url(instance)
+            representation["id"] = instance.pk
+            representation["url"] = reverse(
+                "get_item_detail", request=request, kwargs={"pk": instance.pk}
+            )
+            representation["user_detail"] = UserSerializer(instance.user).data
         return representation
 
     def get_images_url(self, obj):

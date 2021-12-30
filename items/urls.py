@@ -1,8 +1,15 @@
 from django.urls import path, include
-from .views import CreateItemView, RetrieveItemView, UpdateItemView, DestroyItemView
+from .views import (
+    CreateItemView,
+    RetrieveItemView,
+    UpdateItemView,
+    DestroyItemView,
+    ListCreateItemView,
+)
 
 urlpatterns = [
     path("create-item/", CreateItemView.as_view(), name="create_item"),
+    path("all-items/", ListCreateItemView.as_view(), name="all_items"),
     path(
         "get-item-detail/<int:pk>/", RetrieveItemView.as_view(), name="get_item_detail"
     ),
