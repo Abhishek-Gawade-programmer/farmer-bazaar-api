@@ -203,5 +203,4 @@ class UserProfileSerializer(serializers.ModelSerializer):
 #                 },
 #                 status=status.HTTP_400_BAD_REQUEST,
 #             )
-
 #         return

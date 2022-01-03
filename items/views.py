@@ -15,10 +15,8 @@ from users.serializers import (
     UserProfileSerializer,
 )
 from users.models import User, PhoneOtp, UserProfile
-from .serializers import (
-    ItemSerializer,
-)
-from .models import Item, ItemImage
+from .serializers import ItemSerializer, CategorySerializer
+from .models import Item, ItemImage, Category
 from users.permissions import IsOwnerOrReadOnly
 
 
@@ -77,3 +75,8 @@ class DestroyItemView(generics.DestroyAPIView):
         return Response(
             {"detail": "item is deleted"}, status=status.HTTP_204_NO_CONTENT
         )
+
+
+class ListCategoryView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer

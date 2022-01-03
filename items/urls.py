@@ -5,11 +5,13 @@ from .views import (
     UpdateItemView,
     DestroyItemView,
     ListCreateItemView,
+    ListCategoryView,
 )
 
 urlpatterns = [
     path("create-item/", CreateItemView.as_view(), name="create_item"),
     path("all-items/", ListCreateItemView.as_view(), name="all_items"),
+    path("all-categoty/", ListCategoryView.as_view(), name="all_categoty"),
     path(
         "get-item-detail/<int:pk>/", RetrieveItemView.as_view(), name="get_item_detail"
     ),
