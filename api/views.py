@@ -16,7 +16,7 @@ class ApiRoot(generics.GenericAPIView):
                 "user_register": reverse("user_register", request=request),
                 "send_otp_user": reverse("send_otp_user", request=request),
                 "validate_otp_user": reverse("validate_otp_user", request=request),
-                "create_item": reverse("create_item", request=request),
+                # "create_item": reverse("create_item", request=request),
                 # "get_item_detail": reverse("get_item_detail", request=request),
             }
         )
