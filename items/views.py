@@ -18,6 +18,8 @@ from users.models import User, PhoneOtp, UserProfile
 from .serializers import ItemSerializer, CategorySerializer
 from .models import Item, ItemImage, Category
 from users.permissions import IsOwnerOrReadOnly
+from django_filters import rest_framework as filters
+from .filters import ItemFilter
 
 
 class ListCreateItemView(generics.ListCreateAPIView):
@@ -25,6 +27,8 @@ class ListCreateItemView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Item.objects.all()
     parser_classes = (MultiPartParser, FormParser)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ItemFilter
 
     def get_permissions(self):
         if self.request.method == "POST":
