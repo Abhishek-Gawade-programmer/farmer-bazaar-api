@@ -12,7 +12,8 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
-            "created",
+            "color",
+            "image",
         )
 
 
@@ -20,13 +21,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     images = serializers.ImageField()
     category = serializers.CharField()
-    location_in_words = serializers.CharField(source="location.in_words")
-    location_longitude = serializers.DecimalField(
-        source="location.longitude", max_digits=22, decimal_places=16
-    )
-    location_latitude = serializers.DecimalField(
-        source="location.latitude", max_digits=22, decimal_places=16
-    )
+    # category_color = serializers.CharField()
 
     class Meta:
         model = Item
@@ -39,9 +34,6 @@ class ItemSerializer(serializers.ModelSerializer):
             "available_date",
             "images",
             "category",
-            "location_in_words",
-            "location_longitude",
-            "location_latitude",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 
@@ -54,6 +46,7 @@ class ItemSerializer(serializers.ModelSerializer):
             representation["url"] = reverse(
                 "get_delete_update_item", request=request, kwargs={"pk": instance.pk}
             )
+            representation["category"] = CategorySerializer(instance.category).data
             representation["user_detail"] = UserSerializer(instance.user).data
         return representation
 
@@ -67,12 +60,6 @@ class ItemSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context.get("request")
         location = validated_data.get("location")
-        location_obj = Address.objects.create(
-            in_words=location.get("in_words"),
-            longitude=location.get("longitude"),
-            latitude=location.get("latitude"),
-        )
-        location_obj.save()
 
         all_images = dict((request.data).lists())["images"]
         get_category = Category.objects.get(name=validated_data.get("category"))
@@ -84,7 +71,6 @@ class ItemSerializer(serializers.ModelSerializer):
             quantity_unit=validated_data.get("quantity_unit"),
             expected_price=validated_data.get("expected_price"),
             available_date=validated_data.get("available_date"),
-            location=location_obj,
             user=request.user,
         )
         item_obj.save()

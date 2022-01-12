@@ -9,7 +9,6 @@ PyJWT==2.3.0
 pytz==2021.3
 requests==2.26.0
 sqlparse==0.4.2
-twilio==7.3.1
 urllib3==1.26.7
 python-dotenv==0.19.2
 django-cors-headers=3.10.1
