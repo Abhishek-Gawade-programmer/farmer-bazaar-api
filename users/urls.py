@@ -10,6 +10,7 @@ from .views import (
     ValidateOtpView,
     RetrieveUserProfileView,
     RetrieveOtherUserDetailView,
+    GetTermCondition,
 )
 
 urlpatterns = [
@@ -25,5 +26,6 @@ urlpatterns = [
     path("validate-otp-user/", ValidateOtpView.as_view(), name="validate_otp_user"),
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("get-term-condition/", GetTermCondition.as_view(), name="get_term_condition"),
     # path("create-new/", CreatePhoneOtpView.as_view(), name="token_refresh"),
 ]

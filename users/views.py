@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import CreateUserSerializer, UserSerializer, UserProfileSerializer
-from .models import User, PhoneOtp, UserProfile
+from .models import User, PhoneOtp, UserProfile, TermsAndCondition
 from .permissions import IsOwnerOrReadOnly, IsSameUserOrReadOnly
 
 # Create User
@@ -159,25 +159,23 @@ class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
     serializer_class = UserProfileSerializer
 
 
-# class CreatePhoneOtpView(generics.CreateAPIView):
-#     serializer_class = PhoneOtpSerializer
+class GetTermCondition(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return []
+        return [permission() for permission in self.permission_classes]
 
-# class SendPhoneOtpView(generics.CreateAPIView):
-#     serializer_class = PhoneOtpSerializer
+    def get(self, request, format=None):
+        can_buy_product_text = TermsAndCondition.objects.get(
+            title="can_buy_product"
+        ).text
+        return Response({"detail": can_buy_product_text})
 
-#     def create(self, request, *args, **kwargs):
-#         super().create(request, *args, **kwargs)
-#         return Response(
-#             {
-#                 "detail": "sth happen",
-#             },
-#             status=status.HTTP_201_CREATED,
-#         )
-
-
-# class SendUserOtpView(generics.GenericAPIView):
-#     serializer_class = PhoneOtpSerializer
-
-#     def post(self, request, *args, **kwargs):
-#         print(self, request, args, kwargs)
+    def post(self, request, format=None):
+        user_profile_obj = request.user.user_profile
+        user_profile_obj.can_buy_product = True
+        user_profile_obj.buy_tc_accpeted = True
+        user_profile_obj.save()
+        return Response({"detail": "Buyer Access Added"})

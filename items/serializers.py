@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from users.serializers import AddressSerializer, UserSerializer
-from .models import Item, Category, ItemImage
+from .models import Item, Category, ItemImage, ItemRating
 from users.models import Address
 
 from rest_framework.reverse import reverse
@@ -15,6 +15,25 @@ class CategorySerializer(serializers.ModelSerializer):
             "color",
             "image",
         )
+
+
+class ItemRatingSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    # def create(self, validated_data):
+    #     rating = validated_data.pop("rating")
+    #     body = validated_data.pop("body")
+
+    class Meta:
+        model = ItemRating
+        fields = (
+            "id",
+            "user",
+            "rating",
+            "body",
+            "updated",
+        )
+        extra_kwargs = {i: {"required": True} for i in fields}
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -46,6 +65,8 @@ class ItemSerializer(serializers.ModelSerializer):
             representation["url"] = reverse(
                 "get_delete_update_item", request=request, kwargs={"pk": instance.pk}
             )
+            representation["average_rating"] = instance.get_average_rating()
+
             representation["category"] = CategorySerializer(instance.category).data
             representation["user_detail"] = UserSerializer(instance.user).data
         return representation

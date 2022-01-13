@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User, Address
-from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 LABEL_UNIT_CHOICES = (
     ("To", "Ton"),
@@ -78,7 +78,17 @@ class Item(models.Model):
     )
     expected_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     available_date = models.DateField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     # location = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+
+    def get_average_rating(self):
+        all_messages = ItemRating.objects.filter(item=self)
+        rate_list = []
+        for message in all_messages:
+            if message.rating != 0:
+                rate_list.append(message.rating)
+        return int(round(sum(rate_list) / (len(rate_list) or 1), 1))
 
     def __str__(self):
         return self.title
@@ -92,3 +102,25 @@ class ItemImage(models.Model):
     image = models.ImageField(upload_to="item_images/")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="images")
     created = models.DateTimeField(auto_now_add=True)
+
+
+class ItemRating(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="my_comments"
+    )
+    item = models.ForeignKey(
+        Item, on_delete=models.CASCADE, related_name="item_ratings"
+    )
+    # as we can rate [1-5] so 0 means no rate yet
+    rating = models.IntegerField(
+        default=0, validators=[MaxValueValidator(5), MinValueValidator(0)]
+    )
+    body = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "item")
+
+    def __str__(self):
+        return str(self.body[:30]) + self.user.username

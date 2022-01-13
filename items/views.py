@@ -15,8 +15,8 @@ from users.serializers import (
     UserProfileSerializer,
 )
 from users.models import User, PhoneOtp, UserProfile
-from .serializers import ItemSerializer, CategorySerializer
-from .models import Item, ItemImage, Category
+from .serializers import ItemSerializer, CategorySerializer, ItemRatingSerializer
+from .models import Item, ItemImage, Category, ItemRating
 from users.permissions import IsOwnerOrReadOnly
 from django_filters import rest_framework as filters
 from .filters import ItemFilter
@@ -31,20 +31,15 @@ class ListCreateItemView(generics.ListCreateAPIView):
     filterset_class = ItemFilter
 
     def get_permissions(self):
-        if self.request.method == "POST":
-            return [IsAuthenticated()]
-        elif self.request.method == "GET":
+        if self.request.method == "GET":
             return []
         return [permission() for permission in self.permission_classes]
 
     def create(self, request, *args, **kwargs):
-        # call the serializer create method
         super().create(request, *args, **kwargs)
 
         return Response(
-            {
-                "detail": "Item is created",
-            },
+            {"detail": "Item is created"},
             status=status.HTTP_201_CREATED,
         )
 
@@ -68,9 +63,7 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.update(instance, serializer.data)
         return Response(
-            {
-                "detail": "Item is updated",
-            },
+            {"detail": "Item is updated"},
         )
 
     def get_permissions(self):
@@ -96,7 +89,33 @@ class RetrieveItemCategoryView(generics.ListAPIView):
         return queryset
 
 
-# queryset = self.queryset
-# if isinstance(queryset, QuerySet):
-#     queryset = queryset.filter(name=self.lookup_field)
-# return queryset
+class GetReviewItemView(generics.ListCreateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemRatingSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = "pk"
+
+    def list(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = ItemRatingSerializer(instance.item_ratings.all(), many=True)
+        return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user,
+            item=self.get_object(),
+        )
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return []
+        return [permission() for permission in self.permission_classes]
+
+    def post(self, request, *args, **kwargs):
+        qs = ItemRating.objects.filter(user=self.request.user, item=self.get_object())
+        if qs.exists():
+            return Response(
+                {"detail": "You Can't Create Comment On Same Item Mutiple Time"},
+                status=status.HTTP_405_METHOD_NOT_ALLOWED,
+            )
+        return self.create(request, *args, **kwargs)

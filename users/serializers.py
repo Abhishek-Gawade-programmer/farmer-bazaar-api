@@ -16,7 +16,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         validators=[
             UniqueValidator(queryset=User.objects.all()),
             validate_username,
-        ],
+        ]
     )
 
     class Meta:

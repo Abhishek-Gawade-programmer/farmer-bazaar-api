@@ -8,10 +8,14 @@ from .views import (
     ListCategoryView,
     RetrieveUpdateDestroyItemView,
     RetrieveItemCategoryView,
+    GetReviewItemView,
 )
 
 urlpatterns = [
     path("create-list-item/", ListCreateItemView.as_view(), name="create_list_item"),
+    path(
+        "get-review-item/<int:pk>/", GetReviewItemView.as_view(), name="get_review_item"
+    ),
     path(
         "get-delete-update-item/<int:pk>/",
         RetrieveUpdateDestroyItemView.as_view(),
