@@ -57,7 +57,6 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
         )
 
     def update(self, request, *args, **kwargs):
-        partial = kwargs.pop("partial", False)
         instance = self.get_object()
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -67,9 +66,7 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
         )
 
     def get_permissions(self):
-        if self.request.method == "POST" or self.request.method == "PUT":
-            return [IsAuthenticated()]
-        elif self.request.method == "GET":
+        if self.request.method == "GET":
             return []
         return [permission() for permission in self.permission_classes]
 
@@ -101,10 +98,7 @@ class GetReviewItemView(generics.ListCreateAPIView):
         return Response(serializer.data)
 
     def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user,
-            item=self.get_object(),
-        )
+        serializer.save(user=self.request.user, item=self.get_object())
 
     def get_permissions(self):
         if self.request.method == "GET":
@@ -115,7 +109,13 @@ class GetReviewItemView(generics.ListCreateAPIView):
         qs = ItemRating.objects.filter(user=self.request.user, item=self.get_object())
         if qs.exists():
             return Response(
-                {"detail": "You Can't Create Comment On Same Item Mutiple Time"},
+                {"detail": "You Can't Create Comment On Same Item Mutiple Times"},
                 status=status.HTTP_405_METHOD_NOT_ALLOWED,
             )
         return self.create(request, *args, **kwargs)
+
+
+class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ItemRatingSerializer
+    queryset = ItemRating.objects.all()
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]

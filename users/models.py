@@ -40,18 +40,25 @@ class PhoneOtp(models.Model):
 
 
 class Address(models.Model):
-    """
-    Storing Address of product Buyer or seller location
-    """
-
-    in_words = models.CharField(max_length=250)
-    longitude = models.DecimalField(max_digits=22, decimal_places=16)
-    latitude = models.DecimalField(max_digits=22, decimal_places=16)
-    created = models.DateTimeField(auto_now_add=True)
+    google_place_id = models.TextField()
+    formatted_name = models.TextField(null=True, blank=True)
+    name = models.TextField(null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    street_number = models.TextField(null=True, blank=True)
+    route = models.TextField(null=True, blank=True)
+    administrative_area_level_1 = models.TextField(null=True, blank=True)
+    administrative_area_level_1_short = models.TextField(null=True, blank=True)
+    city = models.TextField(null=True, blank=True)
+    country = models.TextField(null=True, blank=True)
+    country_iso = models.TextField(null=True, blank=True)
+    postal_code = models.TextField(null=True, blank=True)
+    utc_offset = models.IntegerField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.in_words
+        return self.name
 
 
 class UserProfile(models.Model):
@@ -61,6 +68,7 @@ class UserProfile(models.Model):
     profile_pic = models.ImageField(
         blank=True, null=True, default="default.png", upload_to="profile_image/"
     )
+    date_of_brith = models.DateField(default="2002-10-12")
     bio = models.TextField(null=True)
     email_verified = models.BooleanField(default=False)
 
@@ -70,7 +78,9 @@ class UserProfile(models.Model):
         "Terms And Conditions Accepted", default=False
     )
     buy_tc_accpeted_date_time = models.DateTimeField(
-        "Terms And Conditions Accepted Time", blank=True
+        "Terms And Conditions Accepted Time",
+        blank=True,
+        null=True,
     )
 
     location = models.ForeignKey(

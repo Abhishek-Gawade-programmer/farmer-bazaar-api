@@ -5,23 +5,32 @@ from rest_framework import exceptions
 from rest_framework.response import Response
 from django.utils import timezone
 from rest_framework import status
-from .validators import validate_username, validate_first_name, validate_last_name
+from .validators import (
+    validate_username,
+    validate_first_name,
+    validate_last_name,
+    validate_atleast_18_age,
+)
 from rest_framework.validators import UniqueValidator
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(validators=[validate_first_name])
     last_name = serializers.CharField(validators=[validate_last_name])
+    password = serializers.CharField()
     username = serializers.CharField(
         validators=[
             UniqueValidator(queryset=User.objects.all()),
             validate_username,
         ]
     )
+    date_of_brith = serializers.DateField(
+        source="user_profile.date_of_brith", validators=[validate_atleast_18_age]
+    )
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "password", "username")
+        fields = ("first_name", "last_name", "password", "username", "date_of_brith")
         extra_kwargs = {i: {"required": True} for i in fields}
 
     def validate_password(self, value):
@@ -39,14 +48,19 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create(
-            username=validated_data["username"],
-            first_name=validated_data["first_name"],
-            last_name=validated_data["last_name"],
+            username=validated_data.pop("username"),
+            first_name=validated_data.pop("first_name"),
+            last_name=validated_data.pop("last_name"),
         )
         user.is_active = False
 
-        user.set_password(validated_data["password"])
+        user.set_password(validated_data.pop("password"))
         user.save()
+        profile_obj = UserProfile.objects.create(user=user)
+        profile_obj.date_of_brith = validated_data.pop("user_profile").pop(
+            "date_of_brith"
+        )
+        profile_obj.save()
         return user
 
 
@@ -69,10 +83,6 @@ class UserSerializer(serializers.ModelSerializer):
             "username",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
-
-    def save(self, validated_data):
-        print(validated_data)
-        return "dkfjglkd"
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -131,6 +141,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         return representation
 
+
+# class NAMESerializer(serializers.):
+# TODO: Define serializer fields here
 
 # def create(self, validated_data):
 #     print("jddfhjkdfj", validated_data)

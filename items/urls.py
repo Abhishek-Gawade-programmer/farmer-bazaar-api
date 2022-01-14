@@ -1,14 +1,11 @@
 from django.urls import path, include
 from .views import (
     ListCreateItemView,
-    # RetrieveItemView,
-    # UpdateItemView,
-    # DestroyItemView,
-    # ListCreateItemView,
     ListCategoryView,
     RetrieveUpdateDestroyItemView,
     RetrieveItemCategoryView,
     GetReviewItemView,
+    RetrieveUpdateDestroyItemRatingView,
 )
 
 urlpatterns = [
@@ -20,6 +17,11 @@ urlpatterns = [
         "get-delete-update-item/<int:pk>/",
         RetrieveUpdateDestroyItemView.as_view(),
         name="get_delete_update_item",
+    ),
+    path(
+        "get-delete-update-item-rating/<int:pk>/",
+        RetrieveUpdateDestroyItemRatingView.as_view(),
+        name="get_delete_update_item-_rating",
     ),
     # path("all-items/", ListCreateItemView.as_view(), name="all_items"),
     path("all-categoty/", ListCategoryView.as_view(), name="all_categoty"),

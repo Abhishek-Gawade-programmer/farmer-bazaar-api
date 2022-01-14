@@ -20,10 +20,6 @@ class CategorySerializer(serializers.ModelSerializer):
 class ItemRatingSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
-    # def create(self, validated_data):
-    #     rating = validated_data.pop("rating")
-    #     body = validated_data.pop("body")
-
     class Meta:
         model = ItemRating
         fields = (
@@ -40,7 +36,6 @@ class ItemSerializer(serializers.ModelSerializer):
 
     images = serializers.ImageField()
     category = serializers.CharField()
-    # category_color = serializers.CharField()
 
     class Meta:
         model = Item
@@ -53,6 +48,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "available_date",
             "images",
             "category",
+            "updated",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 
@@ -103,11 +99,6 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         request = self.context.get("request")
-        location = validated_data.get("location")
-        instance.location.in_words = validated_data.get("location_in_words")
-        instance.location.longitude = validated_data.get("location_longitude")
-        instance.location.latitude = validated_data.get("location_latitude")
-        instance.location.save()
         all_images = dict((request.data).lists())["images"]
         get_category = Category.objects.get(name=validated_data.get("category"))
         instance.title = validated_data.get("title")
