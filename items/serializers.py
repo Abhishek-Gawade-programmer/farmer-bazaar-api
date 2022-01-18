@@ -4,6 +4,7 @@ from .models import Item, Category, ItemImage, ItemRating
 from users.models import Address
 
 from rest_framework.reverse import reverse
+from easy_thumbnails.templatetags.thumbnail import thumbnail_url
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -30,6 +31,17 @@ class ItemRatingSerializer(serializers.ModelSerializer):
             "updated",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
+
+
+class ItemShortSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField("get_image_url")
+
+    class Meta:
+        model = Item
+        fields = ("id", "image_url", "title", "description", "available_date")
+
+    def get_image_url(self, obj):
+        return obj.images.all()[0].image.url
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -71,7 +83,14 @@ class ItemSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         image_list = []
         for _ in obj.images.all():
-            image_list.append(request.build_absolute_uri(_.image.url))
+            image_list.append(
+                {
+                    "thumbnail_image": request.build_absolute_uri(
+                        thumbnail_url(_.image, "small")
+                    ),
+                    "orginal_image": request.build_absolute_uri(_.image.url),
+                }
+            )
         return image_list
 
     def create(self, validated_data):

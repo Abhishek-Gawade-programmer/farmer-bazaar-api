@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import CreateUserSerializer, UserSerializer, UserProfileSerializer
 from .models import User, PhoneOtp, UserProfile, TermsAndCondition
-from .permissions import IsOwnerOrReadOnly, IsSameUserOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 
 # Create User
 class CreateUserView(generics.CreateAPIView):
@@ -141,9 +141,7 @@ class ValidateOtpView(APIView):
 class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         queryset = self.get_queryset()

@@ -29,10 +29,12 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
     "corsheaders",
+    "easy_thumbnails",
     # my apps
     "users",
     "items",
     "api",
+    "orders",
 ]
 
 MIDDLEWARE = [
@@ -135,16 +137,20 @@ FAST_API_KEY = os.getenv("FAST_API_KEY")
 AUTH_USER_MODEL = "users.User"
 
 # DJANGO REST SETINGS
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 5,
 }
 
 # CORS SETTINGS
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
 
-
+# THUMBNAIL SETTINGS
+THUMBNAIL_DEBUG = True
 # JWT SETTINGS
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=60),
@@ -167,4 +173,11 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+}
+THUMBNAIL_ALIASES = {
+    "": {
+        "small": {
+            "size": (700, 700),
+        },
+    },
 }

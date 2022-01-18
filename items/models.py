@@ -116,11 +116,13 @@ class ItemRating(models.Model):
         default=0, validators=[MaxValueValidator(5), MinValueValidator(0)]
     )
     body = models.TextField(blank=True, null=True)
+    is_verified = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ("user", "item")
+        ordering = ("-created",)
 
     def __str__(self):
         return str(self.body[:30]) + self.user.username
