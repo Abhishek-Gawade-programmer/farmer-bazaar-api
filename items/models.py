@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User, Address
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import IntegrityError
 
 LABEL_UNIT_CHOICES = (
     ("To", "Ton"),
@@ -44,6 +45,48 @@ class Category(models.Model):
         return self.name
 
 
+class SubCategory(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    color = models.CharField(
+        max_length=9, choices=CATEGORY_COLOR_CHOICES, default="default"
+    )
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ItemBag(models.Model):
+    """
+    Bags of Items
+    """
+
+    item = models.ForeignKey("Item", related_name="bags", on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1)], default=1
+    )
+    quantity_unit = models.CharField(
+        max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
+    )
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    whole_item_bag = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("item", "quantity", "quantity_unit")
+        ordering = ("item",)
+
+    def __str__(self):
+        return self.item.title + "  bag " + str(self.quantity) + str(self.quantity_unit)
+
+
 class Item(models.Model):
     """
     Category(fk)
@@ -52,9 +95,8 @@ class Item(models.Model):
     Quantity(int)
     Quantity unit(int)
     Expected Price(decimal)
-    available from(date)
-    mobile number(char)
-    images(image)
+    available stastus(bool)
+    mobile numbe
     """
 
     category = models.ForeignKey(
@@ -62,6 +104,12 @@ class Item(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         related_name="products_included",
+    )
+    sub_category = models.ForeignKey(
+        "SubCategory",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="items_included",
     )
     title = models.CharField(max_length=100)
     description = models.TextField(null=True)
@@ -77,10 +125,9 @@ class Item(models.Model):
         null=True,
     )
     expected_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-    available_date = models.DateField()
+    available_status = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    # location = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
 
     def get_average_rating(self):
         all_messages = ItemRating.objects.filter(item=self)
@@ -89,6 +136,17 @@ class Item(models.Model):
             if message.rating != 0:
                 rate_list.append(message.rating)
         return int(round(sum(rate_list) / (len(rate_list) or 1), 1))
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+    # try:
+    #     item_bag_obj = ItemBag.objects.create(
+    #         item=self, quantity=self.quantity, quantity_unit=self.quantity_unit
+    #     )
+    #     item_bag_obj.save()
+    # except IntegrityError:
+    #     pass
 
     def __str__(self):
         return self.title
@@ -105,9 +163,7 @@ class ItemImage(models.Model):
 
 
 class ItemRating(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name="my_comments"
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="my_comments")
     item = models.ForeignKey(
         Item, on_delete=models.CASCADE, related_name="item_ratings"
     )

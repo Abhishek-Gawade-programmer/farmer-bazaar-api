@@ -6,6 +6,7 @@ from .views import (
     RetrieveItemCategoryView,
     GetReviewItemView,
     RetrieveUpdateDestroyItemRatingView,
+    ItemBagCreateListView,
 )
 
 urlpatterns = [
@@ -29,6 +30,12 @@ urlpatterns = [
         "sort-item-category/<str:category_name>/",
         RetrieveItemCategoryView.as_view(),
         name="all_category",
+    ),
+    # ITEM BAGS
+    path(
+        "create-list-item-bag/<int:pk>/",
+        ItemBagCreateListView.as_view(),
+        name="create_list_item_bag",
     ),
     # path(
     #     "get-item-detail/<int:pk>/", RetrieveItemView.as_view(), name="get_item_detail"

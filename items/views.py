@@ -15,8 +15,13 @@ from users.serializers import (
     UserProfileSerializer,
 )
 from users.models import User, PhoneOtp, UserProfile
-from .serializers import ItemSerializer, CategorySerializer, ItemRatingSerializer
-from .models import Item, ItemImage, Category, ItemRating
+from .serializers import (
+    ItemSerializer,
+    CategorySerializer,
+    ItemRatingSerializer,
+    ItemBagSerializer,
+)
+from .models import Item, ItemImage, Category, ItemRating, ItemBag
 from users.permissions import IsOwnerOrReadOnly
 from django_filters import rest_framework as filters
 from .filters import ItemFilter
@@ -119,3 +124,35 @@ class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView)
     serializer_class = ItemRatingSerializer
     queryset = ItemRating.objects.all()
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+
+class ItemBagCreateListView(generics.ListCreateAPIView):
+    serializer_class = ItemBagSerializer
+    queryset = ItemBag.objects.all()
+    pagination_class = None
+    permission_classes = [IsAuthenticated]
+
+    def get_item_object(self):
+        item_obj = get_object_or_404(Item, pk=self.kwargs.get("pk"))
+        return item_obj
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return []
+        return [permission() for permission in self.permission_classes]
+
+    def filter_queryset(self, queryset, *args, **kwargs):
+
+        queryset = self.get_queryset().filter(item=self.get_item_object())
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+
+        if self.get_item_object().user == request.user:
+            print("creating sothiomg nee")
+            # return self.create(request, *args, **kwargs)
+        else:
+            return Response(
+                {"detail": "You do not have permission to perform this action."},
+                status=status.HTTP_403_FORBIDDEN,
+            )

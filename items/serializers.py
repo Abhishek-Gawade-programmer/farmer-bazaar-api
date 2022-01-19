@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from users.serializers import AddressSerializer, UserSerializer
-from .models import Item, Category, ItemImage, ItemRating
+from .models import Item, Category, ItemImage, ItemRating, ItemBag, SubCategory
 from users.models import Address
 
 from rest_framework.reverse import reverse
@@ -15,6 +15,17 @@ class CategorySerializer(serializers.ModelSerializer):
             "name",
             "color",
             "image",
+        )
+
+
+class ItemBagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemBag
+        fields = (
+            "quantity",
+            "id",
+            "quantity_unit",
+            "price",
         )
 
 
@@ -38,7 +49,7 @@ class ItemShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ("id", "image_url", "title", "description", "available_date")
+        fields = ("id", "image_url", "title", "description")
 
     def get_image_url(self, obj):
         return obj.images.all()[0].image.url
@@ -48,6 +59,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
     images = serializers.ImageField()
     category = serializers.CharField()
+    sub_category_name = serializers.CharField(source="sub_category")
+    available_status = serializers.BooleanField()
 
     class Meta:
         model = Item
@@ -57,10 +70,11 @@ class ItemSerializer(serializers.ModelSerializer):
             "quantity",
             "quantity_unit",
             "expected_price",
-            "available_date",
             "images",
             "category",
             "updated",
+            "available_status",
+            "sub_category_name",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 
@@ -68,13 +82,15 @@ class ItemSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         request = self.context.get("request")
         if request.method == "GET":
+            if request.user != instance.user:
+                del representation["quantity_unit"]
+                del representation["quantity"]
             representation["images"] = self.get_images_url(instance)
             representation["id"] = instance.pk
             representation["url"] = reverse(
                 "get_delete_update_item", request=request, kwargs={"pk": instance.pk}
             )
             representation["average_rating"] = instance.get_average_rating()
-
             representation["category"] = CategorySerializer(instance.category).data
             representation["user_detail"] = UserSerializer(instance.user).data
         return representation
@@ -95,19 +111,21 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context.get("request")
-        location = validated_data.get("location")
-
         all_images = dict((request.data).lists())["images"]
         get_category = Category.objects.get(name=validated_data.get("category"))
+        get_sub_category = SubCategory.objects.get(
+            name=validated_data.get("sub_category")
+        )
         item_obj = Item.objects.create(
             category=get_category,
+            sub_category=get_sub_category,
             title=validated_data.get("title"),
             description=validated_data.get("description"),
             quantity=validated_data.get("quantity"),
             quantity_unit=validated_data.get("quantity_unit"),
             expected_price=validated_data.get("expected_price"),
-            available_date=validated_data.get("available_date"),
             user=request.user,
+            available_status=validated_data.get("available_status"),
         )
         item_obj.save()
 
@@ -120,12 +138,17 @@ class ItemSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         all_images = dict((request.data).lists())["images"]
         get_category = Category.objects.get(name=validated_data.get("category"))
+        get_sub_category = SubCategory.objects.get(
+            name=validated_data.get("sub_category_name")
+        )
         instance.title = validated_data.get("title")
         instance.description = validated_data.get("description")
         instance.quantity = validated_data.get("quantity")
         instance.quantity_unit = validated_data.get("quantity_unit")
         instance.expected_price = validated_data.get("expected_price")
-        instance.available_date = validated_data.get("available_date")
+        instance.available_status = validated_data.get("available_status")
+        instance.sub_category = get_sub_category
+        instance.category = get_category
 
         for _ in instance.images.all():
             _.delete()
@@ -144,3 +167,10 @@ class ItemSerializer(serializers.ModelSerializer):
             return super().validate(value)
         else:
             raise serializers.ValidationError("Category Name is not valid")
+
+    def validate_sub_category_name(self, value):
+        qs = SubCategory.objects.filter(name=value)
+        if qs.exists():
+            return super().validate(value)
+        else:
+            raise serializers.ValidationError("Sub Category Name is not valid")
