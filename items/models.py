@@ -84,7 +84,12 @@ class ItemBag(models.Model):
         ordering = ("item",)
 
     def __str__(self):
-        return self.item.title + "  bag " + str(self.quantity) + str(self.quantity_unit)
+        return (
+            self.item.title
+            + f"item-id  {self.item.id}  bag "
+            + str(self.quantity)
+            + str(self.quantity_unit)
+        )
 
 
 class Item(models.Model):

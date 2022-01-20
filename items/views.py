@@ -146,11 +146,39 @@ class ItemBagCreateListView(generics.ListCreateAPIView):
         queryset = self.get_queryset().filter(item=self.get_item_object())
         return queryset
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
+        current_item = self.get_item_object()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        valid_data = serializer.data
+        item_bag_obj_qs = ItemBag.objects.filter(
+            quantity=valid_data.get("quantity"),
+            quantity_unit=valid_data.get("quantity_unit"),
+            price=valid_data.get("price"),
+            item=current_item,
+        )
+        if item_bag_obj_qs.exists():
+            return Response(
+                {"detail": "Bag is already Created"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        else:
+            item_bag_obj = ItemBag.objects.create(
+                quantity=valid_data.get("quantity"),
+                quantity_unit=valid_data.get("quantity_unit"),
+                price=valid_data.get("price"),
+                item=current_item,
+            )
+            item_bag_obj.save()
+            headers = self.get_success_headers(serializer.data)
+            return Response(
+                self.get_serializer(item_bag_obj).data,
+                status=status.HTTP_201_CREATED,
+                headers=headers,
+            )
 
+    def post(self, request, *args, **kwargs):
         if self.get_item_object().user == request.user:
-            print("creating sothiomg nee")
-            # return self.create(request, *args, **kwargs)
+            return self.create(request, *args, **kwargs)
         else:
             return Response(
                 {"detail": "You do not have permission to perform this action."},

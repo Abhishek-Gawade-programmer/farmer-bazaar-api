@@ -27,6 +27,13 @@ class ItemBagSerializer(serializers.ModelSerializer):
             "quantity_unit",
             "price",
         )
+        extra_kwargs = {i: {"required": True} for i in fields}
+
+    def validate_price(self, value):
+        if value > 0:
+            return super().validate(value)
+        else:
+            raise serializers.ValidationError("price can't be negative or Zero ")
 
 
 class ItemRatingSerializer(serializers.ModelSerializer):
