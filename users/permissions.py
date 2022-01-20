@@ -9,6 +9,12 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return obj.user == request.user
 
 
+# checks that is requested user is same as to edit itembag which have it
+class IsOwnerOfItemBag(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.item.user == request.user
+
+
 # checks that is requested user is same as to edit profile
 class IsOwnerOfObject(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):

@@ -7,6 +7,7 @@ from .views import (
     GetReviewItemView,
     RetrieveUpdateDestroyItemRatingView,
     ItemBagCreateListView,
+    ItemBagRetrieveUpdateDestroyView,
 )
 
 urlpatterns = [
@@ -36,6 +37,11 @@ urlpatterns = [
         "create-list-item-bag/<int:pk>/",
         ItemBagCreateListView.as_view(),
         name="create_list_item_bag",
+    ),
+    path(
+        "get-update-delete-itembag/<int:pk>/",
+        ItemBagRetrieveUpdateDestroyView.as_view(),
+        name="get_update_delete_itembag",
     ),
     # path(
     #     "get-item-detail/<int:pk>/", RetrieveItemView.as_view(), name="get_item_detail"

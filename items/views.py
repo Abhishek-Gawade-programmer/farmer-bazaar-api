@@ -22,9 +22,10 @@ from .serializers import (
     ItemBagSerializer,
 )
 from .models import Item, ItemImage, Category, ItemRating, ItemBag
-from users.permissions import IsOwnerOrReadOnly
+from users.permissions import IsOwnerOrReadOnly, IsOwnerOfItemBag
 from django_filters import rest_framework as filters
 from .filters import ItemFilter
+from .utils import convert_item_quantity_gram
 
 
 class ListCreateItemView(generics.ListCreateAPIView):
@@ -151,6 +152,20 @@ class ItemBagCreateListView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         valid_data = serializer.data
+        item_gram_value = convert_item_quantity_gram(
+            current_item.quantity_unit, current_item.quantity
+        )
+        item_bag_gram_value = convert_item_quantity_gram(
+            valid_data.get("quantity_unit"), valid_data.get("quantity")
+        )
+        if item_bag_gram_value > item_gram_value:
+            return Response(
+                {
+                    "detail": "Please check the quantity and unit of bag as Your item quantity and unit is excedting"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         item_bag_obj_qs = ItemBag.objects.filter(
             quantity=valid_data.get("quantity"),
             quantity_unit=valid_data.get("quantity_unit"),
@@ -169,6 +184,8 @@ class ItemBagCreateListView(generics.ListCreateAPIView):
                 item=current_item,
             )
             item_bag_obj.save()
+
+            print(gram_value, "itrm quity unot ", current_item.quantity_unit)
             headers = self.get_success_headers(serializer.data)
             return Response(
                 self.get_serializer(item_bag_obj).data,
@@ -184,3 +201,14 @@ class ItemBagCreateListView(generics.ListCreateAPIView):
                 {"detail": "You do not have permission to perform this action."},
                 status=status.HTTP_403_FORBIDDEN,
             )
+
+
+class ItemBagRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ItemBagSerializer
+    queryset = ItemBag.objects.all()
+    permission_classes = [IsAuthenticated, IsOwnerOfItemBag]
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return []
+        return [permission() for permission in self.permission_classes]

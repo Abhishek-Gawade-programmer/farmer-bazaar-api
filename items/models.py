@@ -2,18 +2,12 @@ from django.db import models
 from users.models import User, Address
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import IntegrityError
+from django.forms import ValidationError
 
 LABEL_UNIT_CHOICES = (
     ("To", "Ton"),
     ("Kg", "Kg"),
     ("Gr", "Gram"),
-    ("Bo", "Box"),
-    ("Ba", "Bag"),
-    ("Pi", "Piece"),
-    ("Li", "Liter"),
-    ("ml", "ml"),
-    ("Fe", "Feet"),
-    ("Ac", "Acre"),
 )
 
 CATEGORY_COLOR_CHOICES = (
@@ -75,12 +69,12 @@ class ItemBag(models.Model):
         max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-    whole_item_bag = models.BooleanField(default=False)
+    available_status = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ("item", "quantity", "quantity_unit")
+        unique_together = ("item", "quantity", "quantity_unit", "price")
         ordering = ("item",)
 
     def __str__(self):
