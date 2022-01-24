@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from .models import Order, OrderItem
-from items.models import Item
-from items.serializers import ItemShortSerializer
+from items.models import Item, ItemBag
+from items.serializers import ItemShortSerializer, ItemBagSerializer
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    item = ItemShortSerializer()
+    item_bag = ItemBagSerializer()
 
     class Meta:
         model = OrderItem
@@ -13,26 +13,17 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 
 class CreateOrderItemSerializer(serializers.ModelSerializer):
-    item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all())
+    item_bag = serializers.PrimaryKeyRelatedField(queryset=ItemBag.objects.all())
 
     class Meta:
         model = OrderItem
-        fields = ("quantity", "quantity_unit", "item")
+        fields = ("quantity", "item_bag")
         extra_kwargs = {i: {"required": True} for i in fields}
 
     def validate(self, data):
-        current_order_item = data["item"]
-        quantity = data["quantity"]
-        quantity_unit = data["quantity_unit"]
-
-        if current_order_item.quantity < quantity:
-            raise serializers.ValidationError(
-                f"Quantity Have A Limit Max To {current_order_item.quantity}"
-            )
-        if current_order_item.quantity_unit != quantity_unit:
-            raise serializers.ValidationError(
-                f"Quantity Unit Must Be {current_order_item.quantity_unit}"
-            )
+        item_bag_obj = data.get("item_bag")
+        if not item_bag_obj.available_status:
+            raise serializers.ValidationError("This bag is currently unavailable")
         return data
 
 

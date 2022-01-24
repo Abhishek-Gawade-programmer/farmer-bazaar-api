@@ -32,7 +32,7 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         qs = Order.objects.filter(
-            current_order=True, pk=kwargs.get("pk"), user=request.user
+            current_order=True, pk=kwargs.get("order_pk"), user=request.user
         )
         if qs.exists():
             return super().post(request, *args, **kwargs)
@@ -46,14 +46,13 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         check_item_exists = OrderItem.objects.filter(
-            order_id=kwargs.get("pk"), item_id=serializer.data.get("item")
+            order_id=kwargs.get("order_pk"), item_bag_id=serializer.data.get("item_bag")
         )
         if not check_item_exists.exists():
             # creating the new order item
             order_item_instance = OrderItem.objects.create(
-                order_id=kwargs.get("pk"),
-                item_id=serializer.data.get("item"),
-                quantity_unit=serializer.data.get("quantity_unit"),
+                order_id=kwargs.get("order_pk"),
+                item_bag_id=serializer.data.get("item_bag"),
                 quantity=serializer.data.get("quantity"),
             )
         else:
@@ -63,7 +62,9 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
         order_item_instance.save()
         headers = self.get_success_headers(serializer.data)
         return Response(
-            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+            OrderItemSerializer(order_item_instance).data,
+            status=status.HTTP_201_CREATED,
+            headers=headers,
         )
 
 
@@ -75,11 +76,13 @@ class OrderItemRemoveCartView(APIView):
             current_order=True, pk=kwargs.get("order_pk"), user=request.user
         )
         if qs.exists():
-            qs_order_item = OrderItem.objects.filter(order_id=qs[0].id)
+            qs_order_item = OrderItem.objects.filter(
+                order_id=qs[0].id, id=kwargs.get("order_item_pk")
+            )
             if qs_order_item.exists():
                 qs_order_item[0].delete()
                 return Response(
-                    {"detail": "Order Itm is deleted"},
+                    {"detail": "Order Item is deleted"},
                     status=status.HTTP_204_NO_CONTENT,
                 )
             else:

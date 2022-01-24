@@ -20,12 +20,11 @@ class IsOwnerOfObject(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user
 
-
-# # checks that is requested user is same as to edit profile
-# class IsAbleToSellItem(permissions.BasePermission):
-#     def has_permission(self, request, view):
-#         # print(obj)
-#         print(request, view)
-#         if request.method == "POST":
-#             return request.user.user_profile.can_able_to_sell_product()
-#         return False
+# checks that is requested user is same as to edit profile
+class IsAbleToSellItem(permissions.BasePermission):
+    def has_permission(self, request, view):
+        # print(obj)
+        print(request, view)
+        if request.method == "POST":
+            return request.user.user_profile.can_able_to_sell_product()
+        return False

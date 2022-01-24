@@ -5,29 +5,34 @@ from users.models import Address
 
 from rest_framework.reverse import reverse
 from easy_thumbnails.templatetags.thumbnail import thumbnail_url
+from .utils import convert_item_quantity_gram
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = (
-            "id",
-            "name",
-            "color",
-            "image",
-        )
+        fields = ("id", "name", "color", "image")
+
+
+class SubCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubCategory
+        fields = ("id", "name", "color")
 
 
 class ItemBagSerializer(serializers.ModelSerializer):
+    item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all())
+
     class Meta:
         model = ItemBag
         fields = (
+            "item",
             "quantity",
             "id",
             "quantity_unit",
+            "available_status",
             "price",
         )
-        extra_kwargs = {i: {"required": True} for i in fields}
 
     def validate_price(self, value):
         if value > 0:
@@ -35,19 +40,30 @@ class ItemBagSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError("price can't be negative or Zero ")
 
+    def validate(self, data):
+        # checking the if quantity exceeds the item quantity
+        current_item = data.get("item")
+
+        item_gram_value = convert_item_quantity_gram(
+            current_item.quantity_unit, current_item.quantity
+        )
+        item_bag_gram_value = convert_item_quantity_gram(
+            data.get("quantity_unit"), data.get("quantity")
+        )
+        if item_bag_gram_value > item_gram_value:
+            raise serializers.ValidationError(
+                "Please check the quantity and unit of bag as Your item quantity and unit is excedting"
+            )
+
+        return data
+
 
 class ItemRatingSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:
         model = ItemRating
-        fields = (
-            "id",
-            "user",
-            "rating",
-            "body",
-            "updated",
-        )
+        fields = ("id", "user", "rating", "body", "updated")
         extra_kwargs = {i: {"required": True} for i in fields}
 
 
@@ -68,6 +84,7 @@ class ItemSerializer(serializers.ModelSerializer):
     category = serializers.CharField()
     sub_category_name = serializers.CharField(source="sub_category")
     available_status = serializers.BooleanField()
+    can_able_to_sell = serializers.BooleanField()
 
     class Meta:
         model = Item
@@ -82,6 +99,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "updated",
             "available_status",
             "sub_category_name",
+            "can_able_to_sell",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 

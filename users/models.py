@@ -13,9 +13,7 @@ TERMS_CONDITIONS_CHOICES = (
 class User(AbstractUser):
     username = models.CharField("Phone Number", max_length=10, unique=True)
     password = models.CharField(max_length=100)
-    email = models.CharField(
-        max_length=255,
-    )
+    email = models.CharField(max_length=255)
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = []
@@ -78,9 +76,7 @@ class UserProfile(models.Model):
         "Terms And Conditions Accepted", default=False
     )
     buy_tc_accpeted_date_time = models.DateTimeField(
-        "Terms And Conditions Accepted Time",
-        blank=True,
-        null=True,
+        "Terms And Conditions Accepted Time", blank=True, null=True
     )
 
     location = models.ForeignKey(

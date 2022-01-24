@@ -41,27 +41,21 @@ class SendUserOtpView(APIView):
                     phone_otp.send_phone_otp()
 
                     return Response(
-                        {
-                            "detail": "OTP is sended",
-                        },
+                        {"detail": "OTP is sended"},
                         status=status.HTTP_200_OK,
                     )
                 else:
                     diff_time = timezone.now() - qs_phone_otp[0].updated
                     if ((diff_time.total_seconds()) // 60) < 2.0:
                         return Response(
-                            {
-                                "detail": "Send After 5 Minutes ",
-                            },
+                            {"detail": "Send After 5 Minutes "},
                             status=status.HTTP_400_BAD_REQUEST,
                         )
                     else:
                         qs_phone_otp[0].save()
                         qs_phone_otp[0].send_phone_otp()
                         return Response(
-                            {
-                                "detail": "OTP is sended again",
-                            },
+                            {"detail": "OTP is sended again"},
                             status=status.HTTP_200_OK,
                         )
 
@@ -75,17 +69,13 @@ class SendUserOtpView(APIView):
 
         elif not (len(phone_number) == 10 and phone_number.isdigit()):
             return Response(
-                {
-                    "detail": ["Enter valid Phone Number"],
-                },
+                {"detail": ["Enter valid Phone Number"]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         else:
             return Response(
-                {
-                    "phone_number": ["This field is required."],
-                },
+                {"phone_number": ["This field is required."]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -107,33 +97,25 @@ class ValidateOtpView(APIView):
                     user_obj.save()
 
                     return Response(
-                        {
-                            "detail": "Account has been verified.",
-                        },
+                        {"detail": "Account has been verified."},
                         status=status.HTTP_200_OK,
                     )
                 else:
                     return Response(
-                        {
-                            "detail": "Otp Is Expired Resend It.",
-                        },
+                        {"detail": "Otp Is Expired Resend It."},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 qs_phone_otp.delete()
 
             else:
                 return Response(
-                    {
-                        "otp_text": ["Not a valid Otp"],
-                    },
+                    {"otp_text": ["Not a valid Otp"]},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
         else:
             return Response(
-                {
-                    "otp_text": ["This field is required."],
-                },
+                {"otp_text": ["This field is required."]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

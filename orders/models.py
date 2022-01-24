@@ -1,15 +1,23 @@
 from django.db import models
 from users.models import User
-from items.models import Item, LABEL_UNIT_CHOICES
+from items.models import Item, ItemBag, LABEL_UNIT_CHOICES
 from django.core.validators import MinValueValidator
 
 
 class Order(models.Model):
+    """
+    user of order
+    placed date time or null
+    dispatched date time or null
+    delivered date time or null
+    rejected date time or null
+    only one order for user at a time
+    created and updated date
+
+    """
+
     user = models.ForeignKey(
-        User,
-        related_name="orders",
-        on_delete=models.SET_NULL,
-        null=True,
+        User, related_name="orders", on_delete=models.SET_NULL, null=True
     )
     placed = models.DateTimeField(null=True, blank=True)
     paid = models.DateTimeField(null=True, blank=True)
@@ -23,6 +31,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def get_total_cost(self):
+        # calculating the total cost of item by order items
         total_cost = 0
         for order_item in self.order_items.all():
             total_cost += order_item.cost
@@ -33,17 +42,20 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    """
+    order item which consist of item_bag * quantity and cost which fk to order
+
+    """
+
     order = models.ForeignKey(
         Order, related_name="order_items", on_delete=models.CASCADE
     )
-    item = models.ForeignKey(
-        Item, related_name="active_orders", on_delete=models.CASCADE
+    item_bag = models.ForeignKey(
+        ItemBag, on_delete=models.CASCADE, related_name="active_orders"
     )
+
     quantity = models.PositiveSmallIntegerField(
         default=1, validators=[MinValueValidator(1)]
-    )
-    quantity_unit = models.CharField(
-        max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
     )
 
     cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -51,7 +63,7 @@ class OrderItem(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        self.cost = self.item.expected_price * self.quantity
+        self.cost = self.item_bag.price * self.quantity
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -24,5 +24,5 @@ def validate_atleast_18_age(value):
     diff_date = timezone.now().date() - value
     if (diff_date.days // 365) < 18:
         raise ValidationError("Must Have Atleast 18 Age")
-    elif (diff_date.days // 365) < 100:
+    elif (diff_date.days // 365) > 100:
         raise ValidationError("Please Enter Valid Date Of Brith")
