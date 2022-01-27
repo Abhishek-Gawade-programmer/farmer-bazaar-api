@@ -19,9 +19,7 @@ class CreateUserView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         super().create(request, *args, **kwargs)
         return Response(
-            {
-                "detail": "user is created",
-            },
+            {"detail": "user is created"},
             status=status.HTTP_201_CREATED,
         )
 
@@ -61,9 +59,7 @@ class SendUserOtpView(APIView):
 
             else:
                 return Response(
-                    {
-                        "detail": "Account Not Found",
-                    },
+                    {"detail": "Account Not Found"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 

@@ -8,6 +8,23 @@ from easy_thumbnails.templatetags.thumbnail import thumbnail_url
 from .utils import convert_item_quantity_gram
 
 
+class ItemImageSerializer(serializers.ModelSerializer):
+    item = serializers.PrimaryKeyRelatedField(read_only=True)
+    thumbnail_image = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = ItemImage
+        exclude = ("created",)
+
+    def create(self, validated_data):
+        item_image_obj = ItemImage.objects.create(**validated_data)
+        item_image_obj.save()
+        return item_image_obj
+
+    def get_thumbnail_image(self, obj):
+        return thumbnail_url(obj.image, "small")
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -79,112 +96,38 @@ class ItemShortSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-
-    images = serializers.ImageField()
-    category = serializers.CharField()
-    sub_category_name = serializers.CharField(source="sub_category")
-    available_status = serializers.BooleanField()
-    can_able_to_sell = serializers.BooleanField()
+    images = serializers.SerializerMethodField(read_only=True)
+    user = UserSerializer(read_only=True)
+    category = serializers.CharField(max_length=10, source="category.name")
+    sub_category = serializers.CharField(max_length=10, source="sub_category.name")
 
     class Meta:
         model = Item
         fields = (
+            "id",
+            "category",
+            "sub_category",
             "title",
             "description",
             "quantity",
             "quantity_unit",
-            "expected_price",
-            "images",
-            "category",
-            "updated",
+            "price",
             "available_status",
-            "sub_category_name",
-            "can_able_to_sell",
+            "user",
+            "images",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        request = self.context.get("request")
-        if request.method == "GET":
-            if request.user != instance.user:
-                del representation["quantity_unit"]
-                del representation["quantity"]
-            representation["images"] = self.get_images_url(instance)
-            representation["id"] = instance.pk
-            representation["url"] = reverse(
-                "get_delete_update_item", request=request, kwargs={"pk": instance.pk}
-            )
-            representation["average_rating"] = instance.get_average_rating()
-            representation["category"] = CategorySerializer(instance.category).data
-            representation["user_detail"] = UserSerializer(instance.user).data
-        return representation
-
-    def get_images_url(self, obj):
-        request = self.context.get("request")
+    def get_images(self, obj):
         image_list = []
         for _ in obj.images.all():
             image_list.append(
                 {
-                    "thumbnail_image": request.build_absolute_uri(
-                        thumbnail_url(_.image, "small")
-                    ),
-                    "orginal_image": request.build_absolute_uri(_.image.url),
+                    "thumbnail_image": thumbnail_url(_.image, "small"),
+                    "orginal_image": _.image.url,
                 }
             )
         return image_list
-
-    def create(self, validated_data):
-        request = self.context.get("request")
-        all_images = dict((request.data).lists())["images"]
-        get_category = Category.objects.get(name=validated_data.get("category"))
-        get_sub_category = SubCategory.objects.get(
-            name=validated_data.get("sub_category")
-        )
-        item_obj = Item.objects.create(
-            category=get_category,
-            sub_category=get_sub_category,
-            title=validated_data.get("title"),
-            description=validated_data.get("description"),
-            quantity=validated_data.get("quantity"),
-            quantity_unit=validated_data.get("quantity_unit"),
-            expected_price=validated_data.get("expected_price"),
-            user=request.user,
-            available_status=validated_data.get("available_status"),
-        )
-        item_obj.save()
-
-        for item_image in all_images:
-            ItemImage.objects.create(image=item_image, item=item_obj).save()
-
-        return item_obj
-
-    def update(self, instance, validated_data):
-        request = self.context.get("request")
-        all_images = dict((request.data).lists())["images"]
-        get_category = Category.objects.get(name=validated_data.get("category"))
-        get_sub_category = SubCategory.objects.get(
-            name=validated_data.get("sub_category_name")
-        )
-        instance.title = validated_data.get("title")
-        instance.description = validated_data.get("description")
-        instance.quantity = validated_data.get("quantity")
-        instance.quantity_unit = validated_data.get("quantity_unit")
-        instance.expected_price = validated_data.get("expected_price")
-        instance.available_status = validated_data.get("available_status")
-        instance.sub_category = get_sub_category
-        instance.category = get_category
-
-        for _ in instance.images.all():
-            _.delete()
-        for item_image in all_images:
-            ItemImage.objects.create(image=item_image, item=instance).save()
-        instance.save()
-
-    def save(self, **kwargs):
-        validated_data = {**self.validated_data, **kwargs}
-        self.create(validated_data)
-        return
 
     def validate_category(self, value):
         qs = Category.objects.filter(name=value)
@@ -193,9 +136,58 @@ class ItemSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError("Category Name is not valid")
 
-    def validate_sub_category_name(self, value):
+    def validate_sub_category(self, value):
         qs = SubCategory.objects.filter(name=value)
         if qs.exists():
             return super().validate(value)
         else:
             raise serializers.ValidationError("Sub Category Name is not valid")
+
+    def validate_price(self, value):
+        if float(value) > 0:
+            return super().validate(value)
+        else:
+            raise serializers.ValidationError("Price Can't be negative or Zero")
+
+    def create(self, validated_data):
+        get_category = Category.objects.get(
+            name=validated_data.get("category").get("name")
+        )
+        get_sub_category = SubCategory.objects.get(
+            name=validated_data.get("sub_category").get("name")
+        )
+        item_object = Item.objects.create(
+            category=get_category,
+            sub_category=get_sub_category,
+            title=validated_data.get("title"),
+            description=validated_data.get("description"),
+            quantity=validated_data.get("quantity"),
+            quantity_unit=validated_data.get("quantity_unit"),
+            price=validated_data.get("price"),
+            available_status=validated_data.get("available_status"),
+            user=validated_data.get("user"),
+        )
+        item_object.save()
+
+        return item_object
+
+    def update(self, instance, validated_data):
+        print(instance, validated_data)
+        get_category = Category.objects.get(
+            name=validated_data.get("category").get("name")
+        )
+        get_sub_category = SubCategory.objects.get(
+            name=validated_data.get("sub_category").get("name")
+        )
+
+        instance.category = get_category
+        instance.sub_category = get_sub_category
+        instance.title = validated_data.get("title")
+        instance.description = validated_data.get("description")
+        instance.quantity = validated_data.get("quantity")
+        instance.quantity_unit = validated_data.get("quantity_unit")
+        instance.price = validated_data.get("price")
+        instance.available_status = validated_data.get("available_status")
+        instance.user = validated_data.get("user")
+        instance.save()
+        return instance

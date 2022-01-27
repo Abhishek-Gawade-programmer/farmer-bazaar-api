@@ -4,11 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import IntegrityError
 from django.forms import ValidationError
 
-LABEL_UNIT_CHOICES = (
-    ("To", "Ton"),
-    ("Kg", "Kg"),
-    ("Gr", "Gram"),
-)
+LABEL_UNIT_CHOICES = (("To", "Ton"), ("Kg", "Kg"), ("Gr", "Gram"))
 
 CATEGORY_COLOR_CHOICES = (
     ("primary", "blue"),

@@ -17,13 +17,14 @@ from users.serializers import (
 from users.models import User, PhoneOtp, UserProfile
 from .serializers import (
     ItemSerializer,
-    CategorySerializer,
-    SubCategorySerializer,
+    ItemImageSerializer,
     ItemRatingSerializer,
     ItemBagSerializer,
+    CategorySerializer,
+    SubCategorySerializer,
 )
 from .models import Item, ItemImage, Category, ItemRating, ItemBag, SubCategory
-from users.permissions import IsOwnerOrReadOnly, IsOwnerOfItemBag
+from users.permissions import IsOwnerOrReadOnly, IsOwnerOfItemBelongs
 from django_filters import rest_framework as filters
 from .filters import ItemFilter
 
@@ -43,8 +44,9 @@ class ListCreateItemView(generics.ListCreateAPIView):
             return []
         return [permission() for permission in self.permission_classes]
 
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+    def perform_create(self, serializer):
+        # creating the item review
+        serializer.save(user=self.request.user)
 
 
 class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
@@ -52,8 +54,11 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
 
     serializer_class = ItemSerializer
     # checking item call able to sell
-    queryset = Item.objects.filter(can_able_to_sell=True)
+    queryset = Item.objects.all()
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -63,14 +68,44 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.update(instance, serializer.data)
-        return Response(
-            {"detail": "Item is updated", "item_id": instance.id},
-        )
+    def get_permissions(self):
+        # no permission for get request
+        if self.request.method == "GET":
+            return []
+        return [permission() for permission in self.permission_classes]
+
+
+# ITEM IMAGES
+
+
+class ListCreateItemImageView(generics.ListCreateAPIView):
+    # list  the item with no permission or create the item who is owner of item
+    serializer_class = ItemImageSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = ItemImage.objects.all()
+
+    def get_object(self):
+        # getting the object or 404 if item
+        return get_object_or_404(Item, id=self.kwargs.get("pk"))
+
+    def list(self, request, *args, **kwargs):
+        # filtering the query  so that only item image will appear
+        queryset = self.get_queryset().filter(item=self.get_object())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        # checking that item belongs to that ser
+        if self.get_object().user == request.user:
+            return self.create(request, *args, **kwargs)
+        else:
+            return Response(
+                {"detail": "You permisuhibn"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+    def perform_create(self, serializer):
+        serializer.save(item=self.get_object())
 
     def get_permissions(self):
         # no permission for get request
@@ -141,14 +176,14 @@ class ItemBagCreateView(generics.CreateAPIView):
     # the owner of item only can create item bags
     serializer_class = ItemBagSerializer
     queryset = ItemBag.objects.all()
-    permission_classes = [IsAuthenticated, IsOwnerOfItemBag]
+    permission_classes = [IsAuthenticated, IsOwnerOfItemBelongs]
 
 
 class ItemBagRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     # the owner of item only can UD item bags
     serializer_class = ItemBagSerializer
     queryset = ItemBag.objects.all()
-    permission_classes = [IsAuthenticated, IsOwnerOfItemBag]
+    permission_classes = [IsAuthenticated, IsOwnerOfItemBelongs]
 
     def get_permissions(self):
         if self.request.method == "GET":
