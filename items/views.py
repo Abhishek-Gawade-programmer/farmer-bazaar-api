@@ -100,12 +100,24 @@ class ListCreateItemImageView(generics.ListCreateAPIView):
             return self.create(request, *args, **kwargs)
         else:
             return Response(
-                {"detail": "You permisuhibn"},
+                {"detail": "You permission to perform this action"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
     def perform_create(self, serializer):
         serializer.save(item=self.get_object())
+
+    def get_permissions(self):
+        # no permission for get request
+        if self.request.method == "GET":
+            return []
+        return [permission() for permission in self.permission_classes]
+
+
+class RetrieveUpdateDestroyItemImageView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, IsOwnerOfItemBelongs]
+    serializer_class = ItemImageSerializer
+    queryset = ItemImage.objects.all()
 
     def get_permissions(self):
         # no permission for get request
@@ -166,7 +178,12 @@ class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView)
 
     serializer_class = ItemRatingSerializer
     queryset = ItemRating.objects.all()
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return []
+        return [permission() for permission in self.permission_classes]
 
 
 # ITEM BAGS

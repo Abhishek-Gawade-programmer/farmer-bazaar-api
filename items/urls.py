@@ -5,6 +5,7 @@ from .views import (
     GetReviewItemView,
     RetrieveUpdateDestroyItemRatingView,
     ItemBagCreateView,
+    RetrieveUpdateDestroyItemImageView,
     AllItemBagItemView,
     ItemBagRetrieveUpdateDestroyView,
     ListCreateItemImageView,
@@ -19,11 +20,17 @@ urlpatterns = [
     path(
         "get-review-item/<int:pk>/", GetReviewItemView.as_view(), name="get_review_item"
     ),
-    # GET ITEM IMAGES OR CREATE ITEM IMAGES
+    # GET ITEM IMAGES OR CREATE ITEM IMAGES OF ITEM
     path(
         "get-item-images-create/<int:pk>/",
         ListCreateItemImageView.as_view(),
         name="get_item_images_create",
+    ),
+    # get update or destory th specific image of item
+    path(
+        "get-update-destory-item-image/<int:pk>/",
+        RetrieveUpdateDestroyItemImageView.as_view(),
+        name="getupdatedestrory_item_image",
     ),
     # RUD the of item
     path(

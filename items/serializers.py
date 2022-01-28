@@ -5,7 +5,7 @@ from users.models import Address
 
 from rest_framework.reverse import reverse
 from easy_thumbnails.templatetags.thumbnail import thumbnail_url
-from .utils import convert_item_quantity_gram
+from .utils import convert_quantity_gram
 
 
 class ItemImageSerializer(serializers.ModelSerializer):
@@ -39,6 +39,7 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
 class ItemBagSerializer(serializers.ModelSerializer):
     item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all())
+    number_of_available_bags = serializers.SerializerMethodField()
 
     class Meta:
         model = ItemBag
@@ -49,7 +50,11 @@ class ItemBagSerializer(serializers.ModelSerializer):
             "quantity_unit",
             "available_status",
             "price",
+            "number_of_available_bags",
         )
+
+    def get_number_of_available_bags(self, obj):
+        return obj.number_of_available()
 
     def validate_price(self, value):
         if value > 0:
@@ -61,10 +66,8 @@ class ItemBagSerializer(serializers.ModelSerializer):
         # checking the if quantity exceeds the item quantity
         current_item = data.get("item")
 
-        item_gram_value = convert_item_quantity_gram(
-            current_item.quantity_unit, current_item.quantity
-        )
-        item_bag_gram_value = convert_item_quantity_gram(
+        item_gram_value = current_item.convert_item_quantity_gram()
+        item_bag_gram_value = convert_quantity_gram(
             data.get("quantity_unit"), data.get("quantity")
         )
         if item_bag_gram_value > item_gram_value:
@@ -119,14 +122,7 @@ class ItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {i: {"required": True} for i in fields}
 
     def get_images(self, obj):
-        image_list = []
-        for _ in obj.images.all():
-            image_list.append(
-                {
-                    "thumbnail_image": thumbnail_url(_.image, "small"),
-                    "orginal_image": _.image.url,
-                }
-            )
+        image_list = ItemImageSerializer(obj.images.all(), many=True).data
         return image_list
 
     def validate_category(self, value):

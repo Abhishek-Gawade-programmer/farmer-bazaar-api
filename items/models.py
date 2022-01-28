@@ -3,6 +3,7 @@ from users.models import User, Address
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import IntegrityError
 from django.forms import ValidationError
+from .utils import convert_quantity_gram
 
 LABEL_UNIT_CHOICES = (("To", "Ton"), ("Kg", "Kg"), ("Gr", "Gram"))
 
@@ -65,10 +66,18 @@ class ItemBag(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def number_of_available(self):
+        return (
+            self.item.convert_item_quantity_gram() // self.convert_item_quantity_gram()
+        )
+
     class Meta:
         # bag must unique with respect  item  quantity quantity_unit price
         unique_together = ("item", "quantity", "quantity_unit", "price")
         ordering = ("item",)
+
+    def convert_item_quantity_gram(self):
+        return convert_quantity_gram(self.quantity_unit, self.quantity)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -134,6 +143,9 @@ class Item(models.Model):
             if message.rating != 0:
                 rate_list.append(message.rating)
         return int(round(sum(rate_list) / (len(rate_list) or 1), 1))
+
+    def convert_item_quantity_gram(self):
+        return convert_quantity_gram(self.quantity_unit, self.quantity)
 
     def __str__(self):
         return self.title
