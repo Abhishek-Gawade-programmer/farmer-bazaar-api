@@ -24,7 +24,12 @@ from .serializers import (
     SubCategorySerializer,
 )
 from .models import Item, ItemImage, Category, ItemRating, ItemBag, SubCategory
-from users.permissions import IsOwnerOrReadOnly, IsOwnerOfItemBelongs
+from users.permissions import (
+    IsOwnerOrReadOnly,
+    IsOwnerOfObject,
+    IsOwnerOfItemBelongs,
+    IsAbleToSellItem,
+)
 from django_filters import rest_framework as filters
 from .filters import ItemFilter
 
@@ -33,7 +38,7 @@ class ListCreateItemView(generics.ListCreateAPIView):
     """Listing the item with pagination of 5 item with create"""
 
     serializer_class = ItemSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAbleToSellItem]
     queryset = Item.objects.filter(can_able_to_sell=True)
     parser_classes = (MultiPartParser, FormParser)
     filter_backends = (filters.DjangoFilterBackend,)
@@ -55,7 +60,7 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ItemSerializer
     # checking item call able to sell
     queryset = Item.objects.all()
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsAbleToSellItem]
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
@@ -64,7 +69,7 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(
-            {"detail": "item is deleted", "item_id": instance.id},
+            {"detail": "item is deleted"},
             status=status.HTTP_204_NO_CONTENT,
         )
 
@@ -76,12 +81,10 @@ class RetrieveUpdateDestroyItemView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # ITEM IMAGES
-
-
 class ListCreateItemImageView(generics.ListCreateAPIView):
     # list  the item with no permission or create the item who is owner of item
     serializer_class = ItemImageSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAbleToSellItem]
     queryset = ItemImage.objects.all()
 
     def get_object(self):
@@ -115,7 +118,7 @@ class ListCreateItemImageView(generics.ListCreateAPIView):
 
 
 class RetrieveUpdateDestroyItemImageView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated, IsOwnerOfItemBelongs]
+    permission_classes = [IsAuthenticated, IsAbleToSellItem, IsOwnerOfItemBelongs]
     serializer_class = ItemImageSerializer
     queryset = ItemImage.objects.all()
 
@@ -178,7 +181,7 @@ class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView)
 
     serializer_class = ItemRatingSerializer
     queryset = ItemRating.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOfObject]
 
     def get_permissions(self):
         if self.request.method == "GET":
@@ -187,20 +190,18 @@ class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView)
 
 
 # ITEM BAGS
-
-
 class ItemBagCreateView(generics.CreateAPIView):
     # the owner of item only can create item bags
     serializer_class = ItemBagSerializer
     queryset = ItemBag.objects.all()
-    permission_classes = [IsAuthenticated, IsOwnerOfItemBelongs]
+    permission_classes = [IsAuthenticated, IsAbleToSellItem, IsOwnerOfItemBelongs]
 
 
 class ItemBagRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     # the owner of item only can UD item bags
     serializer_class = ItemBagSerializer
     queryset = ItemBag.objects.all()
-    permission_classes = [IsAuthenticated, IsOwnerOfItemBelongs]
+    permission_classes = [IsAuthenticated, IsAbleToSellItem, IsOwnerOfItemBelongs]
 
     def get_permissions(self):
         if self.request.method == "GET":

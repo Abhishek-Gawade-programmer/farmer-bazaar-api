@@ -19,10 +19,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(validators=[validate_last_name])
     password = serializers.CharField()
     username = serializers.CharField(
-        validators=[
-            UniqueValidator(queryset=User.objects.all()),
-            validate_username,
-        ]
+        validators=[UniqueValidator(queryset=User.objects.all()), validate_username]
     )
     date_of_brith = serializers.DateField(
         source="user_profile.date_of_brith", validators=[validate_atleast_18_age]
@@ -76,12 +73,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = (
-            "first_name",
-            "last_name",
-            "email",
-            "username",
-        )
+        fields = ("first_name", "last_name", "email", "username")
         extra_kwargs = {i: {"required": True} for i in fields}
 
 
@@ -115,8 +107,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         else:
             address = AddressSerializer.create(
-                AddressSerializer(),
-                validated_data=location_data,
+                AddressSerializer(), validated_data=location_data
             )
         instance.location = address
 

@@ -6,7 +6,7 @@ from django.utils import timezone
 TERMS_CONDITIONS_CHOICES = (
     ("login", "login"),
     ("delete", "delete"),
-    ("can_buy_product", "can_buy_product"),
+    ("can_sell_product", "can_sell_product"),
 )
 
 
@@ -70,13 +70,13 @@ class UserProfile(models.Model):
     bio = models.TextField(null=True)
     email_verified = models.BooleanField(default=False)
 
-    can_buy_product = models.BooleanField("Can Sell Product", default=False)
-    # buyer t and c
-    buy_tc_accpeted = models.BooleanField(
-        "Terms And Conditions Accepted", default=False
+    can_sell_product = models.BooleanField("Can Sell Product", default=False)
+    # Seller t and c
+    seller_tc_accepted = models.BooleanField(
+        "Seller Terms And Conditions Accepted", default=False
     )
-    buy_tc_accpeted_date_time = models.DateTimeField(
-        "Terms And Conditions Accepted Time", blank=True, null=True
+    seller_tc_accepted_date_time = models.DateTimeField(
+        "Seller Terms And Conditions Accepted Date Time", blank=True, null=True
     )
 
     location = models.ForeignKey(
@@ -86,21 +86,21 @@ class UserProfile(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def can_able_to_sell_product(self):
-        return self.can_sell_product and self.sell_tc_accpeted
+        return self.can_sell_product and self.seller_tc_accepted
 
     def __str__(self):
         return str(self.user.username) + " profile"
 
     def save(self, *args, **kwargs):
-        if self.buy_tc_accpeted:
-            self.buy_tc_accpeted_date_time = timezone.now()
+        if self.seller_tc_accepted:
+            self.seller_tc_accepted_date_time = timezone.now()
         super().save(*args, **kwargs)
 
 
 class TermsAndCondition(models.Model):
     title = models.CharField(
         "Title of Terms and Conditions",
-        max_length=15,
+        max_length=16,
         choices=TERMS_CONDITIONS_CHOICES,
         default="login",
         unique=True,

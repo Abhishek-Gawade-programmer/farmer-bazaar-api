@@ -1,4 +1,7 @@
-from rest_framework import permissions
+from rest_framework import exceptions, permissions
+
+# messages user terms conditions not accepted
+USER_T_C_NOT_ACCEPTED = "User Don't have Accepted Terms And conditions"
 
 
 # checks that is requested user is owner of item
@@ -23,9 +26,7 @@ class IsOwnerOfObject(permissions.BasePermission):
 
 # checks that is requested user is same as to edit profile
 class IsAbleToSellItem(permissions.BasePermission):
+    message = USER_T_C_NOT_ACCEPTED
+
     def has_permission(self, request, view):
-        # print(obj)
-        print(request, view)
-        if request.method == "POST":
-            return request.user.user_profile.can_able_to_sell_product()
-        return False
+        return request.user.user_profile.can_able_to_sell_product()

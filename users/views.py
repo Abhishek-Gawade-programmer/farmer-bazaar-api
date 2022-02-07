@@ -6,11 +6,11 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from .serializers import CreateUserSerializer, UserSerializer, UserProfileSerializer
 from .models import User, PhoneOtp, UserProfile, TermsAndCondition
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsAbleToSellItem
 
 # Create User
 class CreateUserView(generics.CreateAPIView):
@@ -76,6 +76,7 @@ class SendUserOtpView(APIView):
             )
 
 
+# validate the Otp
 class ValidateOtpView(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get("phone_number")
@@ -88,6 +89,7 @@ class ValidateOtpView(APIView):
                     PhoneOtp, user=user_obj, otp_code=otp_text
                 )
                 diff_time = timezone.now() - qs_phone_otp.updated
+                # checking that the otp in less that 2 minutes
                 if ((diff_time.total_seconds()) // 60) < 2.0:
                     user_obj.is_active = True
                     user_obj.save()
@@ -116,6 +118,7 @@ class ValidateOtpView(APIView):
             )
 
 
+# get update or edit user profile of request user
 class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
@@ -130,28 +133,26 @@ class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
         serializer.save()
 
 
+# get the other user profile
 class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
 
+# accept the t and c for seller
 class GetTermCondition(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get_permissions(self):
-        if self.request.method == "GET":
-            return []
-        return [permission() for permission in self.permission_classes]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, format=None):
         can_buy_product_text = TermsAndCondition.objects.get(
-            title="can_buy_product"
+            title="can_sell_product"
         ).text
         return Response({"detail": can_buy_product_text})
 
     def post(self, request, format=None):
+        # accept the t and c for seller ie for farmer
         user_profile_obj = request.user.user_profile
-        user_profile_obj.can_buy_product = True
-        user_profile_obj.buy_tc_accpeted = True
+        user_profile_obj.can_sell_product = True
+        user_profile_obj.seller_tc_accepted = True
         user_profile_obj.save()
-        return Response({"detail": "Buyer Access Added"})
+        return Response({"detail": "Seller Access Added"})

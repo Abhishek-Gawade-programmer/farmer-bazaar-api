@@ -6,24 +6,36 @@ from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import Order, OrderItem
-from users.permissions import IsOwnerOfObject
+from users.permissions import IsOwnerOfObject, IsAbleToSellItem
 from .serializers import OrderSerializer, OrderItemSerializer, CreateOrderItemSerializer
 
 
-class GetCartStatusView(generics.ListAPIView):
+class GetCartStatusView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
+    # getting the status of cart
     def get(self, request, *args, **kwargs):
         qs = Order.objects.filter(user=request.user, current_order=True)
-        if not qs.exists():
+        if qs.exists():
+            order_instance = qs[0]
+            return Response(OrderSerializer(order_instance).data)
+        else:
+            return Response(
+                {"detail": "User Don't Have Active Order"}, status.HTTP_400_BAD_REQUEST
+            )
+
+    # creating the order
+    def post(self, request, *args, **kwargs):
+        qs = Order.objects.filter(user=request.user, current_order=True)
+        if qs.exists():
+            order_instance = qs[0]
+        else:
             order_instance = Order.objects.create(user=request.user)
             order_instance.current_order = True
-            order_instance.save()
-        else:
-            order_instance = qs[0]
-        return Response(OrderSerializer(order_instance).data)
+        order_instance.save()
+        return Response(OrderSerializer(order_instance).data, status.HTTP_201_CREATED)
 
 
 class AddUpdateItemToCartView(generics.CreateAPIView):

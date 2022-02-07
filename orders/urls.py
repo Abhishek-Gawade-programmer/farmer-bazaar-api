@@ -3,7 +3,9 @@ from .views import GetCartStatusView, AddUpdateItemToCartView, OrderItemRemoveCa
 
 urlpatterns = [
     # get the the user item bag status
-    path("get-cart-status/", GetCartStatusView.as_view(), name="get_cart_status"),
+    path(
+        "get-create-cart-status/", GetCartStatusView.as_view(), name="get_cart_status"
+    ),
     # add or update order item from order
     path(
         "add-update-item-to-cart/<int:order_pk>/",

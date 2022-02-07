@@ -22,6 +22,12 @@ class CreateOrderItemSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         item_bag_obj = data.get("item_bag")
+        number_of_available_bags = item_bag_obj.number_of_available()
+        if number_of_available_bags < data.get("quantity"):
+            raise serializers.ValidationError(
+                f"The quantity must at most {number_of_available_bags}"
+            )
+
         if not item_bag_obj.available_status:
             raise serializers.ValidationError("This bag is currently unavailable")
         return data
