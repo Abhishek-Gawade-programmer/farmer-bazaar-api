@@ -26,9 +26,14 @@ class ItemImageSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    discount_percentage = serializers.SerializerMethodField(read_only=True)
+
+    def get_discount_percentage(self, obj):
+        return obj.get_discount_percentage()
+
     class Meta:
         model = Category
-        fields = ("id", "name", "color", "image")
+        fields = ("id", "name", "image", "discount_percentage")
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
@@ -39,7 +44,8 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
 class ItemBagSerializer(serializers.ModelSerializer):
     item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all())
-    number_of_available_bags = serializers.SerializerMethodField()
+    number_of_available_bags = serializers.SerializerMethodField(read_only=True)
+    discount_percentage = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = ItemBag
@@ -51,10 +57,16 @@ class ItemBagSerializer(serializers.ModelSerializer):
             "available_status",
             "price",
             "number_of_available_bags",
+            "discount_percentage",
+            "discount_price",
         )
+        extra_kwargs = {"item": {"required": True}}
 
     def get_number_of_available_bags(self, obj):
         return obj.number_of_available()
+
+    def get_discount_percentage(self, obj):
+        return obj.get_discount_percentage()
 
     def validate_price(self, value):
         if value > 0:
@@ -74,7 +86,6 @@ class ItemBagSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Please check the quantity and unit of bag as Your item quantity and unit is excedting"
             )
-
         return data
 
 
@@ -103,6 +114,7 @@ class ItemSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     category = serializers.CharField(max_length=10, source="category.name")
     sub_category = serializers.CharField(max_length=10, source="sub_category.name")
+    discount_percentage = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Item
@@ -114,10 +126,10 @@ class ItemSerializer(serializers.ModelSerializer):
             "description",
             "quantity",
             "quantity_unit",
-            "price",
             "available_status",
             "user",
             "images",
+            "discount_percentage",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 
@@ -139,11 +151,8 @@ class ItemSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError("Sub Category Name is not valid")
 
-    def validate_price(self, value):
-        if float(value) > 0:
-            return super().validate(value)
-        else:
-            raise serializers.ValidationError("Price Can't be negative or Zero")
+    def get_discount_percentage(self, obj):
+        return obj.get_discount_percentage()
 
     def create(self, validated_data):
         get_category = Category.objects.get(
@@ -159,7 +168,6 @@ class ItemSerializer(serializers.ModelSerializer):
             description=validated_data.get("description"),
             quantity=validated_data.get("quantity"),
             quantity_unit=validated_data.get("quantity_unit"),
-            price=validated_data.get("price"),
             available_status=validated_data.get("available_status"),
             user=validated_data.get("user"),
         )
@@ -182,7 +190,6 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.description = validated_data.get("description")
         instance.quantity = validated_data.get("quantity")
         instance.quantity_unit = validated_data.get("quantity_unit")
-        instance.price = validated_data.get("price")
         instance.available_status = validated_data.get("available_status")
         instance.user = validated_data.get("user")
         instance.save()

@@ -8,8 +8,13 @@ from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
-from .serializers import CreateUserSerializer, UserSerializer, UserProfileSerializer
-from .models import User, PhoneOtp, UserProfile, TermsAndCondition
+from .serializers import (
+    CreateUserSerializer,
+    UserSerializer,
+    UserProfileSerializer,
+    AddressSerializer,
+)
+from .models import User, PhoneOtp, UserProfile, TermsAndCondition, Address
 from .permissions import IsOwnerOrReadOnly, IsAbleToSellItem
 
 # Create User
@@ -18,10 +23,7 @@ class CreateUserView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         super().create(request, *args, **kwargs)
-        return Response(
-            {"detail": "user is created"},
-            status=status.HTTP_201_CREATED,
-        )
+        return Response({"detail": "user is created"}, status=status.HTTP_201_CREATED)
 
 
 # activating user by otp
@@ -80,10 +82,9 @@ class SendUserOtpView(APIView):
 class ValidateOtpView(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get("phone_number")
-        user_obj = get_object_or_404(User, username=phone_number)
-
         otp_text = request.data.get("otp_text")
         if otp_text:
+            user_obj = get_object_or_404(User, username=phone_number)
             if otp_text.isdigit():
                 qs_phone_otp = get_object_or_404(
                     PhoneOtp, user=user_obj, otp_code=otp_text
@@ -156,3 +157,55 @@ class GetTermCondition(APIView):
         user_profile_obj.seller_tc_accepted = True
         user_profile_obj.save()
         return Response({"detail": "Seller Access Added"})
+
+
+# Create A New Address or list address user  Of User
+class ListCreateAddressView(generics.ListCreateAPIView):
+    serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Address.objects.all()
+    pagination_class = None
+
+    def perform_create(self, serializer):
+        address_obj = serializer.save(user=self.request.user)
+        # setting the default address to user if not exist (the first address as a default)
+        user_profile = self.request.user.user_profile
+        if not user_profile.default_address:
+            user_profile.default_address = address_obj
+            user_profile.save()
+
+    def list(self, request, *args, **kwargs):
+        # filtering the address which have user
+        queryset = self.get_queryset().filter(user=request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+# Get or SET User Default Address
+class GetSetUserDefaultAddress(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        # checking that user have the default address
+        get_default_address_null = request.user.user_profile.default_address
+        if get_default_address_null:
+            return Response(AddressSerializer(get_default_address_null).data)
+        else:
+            return Response(
+                {"detail": "User Don't Have Default Address"},
+                status.HTTP_400_BAD_REQUEST,
+            )
+
+    def post(self, request, *args, **kwargs):
+        address_id = request.data.get("address_id")
+        if address_id:
+            address_obj = get_object_or_404(Address, id=address_id, user=request.user)
+            request.user.user_profile.default_address = address_obj
+            request.user.user_profile.save()
+            return Response({"detail": "Added To Default Address"})
+
+        else:
+            return Response(
+                {"address_id": ["This field is required."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )

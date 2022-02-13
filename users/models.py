@@ -2,6 +2,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .utils import generate_otp, send_otp
 from django.utils import timezone
+from django.core.validators import RegexValidator, MinLengthValidator
+
+# from orders.models import Order
 
 TERMS_CONDITIONS_CHOICES = (
     ("login", "login"),
@@ -11,7 +14,15 @@ TERMS_CONDITIONS_CHOICES = (
 
 
 class User(AbstractUser):
-    username = models.CharField("Phone Number", max_length=10, unique=True)
+    username = models.CharField(
+        "Phone Number",
+        max_length=10,
+        unique=True,
+        validators=[
+            MinLengthValidator(10),
+            RegexValidator(regex=r"^\d*$", message="Only digits are allowed."),
+        ],
+    )
     password = models.CharField(max_length=100)
     email = models.CharField(max_length=255)
 
@@ -38,36 +49,37 @@ class PhoneOtp(models.Model):
 
 
 class Address(models.Model):
-    google_place_id = models.TextField()
-    formatted_name = models.TextField(null=True, blank=True)
-    name = models.TextField(null=True, blank=True)
-    latitude = models.FloatField(null=True, blank=True)
-    longitude = models.FloatField(null=True, blank=True)
-    street_number = models.TextField(null=True, blank=True)
-    route = models.TextField(null=True, blank=True)
-    administrative_area_level_1 = models.TextField(null=True, blank=True)
-    administrative_area_level_1_short = models.TextField(null=True, blank=True)
-    city = models.TextField(null=True, blank=True)
-    country = models.TextField(null=True, blank=True)
-    country_iso = models.TextField(null=True, blank=True)
-    postal_code = models.TextField(null=True, blank=True)
-    utc_offset = models.IntegerField(null=True, blank=True)
+    user = models.ForeignKey(
+        "User", on_delete=models.CASCADE, related_name="my_address"
+    )
+    full_address = models.TextField("Full Address")
+    short_address = models.TextField("Short Address")
+    place_id = models.CharField("Place id", max_length=50)
+    latitude = models.FloatField("Latitude")
+    longitude = models.FloatField("Longitude")
+    postal_code = models.CharField(
+        "Postal Code",
+        max_length=6,
+        validators=[
+            MinLengthValidator(6),
+            RegexValidator(regex=r"^\d*$", message="Only digits are allowed."),
+        ],
+    )
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.name
+        return self.full_address
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="user_profile"
-    )
-    profile_pic = models.ImageField(
-        blank=True, null=True, default="default.png", upload_to="profile_image/"
+        "User", on_delete=models.CASCADE, related_name="user_profile"
     )
     date_of_brith = models.DateField(default="2002-10-12")
-    bio = models.TextField(null=True)
     email_verified = models.BooleanField(default=False)
 
     can_sell_product = models.BooleanField("Can Sell Product", default=False)
@@ -79,8 +91,11 @@ class UserProfile(models.Model):
         "Seller Terms And Conditions Accepted Date Time", blank=True, null=True
     )
 
-    location = models.ForeignKey(
-        "Address", on_delete=models.CASCADE, null=True, blank=True
+    default_address = models.ForeignKey(
+        Address, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    current_order = models.ForeignKey(
+        "orders.Order", on_delete=models.SET_NULL, null=True, blank=True
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

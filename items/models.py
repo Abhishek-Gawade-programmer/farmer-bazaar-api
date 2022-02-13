@@ -22,13 +22,21 @@ class Category(models.Model):
     """Category which haves the name user who creates and color and image and created and updated timestamp"""
 
     name = models.CharField(max_length=50, unique=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    color = models.CharField(
-        max_length=9, choices=CATEGORY_COLOR_CHOICES, default="default"
-    )
     image = models.ImageField(upload_to="category_images/", null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def get_discount_percentage(self):
+        item_discount_percentage = 0
+        count = 0
+        for item in self.products_included.all():
+            if item.get_discount_percentage():
+                item_discount_price = item.get_discount_percentage()
+                count += 1
+                item_discount_percentage += item_discount_price
+        if count == 0:
+            return None
+        return round(item_discount_percentage / count, 2)
 
     def __str__(self):
         return self.name
@@ -38,10 +46,6 @@ class SubCategory(models.Model):
     """SubCategory which haves the name user who creates and color created and updated timestamp"""
 
     name = models.CharField(max_length=50, unique=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    color = models.CharField(
-        max_length=9, choices=CATEGORY_COLOR_CHOICES, default="default"
-    )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -61,6 +65,9 @@ class ItemBag(models.Model):
     quantity_unit = models.CharField(
         max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
     )
+    discount_price = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     available_status = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -78,6 +85,12 @@ class ItemBag(models.Model):
 
     def convert_item_quantity_gram(self):
         return convert_quantity_gram(self.quantity_unit, self.quantity)
+
+    def get_discount_percentage(self):
+        if self.discount_price:
+            return round(100 - ((self.discount_price / self.price) * 100), 2)
+        else:
+            return None
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -130,7 +143,6 @@ class Item(models.Model):
         max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     available_status = models.BooleanField(default=False)
     can_able_to_sell = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
@@ -146,6 +158,18 @@ class Item(models.Model):
 
     def convert_item_quantity_gram(self):
         return convert_quantity_gram(self.quantity_unit, self.quantity)
+
+    def get_discount_percentage(self):
+        # this will be exclude the items that don't have discount price
+        item_discount_percentage = 0
+        count = 0
+        for item_bag in self.bags.exclude(discount_price=None):
+            item_bag_discount_price = item_bag.get_discount_percentage()
+            count += 1
+            item_discount_percentage += item_bag_discount_price
+        if count == 0:
+            return None
+        return round(item_discount_percentage / count, 2)
 
     def __str__(self):
         return self.title

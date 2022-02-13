@@ -78,9 +78,25 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class AddressSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Address
-        fields = "__all__"
+        fields = (
+            "id",
+            "full_address",
+            "short_address",
+            "place_id",
+            "latitude",
+            "longitude",
+            "postal_code",
+            "user",
+            "updated",
+            "created",
+        )
+
+        def create(self, validated_data):
+            print(validated_data)
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -93,7 +109,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ("user", "bio", "location")
+        fields = ("user", "location")
 
     def update(self, instance, validated_data):
         user_data = validated_data.get("user")
@@ -117,7 +133,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.user = user
         instance.save()
         userprofile_obj = UserProfile.objects.get(user=user)
-        userprofile_obj.bio = validated_data.get("bio")
         userprofile_obj.save()
 
         return userprofile_obj

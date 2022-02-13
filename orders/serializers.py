@@ -1,7 +1,20 @@
 from rest_framework import serializers
-from .models import Order, OrderItem
+from .models import Order, OrderItem, OrderDetails
 from items.models import Item, ItemBag
 from items.serializers import ItemShortSerializer, ItemBagSerializer
+
+
+class OrderDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderDetails
+        fields = (
+            "id",
+            "order",
+            "first_name",
+            "phone_number",
+            "address",
+            "payment_method",
+        )
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -39,7 +52,20 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        exclude = ("user",)
+        fields = (
+            "id",
+            "order_items_all",
+            "order_cost",
+            "placed",
+            "paid",
+            "dispatched",
+            "delivered",
+            "rejected",
+            "reject_reason",
+            "current_order",
+            "updated",
+            "created",
+        )
 
     def get_order_cost(self, obj):
         return obj.get_total_cost()
