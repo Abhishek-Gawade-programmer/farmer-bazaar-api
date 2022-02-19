@@ -13,6 +13,8 @@ from .views import (
     GetTermCondition,
     ListCreateAddressView,
     GetSetUserDefaultAddress,
+    RetrieveUpdateDestroyAddressView,
+    ChangeUsernameView,
 )
 
 urlpatterns = [
@@ -31,6 +33,8 @@ urlpatterns = [
     path("validate-otp-user/", ValidateOtpView.as_view(), name="validate_otp_user"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("get-term-condition/", GetTermCondition.as_view(), name="get_term_condition"),
+    # change Username(mobile number ) Password
+    path("change-username/", ChangeUsernameView.as_view(), name="change_username"),
     path(
         "create-get-address/",
         ListCreateAddressView.as_view(),
@@ -40,5 +44,10 @@ urlpatterns = [
         "get-set-default-address/",
         GetSetUserDefaultAddress.as_view(),
         name="get_set_default_address",
+    ),
+    path(
+        "get-update-delete-address/<int:pk>/",
+        RetrieveUpdateDestroyAddressView.as_view(),
+        name="get_update_delete_address",
     ),
 ]

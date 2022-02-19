@@ -1,5 +1,6 @@
 from rest_framework.serializers import ValidationError
 from django.utils import timezone
+from .models import User
 
 
 def validate_username(value):
@@ -8,6 +9,12 @@ def validate_username(value):
     else:
         if not value.isdigit():
             raise ValidationError("Mobile Number Should Be  Numerical Value Only")
+
+
+def validate_username_exist(value):
+    qs = User.objects.filter(username=value)
+    if not qs.exists():
+        raise ValidationError("No Account Found With Given Credentials ")
 
 
 def validate_first_name(value):

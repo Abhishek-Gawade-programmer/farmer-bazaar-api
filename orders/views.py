@@ -7,7 +7,12 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import Order, OrderItem
 from users.permissions import IsOwnerOfObject, IsAbleToSellItem
-from .serializers import OrderSerializer, OrderItemSerializer, CreateOrderItemSerializer
+from .serializers import (
+    OrderSerializer,
+    OrderItemSerializer,
+    CreateOrderItemSerializer,
+    OrderDetailsSerializer,
+)
 
 
 class GetCartStatusView(generics.ListCreateAPIView):
@@ -110,7 +115,22 @@ class OrderItemRemoveCartView(APIView):
             )
 
 
-class CheckOutOrderView(APIView):
-    """The order placed will now have the date"""
+# {'order': 1, 'first_name': 'fghfg', 'last_name': 'rtyrt',
+# 'phone_number': '4564564565', 'address': 1, 'payment_method': 'OP'}
 
-    pass
+
+class CheckOutOrderView(generics.CreateAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrderDetailsSerializer
+
+    def check_user_permission(self, address_id, order_id):
+        address_obj = get_object_or_404(Address, user=self.request, id=address_id)
+        order_obj = get_object_or_404(Order, user=self.request, id=order_id)
+        return address_obj, order_obj
+
+    def perform_create(self, serializer):
+        serializer_data = serializer.data
+
+        print("serializer Data", serializer_data)
+        # serializer.save()

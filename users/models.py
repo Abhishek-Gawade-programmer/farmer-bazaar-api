@@ -34,8 +34,9 @@ class User(AbstractUser):
 
 
 class PhoneOtp(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField("User", on_delete=models.CASCADE, unique=True)
     otp_code = models.PositiveIntegerField()
+    is_verified = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -46,6 +47,9 @@ class PhoneOtp(models.Model):
     def send_phone_otp(self):
         send_otp(self.otp_code, self.user.username)
         return
+
+    def __str__(self):
+        return f"{self.user.username} #Number "
 
 
 class Address(models.Model):

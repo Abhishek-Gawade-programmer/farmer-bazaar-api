@@ -124,5 +124,10 @@ class OrderDetails(models.Model):
         verbose_name = "order details"
         verbose_name_plural = "order details"
 
+    def save(self, *args, **kwargs):
+        # now set that order
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.order} Details"

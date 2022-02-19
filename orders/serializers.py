@@ -1,20 +1,26 @@
 from rest_framework import serializers
+from users.models import Address
 from .models import Order, OrderItem, OrderDetails
 from items.models import Item, ItemBag
 from items.serializers import ItemShortSerializer, ItemBagSerializer
 
 
 class OrderDetailsSerializer(serializers.ModelSerializer):
+    order = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all())
+    address = serializers.PrimaryKeyRelatedField(queryset=Address.objects.all())
+
     class Meta:
         model = OrderDetails
         fields = (
             "id",
             "order",
             "first_name",
+            "last_name",
             "phone_number",
             "address",
             "payment_method",
         )
+        extra_kwargs = {i: {"required": True} for i in fields}
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
