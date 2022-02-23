@@ -10,7 +10,7 @@ from .views import (
     ValidateOtpView,
     RetrieveUserProfileView,
     RetrieveOtherUserDetailView,
-    GetTermCondition,
+    GetAcceptSellerTermCondition,
     ListCreateAddressView,
     GetSetUserDefaultAddress,
     RetrieveUpdateDestroyAddressView,
@@ -32,7 +32,11 @@ urlpatterns = [
     path("send-otp-user/", SendUserOtpView.as_view(), name="send_otp_user"),
     path("validate-otp-user/", ValidateOtpView.as_view(), name="validate_otp_user"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("get-term-condition/", GetTermCondition.as_view(), name="get_term_condition"),
+    path(
+        "get-accept-seller-term-condition/",
+        GetAcceptSellerTermCondition.as_view(),
+        name="get_accept_seller_term_condition",
+    ),
     # change Username(mobile number ) Password
     path("change-username/", ChangeUsernameView.as_view(), name="change_username"),
     path(

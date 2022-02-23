@@ -14,7 +14,11 @@ from users.serializers import (
     UserSerializer,
     UserProfileSerializer,
 )
-from users.models import User, PhoneOtp, UserProfile
+from users.models import (
+    User,
+    PhoneOtp,
+    UserProfile,
+)
 from .serializers import (
     ItemSerializer,
     ItemImageSerializer,
@@ -22,8 +26,17 @@ from .serializers import (
     ItemBagSerializer,
     CategorySerializer,
     SubCategorySerializer,
+    SellerReplySerializer,
 )
-from .models import Item, ItemImage, Category, ItemRating, ItemBag, SubCategory
+from .models import (
+    Item,
+    ItemImage,
+    Category,
+    ItemRating,
+    ItemBag,
+    SubCategory,
+    SellerReply,
+)
 from users.permissions import (
     IsOwnerOrReadOnly,
     IsOwnerOfObject,
@@ -146,7 +159,7 @@ class ListSubCategoryView(generics.ListAPIView):
 
 
 # ITEM REVIEW
-class GetReviewItemView(generics.ListCreateAPIView):
+class GetCreateReviewItemView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemRatingSerializer
     permission_classes = [IsAuthenticated]
@@ -176,6 +189,16 @@ class GetReviewItemView(generics.ListCreateAPIView):
                 status=status.HTTP_405_METHOD_NOT_ALLOWED,
             )
         return self.create(request, *args, **kwargs)
+
+
+class CreateSellerReplyView(generics.CreateAPIView):
+    serializer_class = SellerReplySerializer
+    queryset = ItemRating.objects.all()
+    permission_classes = [IsAuthenticated, IsAbleToSellItem]
+
+    def perform_create(self, serializer):
+        # creating the seller reply on item review
+        serializer.save(user=self.request.user)
 
 
 class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView):
@@ -235,3 +258,17 @@ class AllItemBagItemView(generics.RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance.bags.all(), many=True)
         return Response(serializer.data)
+
+
+# Item Recommendation
+class ListRecommendItemView(generics.ListAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+    lookup_field = "pk"
+
+    def get_queryset(self):
+        current_item = get_object_or_404(Item, id=self.kwargs.get("pk"))
+        # getting current_item farmer item  products of that category
+        return current_item.user.my_items.exclude(id=current_item.id).filter(
+            category=current_item.category, sub_category=current_item.sub_category
+        )

@@ -1,11 +1,28 @@
 from rest_framework import serializers
 from users.serializers import AddressSerializer, UserSerializer
-from .models import Item, Category, ItemImage, ItemRating, ItemBag, SubCategory
+from .models import (
+    Item,
+    Category,
+    ItemImage,
+    ItemRating,
+    ItemBag,
+    SubCategory,
+    SellerReply,
+)
 from users.models import Address
 
 from rest_framework.reverse import reverse
 from easy_thumbnails.templatetags.thumbnail import thumbnail_url
 from .utils import convert_quantity_gram
+
+
+class SellerReplySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = SellerReply
+        fields = ("id", "user", "reply_on", "message", "updated")
+        extra_kwargs = {i: {"required": True} for i in fields}
 
 
 class ItemImageSerializer(serializers.ModelSerializer):
@@ -39,7 +56,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = SubCategory
-        fields = ("id", "name", "color")
+        fields = ("id", "name")
 
 
 class ItemBagSerializer(serializers.ModelSerializer):
@@ -91,11 +108,15 @@ class ItemBagSerializer(serializers.ModelSerializer):
 
 class ItemRatingSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    seller_replies = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = ItemRating
-        fields = ("id", "user", "rating", "body", "updated")
+        fields = ("id", "user", "rating", "body", "seller_replies", "updated")
         extra_kwargs = {i: {"required": True} for i in fields}
+
+    def get_seller_replies(self, obj):
+        return SellerReplySerializer(obj.seller_replies.all(), many=True).data
 
 
 class ItemShortSerializer(serializers.ModelSerializer):
@@ -115,6 +136,7 @@ class ItemSerializer(serializers.ModelSerializer):
     category = serializers.CharField(max_length=10, source="category.name")
     sub_category = serializers.CharField(max_length=10, source="sub_category.name")
     discount_percentage = serializers.SerializerMethodField(read_only=True)
+    average_rating = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Item
@@ -130,12 +152,16 @@ class ItemSerializer(serializers.ModelSerializer):
             "user",
             "images",
             "discount_percentage",
+            "average_rating",
         )
         extra_kwargs = {i: {"required": True} for i in fields}
 
     def get_images(self, obj):
         image_list = ItemImageSerializer(obj.images.all(), many=True).data
         return image_list
+
+    def get_average_rating(self, obj):
+        return obj.get_average_rating()
 
     def validate_category(self, value):
         qs = Category.objects.filter(name=value)

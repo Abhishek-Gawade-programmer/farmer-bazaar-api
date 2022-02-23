@@ -83,6 +83,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         "User", on_delete=models.CASCADE, related_name="user_profile"
     )
+    seller_name = models.CharField(max_length=50, blank=True, null=True)
     date_of_brith = models.DateField(default="2002-10-12")
     email_verified = models.BooleanField(default=False)
 

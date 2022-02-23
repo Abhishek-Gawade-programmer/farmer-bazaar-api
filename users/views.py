@@ -123,7 +123,7 @@ class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
 
 
 # accept the t and c for seller
-class GetTermCondition(APIView):
+class GetAcceptSellerTermCondition(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, format=None):
@@ -133,12 +133,20 @@ class GetTermCondition(APIView):
         return Response({"detail": can_buy_product_text})
 
     def post(self, request, format=None):
-        # accept the t and c for seller ie for farmer
-        user_profile_obj = request.user.user_profile
-        user_profile_obj.can_sell_product = True
-        user_profile_obj.seller_tc_accepted = True
-        user_profile_obj.save()
-        return Response({"detail": "Seller Access Added"})
+        # accept the t and c for seller  for farmer
+        seller_name = request.data.get("seller_name")
+        if seller_name:
+            user_profile_obj = request.user.user_profile
+            user_profile_obj.seller_name = seller_name
+            user_profile_obj.can_sell_product = True
+            user_profile_obj.seller_tc_accepted = True
+            user_profile_obj.save()
+            return Response({"detail": "Seller Access Added"})
+        else:
+            return Response(
+                {"seller_name": ["This field is required."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 # Create A New Address or list address user  Of User

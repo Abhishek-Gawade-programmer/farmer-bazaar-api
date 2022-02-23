@@ -5,14 +5,22 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from .models import Order, OrderItem
-from users.permissions import IsOwnerOfObject, IsAbleToSellItem
+from .models import Order, OrderItem, OrderDetail
+from users.models import Address
+from users.permissions import IsOwnerOfObject, IsAbleToSellItem, IsOwnerOfOrder
 from .serializers import (
     OrderSerializer,
     OrderItemSerializer,
     CreateOrderItemSerializer,
-    OrderDetailsSerializer,
+    OrderDetailSerializer,
 )
+from django.http import HttpResponse
+
+# HTML TO PDF
+import os
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 
 class GetCartStatusView(generics.ListCreateAPIView):
@@ -40,6 +48,7 @@ class GetCartStatusView(generics.ListCreateAPIView):
         else:
             order_instance = Order.objects.create(user=request.user)
             request.user.user_profile.current_order = order_instance
+            request.user.user_profile.save()
             order_instance.save()
         return Response(OrderSerializer(order_instance).data, status.HTTP_201_CREATED)
 
@@ -115,22 +124,75 @@ class OrderItemRemoveCartView(APIView):
             )
 
 
-# {'order': 1, 'first_name': 'fghfg', 'last_name': 'rtyrt',
-# 'phone_number': '4564564565', 'address': 1, 'payment_method': 'OP'}
-
-
 class CheckOutOrderView(generics.CreateAPIView):
 
     permission_classes = [IsAuthenticated]
-    serializer_class = OrderDetailsSerializer
+    serializer_class = OrderDetailSerializer
 
-    def check_user_permission(self, address_id, order_id):
-        address_obj = get_object_or_404(Address, user=self.request, id=address_id)
-        order_obj = get_object_or_404(Order, user=self.request, id=order_id)
-        return address_obj, order_obj
+    def check_user_permission(self, address_id):
+        address_obj = get_object_or_404(Address, user=self.request.user, id=address_id)
+        return address_obj
 
     def perform_create(self, serializer):
-        serializer_data = serializer.data
+        # saving the order  to order detail to we can track the order
+        order_or_null = self.request.user.user_profile.current_order
+        address_obj = self.check_user_permission(self.request.POST.get("address"))
+        serializer.save(order=order_or_null)
 
-        print("serializer Data", serializer_data)
-        # serializer.save()
+    def post(self, request, *args, **kwargs):
+        # checking the order can able to placed
+        order_or_null = self.request.user.user_profile.current_order
+        if order_or_null == None:
+            return Response(
+                {"detail": "User Don't Have Any Active Order "},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # is order is empty or don't have any items
+        if order_or_null.can_ableto_place():
+            return super().post(request, *args, **kwargs)
+
+        return Response(
+            {
+                "detail": "You can't Place The empty order or that Don't have order items"
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+# get order detail by id that have permission
+class RetrieveOrderDetailView(generics.RetrieveAPIView):
+    queryset = OrderDetail.objects.all()
+    serializer_class = OrderDetailSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOfOrder]
+
+
+# get order detail PDF by id that have permission
+class RetrieveOrderInvoiceView(generics.RetrieveAPIView):
+    queryset = OrderDetail.objects.all()
+    serializer_class = OrderDetailSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOfOrder]
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        from django.utils import timezone
+
+        now_date = timezone.now()
+
+        template_path = "invoice_pdf.html"
+        context = {"order_detail": instance, "request": request, "now_date": now_date}
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type="application/pdf")
+        response[
+            "Content-Disposition"
+        ] = f'attachment; filename="{request.user.get_full_name()}_invioce_number_{instance.id}.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # create a pdf
+        pisa_status = pisa.CreatePDF(html, dest=response)
+        # if error then show some funy view
+        if pisa_status.err:
+            return HttpResponse("We had some errors <pre>" + html + "</pre>")
+        return response

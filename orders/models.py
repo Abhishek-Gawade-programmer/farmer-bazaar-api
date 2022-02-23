@@ -4,6 +4,7 @@ from users.models import User, Address
 from items.models import Item, ItemBag, LABEL_UNIT_CHOICES
 from django.core.validators import MinValueValidator, RegexValidator, MinLengthValidator
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 PAYMENT_CHOICES = (
     ("OP", "NetBanking Payment"),
@@ -37,7 +38,6 @@ class Order(models.Model):
     delivered = models.DateTimeField(null=True, blank=True)
     rejected = models.DateTimeField(null=True, blank=True)
     reject_reason = models.TextField(max_length=1000, blank=True)
-    current_order = models.BooleanField(default=False, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -55,10 +55,15 @@ class Order(models.Model):
         if self.paid and self.rejected:
             raise ValidationError("Order can't be rejected if its paid")
 
+    def can_ableto_place(self):
+        if int(self.get_total_cost()) == 0 or (not self.order_items.all()):
+            return False
+        return True
+
     def save(self, *args, **kwargs):
         # removing the current order from cart
         if self.placed:
-            self.current_order = False
+            self.user.user_profile.current_order = None
         super().save(*args, **kwargs)
 
     def get_total_cost(self):
@@ -104,7 +109,7 @@ class OrderItem(models.Model):
         return "OrderItem -->   " + str(self.id)
 
 
-class OrderDetails(models.Model):
+class OrderDetail(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -119,6 +124,8 @@ class OrderDetails(models.Model):
     payment_method = models.CharField(
         choices=PAYMENT_CHOICES, max_length=3, default="OP"
     )
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "order details"
@@ -126,6 +133,10 @@ class OrderDetails(models.Model):
 
     def save(self, *args, **kwargs):
         # now set that order
+        self.order.user.user_profile.current_order = None
+        self.order.user.user_profile.save()
+        self.order.placed = timezone.now()
+        self.order.save()
 
         super().save(*args, **kwargs)
 

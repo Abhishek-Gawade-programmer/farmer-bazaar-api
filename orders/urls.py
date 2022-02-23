@@ -4,6 +4,8 @@ from .views import (
     AddUpdateItemToCartView,
     OrderItemRemoveCartView,
     CheckOutOrderView,
+    RetrieveOrderDetailView,
+    RetrieveOrderInvoiceView,
 )
 
 urlpatterns = [
@@ -24,5 +26,17 @@ urlpatterns = [
         "delete-item-to-cart/<int:order_item_pk>/",
         OrderItemRemoveCartView.as_view(),
         name="add_item_to_cart",
+    ),
+    # get the order info
+    path(
+        "get-order-detail/<int:pk>/",
+        RetrieveOrderDetailView.as_view(),
+        name="get_order_detail",
+    ),
+    # get the order  detail pdfinfo
+    path(
+        "get-order-invoice-pdf/<int:pk>/",
+        RetrieveOrderInvoiceView.as_view(),
+        name="get_order_invoice_pdf",
     ),
 ]

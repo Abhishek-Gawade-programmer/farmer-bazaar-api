@@ -30,3 +30,9 @@ class IsAbleToSellItem(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return request.user.user_profile.can_able_to_sell_product()
+
+
+# checks the user ownwer of order
+class IsOwnerOfOrder(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.order.user == request.user

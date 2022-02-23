@@ -142,7 +142,9 @@ class Item(models.Model):
     quantity_unit = models.CharField(
         max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
     )
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="my_items"
+    )
     available_status = models.BooleanField(default=False)
     can_able_to_sell = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
@@ -205,3 +207,16 @@ class ItemRating(models.Model):
 
     def __str__(self):
         return str(self.body[:30]) + self.user.username
+
+
+class SellerReply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="my_replies")
+    reply_on = models.ForeignKey(
+        "ItemRating", on_delete=models.CASCADE, related_name="seller_replies"
+    )
+    message = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.reply_on.id) + self.message[:20]

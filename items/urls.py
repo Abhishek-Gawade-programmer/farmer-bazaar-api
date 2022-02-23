@@ -2,7 +2,7 @@ from django.urls import path, include
 from .views import (
     ListCreateItemView,
     RetrieveUpdateDestroyItemView,
-    GetReviewItemView,
+    GetCreateReviewItemView,
     RetrieveUpdateDestroyItemRatingView,
     ItemBagCreateView,
     RetrieveUpdateDestroyItemImageView,
@@ -11,14 +11,30 @@ from .views import (
     ListCreateItemImageView,
     ListCategoryView,
     ListSubCategoryView,
+    CreateSellerReplyView,
+    ListRecommendItemView,
 )
 
 urlpatterns = [
     # creating of list items
     path("create-list-item/", ListCreateItemView.as_view(), name="create_list_item"),
+    # creating of list items
+    path(
+        "get-item-recommendations/<int:pk>/",
+        ListRecommendItemView.as_view(),
+        name="get_item_recommendations",
+    ),
     # get the reviews of specific item
     path(
-        "get-review-item/<int:pk>/", GetReviewItemView.as_view(), name="get_review_item"
+        "get-create-review-item/<int:pk>/",
+        GetCreateReviewItemView.as_view(),
+        name="get_create_review_item",
+    ),
+    # get the reviews of specific item
+    path(
+        "create-seller-reply/",
+        CreateSellerReplyView.as_view(),
+        name="create_seller_reply",
     ),
     # GET ITEM IMAGES OR CREATE ITEM IMAGES OF ITEM
     path(
@@ -57,8 +73,8 @@ urlpatterns = [
         name="get_update_delete_itembag",
     ),
     # CATGOIRES AND SUBCATGOIRES
-    path("all-categoty/", ListCategoryView.as_view(), name="all_categoty"),
-    path("all-subcategoty/", ListSubCategoryView.as_view(), name="all_subcategoty"),
+    path("all-category/", ListCategoryView.as_view(), name="all_categoty"),
+    path("all-subcategory/", ListSubCategoryView.as_view(), name="all_subcategoty"),
     # CREATE ITEM BAGS
     path(
         "create-item-bag/",

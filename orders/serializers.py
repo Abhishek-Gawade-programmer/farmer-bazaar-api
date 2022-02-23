@@ -1,26 +1,8 @@
 from rest_framework import serializers
 from users.models import Address
-from .models import Order, OrderItem, OrderDetails
+from .models import Order, OrderItem, OrderDetail
 from items.models import Item, ItemBag
 from items.serializers import ItemShortSerializer, ItemBagSerializer
-
-
-class OrderDetailsSerializer(serializers.ModelSerializer):
-    order = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all())
-    address = serializers.PrimaryKeyRelatedField(queryset=Address.objects.all())
-
-    class Meta:
-        model = OrderDetails
-        fields = (
-            "id",
-            "order",
-            "first_name",
-            "last_name",
-            "phone_number",
-            "address",
-            "payment_method",
-        )
-        extra_kwargs = {i: {"required": True} for i in fields}
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -75,3 +57,29 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_order_cost(self, obj):
         return obj.get_total_cost()
+
+
+class OrderDetailSerializer(serializers.ModelSerializer):
+    order = OrderSerializer(read_only=True)
+    address = serializers.PrimaryKeyRelatedField(queryset=Address.objects.all())
+
+    class Meta:
+        model = OrderDetail
+        fields = (
+            "id",
+            "order",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "address",
+            "payment_method",
+        )
+        extra_kwargs = {i: {"required": True} for i in fields}
+
+    def create(self, validated_data):
+        order_detail_qs = OrderDetail.objects.filter(order=validated_data.get("order"))
+        if order_detail_qs.exists():
+            raise serializers.ValidationError(
+                "You can't Use Same Order For Order Details"
+            )
+        return super().create(validated_data)
