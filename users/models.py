@@ -34,22 +34,50 @@ class User(AbstractUser):
 
 
 class PhoneOtp(models.Model):
-    user = models.OneToOneField("User", on_delete=models.CASCADE, unique=True)
-    otp_code = models.PositiveIntegerField()
+    phone_number = models.CharField(
+        "Phone Number",
+        max_length=10,
+        unique=True,
+        validators=[
+            MinLengthValidator(10),
+            RegexValidator(regex=r"^\d*$", message="Only digits are allowed."),
+        ],
+    )
+    otp_code = models.PositiveIntegerField(null=True)
+    request_id = models.CharField(max_length=30, unique=True)
     is_verified = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        self.otp_code = generate_otp(min_number=10000, max_number=99999)
         super().save(*args, **kwargs)
 
+    class Meta:
+        unique_together = ("phone_number", "request_id")
+
     def send_phone_otp(self):
-        send_otp(self.otp_code, self.user.username)
+        self.is_verified = False
+        self.otp_code = generate_otp(min_number=100000, max_number=999999)
+        self.request_id = send_otp(self.otp_code, self.phone_number)
+        self.save()
         return
 
+    def can_able_to_use(self):
+        # checking that the otp in less that 2 minutes
+        diff_time = timezone.now() - self.updated
+        if (diff_time.total_seconds() // 60) < 2.0:
+            return True
+        return False
+
+    def can_able_to_authenticate(self):
+        # checking that the otp in less that 2 minutes
+        diff_time = timezone.now() - self.updated
+        if self.is_verified and ((diff_time.total_seconds() // 60) < 6.0):
+            return True
+        return False
+
     def __str__(self):
-        return f"{self.user.username} #Number "
+        return f"{self.phone_number} #Number "
 
 
 class Address(models.Model):

@@ -12,7 +12,6 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from users.serializers import (
     CreateUserSerializer,
     UserSerializer,
-    UserProfileSerializer,
 )
 from users.models import (
     User,

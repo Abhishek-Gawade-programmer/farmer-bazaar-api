@@ -2,6 +2,7 @@ import random
 from django.conf import settings
 import requests
 
+import json
 
 # genertaing the radom otp to user
 def generate_otp(min_number, max_number):
@@ -10,25 +11,22 @@ def generate_otp(min_number, max_number):
 
 
 # validating before sending otp
-def validate_send_otp(user_phone):
+def validate_send_otp(user_phone_number: str):
     from .models import PhoneOtp
     from django.utils import timezone
 
-    qs_phone_otp = PhoneOtp.objects.filter(user=user_phone)
+    qs_phone_otp = PhoneOtp.objects.filter(phone_number=user_phone_number)
 
     if qs_phone_otp.exists():
-        diff_time = timezone.now() - qs_phone_otp[0].updated
-        if ((diff_time.total_seconds()) // 60) < 2.0:
-            return ("Wait Till 5 Minutes ", False)
+        if qs_phone_otp[0].can_able_to_use():
+            return ("Wait Till 5 Minutes ", False, None)
         else:
-            qs_phone_otp[0].save()
             qs_phone_otp[0].send_phone_otp()
-            return ("Otp Is Sended Again ", False)
+            return ("Otp Is Sended Again ", True, qs_phone_otp[0].request_id)
     else:
-        phone_otp = PhoneOtp.objects.create(user=user_phone)
-        phone_otp.save()
+        phone_otp = PhoneOtp.objects.create(phone_number=user_phone_number)
         phone_otp.send_phone_otp()
-        return ("OTP is sended", True)
+        return ("OTP is sended", True, phone_otp.request_id)
 
 
 # sending the otp user mobile number
@@ -41,10 +39,8 @@ def send_otp(otp_text, phone_number):
         "route": "otp",
         "numbers": f"{phone_number}",
     }
+    response = requests.request(
+        "GET", url, headers={"cache-control": "no-cache"}, params=querystring
+    )
 
-    headers = {"cache-control": "no-cache"}
-
-    response = requests.request("GET", url, headers=headers, params=querystring)
-
-    print(response.text)
-    return
+    return json.loads(response.text).get("request_id")

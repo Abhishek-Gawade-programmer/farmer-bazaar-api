@@ -134,6 +134,7 @@ class ItemSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField(read_only=True)
     user = UserSerializer(read_only=True)
     category = serializers.CharField(max_length=10, source="category.name")
+    seller_name = serializers.SerializerMethodField(read_only=True)
     sub_category = serializers.CharField(max_length=10, source="sub_category.name")
     discount_percentage = serializers.SerializerMethodField(read_only=True)
     average_rating = serializers.SerializerMethodField(read_only=True)
@@ -149,6 +150,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "quantity",
             "quantity_unit",
             "available_status",
+            "seller_name",
             "user",
             "images",
             "discount_percentage",
@@ -159,6 +161,9 @@ class ItemSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         image_list = ItemImageSerializer(obj.images.all(), many=True).data
         return image_list
+
+    def get_seller_name(self, obj):
+        return obj.user.user_profile.seller_name
 
     def get_average_rating(self, obj):
         return obj.get_average_rating()
@@ -202,7 +207,6 @@ class ItemSerializer(serializers.ModelSerializer):
         return item_object
 
     def update(self, instance, validated_data):
-        print(instance, validated_data)
         get_category = Category.objects.get(
             name=validated_data.get("category").get("name")
         )

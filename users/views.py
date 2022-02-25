@@ -12,12 +12,24 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from .serializers import (
     CreateUserSerializer,
     UserSerializer,
-    UserProfileSerializer,
     AddressSerializer,
     PhoneOtpSerializer,
+    ValidatePhoneOtpSerializer,
+    TokenObtainPairWithoutPasswordSerializer,
 )
 from .models import User, PhoneOtp, UserProfile, TermsAndCondition, Address
 from .permissions import IsOwnerOrReadOnly, IsAbleToSellItem, IsOwnerOfObject
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class TokenObtainPairWithoutPasswordView(TokenObtainPairView):
+    serializer_class = TokenObtainPairWithoutPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+
 
 # Create User
 class CreateUserView(generics.CreateAPIView):
@@ -36,51 +48,47 @@ class SendUserOtpView(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         user_phone_number = serializer.data.get("phone_number")
-        user_phone = User.objects.get(username=user_phone_number)
-        response_fuc = validate_send_otp(user_phone)
-
+        response_fuc = validate_send_otp(user_phone_number)
         return Response(
-            {"detail": response_fuc[0]},
+            {"detail": response_fuc[0], "request_id": response_fuc[2]},
             status.HTTP_201_CREATED if response_fuc[1] else status.HTTP_400_BAD_REQUEST,
         )
 
 
 # validate the Otp
 class ValidateOtpView(APIView):
-    serializer_class = PhoneOtpSerializer
+    serializer_class = ValidatePhoneOtpSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user_phone_number = serializer.data.get("phone_number")
-        user_phone = User.objects.get(username=user_phone_number)
-        otp_text = request.data.get("otp_text")
-        if otp_text:
-            qs_phone_otp = get_object_or_404(
-                PhoneOtp, user=user_phone, otp_code=otp_text, is_verified=False
+        serializer.data
+        qs_phone_otp = get_object_or_404(
+            PhoneOtp,
+            phone_number=serializer.data.get("phone_number"),
+            otp_code=serializer.data.get("otp_code"),
+            request_id=serializer.data.get("request_id"),
+            is_verified=False,
+        )
+        if qs_phone_otp.can_able_to_use():
+            # otp is verified
+            qs_phone_otp.is_verified = True
+            qs_phone_otp.save()
+            # check that account exists or not for login or create account
+            user_phone_qs = User.objects.filter(
+                username=serializer.data.get("phone_number")
             )
-            diff_time = timezone.now() - qs_phone_otp.updated
-            # checking that the otp in less that 2 minutes
-            if ((diff_time.total_seconds()) // 60) < 2.0:
-                user_phone.is_active = True
-                qs_phone_otp.is_verified = True
-                qs_phone_otp.save()
-                user_phone.save()
-
-                return Response(
-                    {"detail": "Account has been verified."},
-                    status=status.HTTP_200_OK,
-                )
+            if user_phone_qs.exists():
+                exists = True
             else:
-                return Response(
-                    {"detail": "Otp Is Expired Resend It."},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            # qs_phone_otp.delete()
-
+                exists = False
+            return Response(
+                {"detail": "Account has been verified.", "exists": exists},
+                status=status.HTTP_200_OK,
+            )
         else:
             return Response(
-                {"otp_text": ["This field is required."]},
+                {"detail": "Otp Is Expired Resend It."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -103,23 +111,23 @@ class ChangeUsernameView(APIView):
 
 # get update or edit user profile of request user
 class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
         queryset = self.get_queryset()
-        obj = queryset.get(user=self.request.user)
+        obj = queryset.get(id=self.request.user.id)
         return obj
 
-    def perform_update(self, serializer):
-        serializer.save()
 
+# def perform_update(self, serializer):
+#     serializer.save()
 
 # get the other user profile
 class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 # accept the t and c for seller

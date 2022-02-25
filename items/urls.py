@@ -46,7 +46,7 @@ urlpatterns = [
     path(
         "get-update-destory-item-image/<int:pk>/",
         RetrieveUpdateDestroyItemImageView.as_view(),
-        name="getupdatedestrory_item_image",
+        name="getupdate_destory_item_image",
     ),
     # RUD the of item
     path(

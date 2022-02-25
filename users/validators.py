@@ -1,14 +1,22 @@
 from rest_framework.serializers import ValidationError
 from django.utils import timezone
-from .models import User
+from .models import User, PhoneOtp
 
 
-def validate_username(value):
-    if len(value) != 10:
-        raise ValidationError("Mobile Number Should Be 10 Digits")
+def validate_username_login(value):
+    qs_phone_otp = PhoneOtp.objects.filter(phone_number=value, is_verified=True)
+    if qs_phone_otp.exists():
+        if not qs_phone_otp[0].can_able_to_authenticate():
+            raise ValidationError("Timeout Please Send OTP Again")
+
     else:
-        if not value.isdigit():
-            raise ValidationError("Mobile Number Should Be  Numerical Value Only")
+        raise ValidationError("Phone Number is Not Verified")
+
+
+def validate_phone_number_otp_send(value):
+    qs_phone_otp = PhoneOtp.objects.filter(phone_number=value)
+    if not qs_phone_otp.exists():
+        raise ValidationError("Otp is Not send to This Phone Number")
 
 
 def validate_username_exist(value):

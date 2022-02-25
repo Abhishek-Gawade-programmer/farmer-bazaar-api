@@ -3,24 +3,64 @@ from .models import User, PhoneOtp, UserProfile, Address
 import django.contrib.auth.password_validation as validators
 from rest_framework import exceptions
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
 from .validators import (
-    validate_username,
+    validate_username_login,
     validate_first_name,
     validate_last_name,
     validate_atleast_18_age,
     validate_username_exist,
+    validate_phone_number_otp_send,
 )
 from rest_framework.validators import UniqueValidator
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.core.validators import RegexValidator, MinLengthValidator
+
+
+class TokenObtainPairWithoutPasswordSerializer(TokenObtainPairSerializer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields[self.username_field] = serializers.CharField(
+            validators=[
+                MinLengthValidator(10),
+                RegexValidator(regex=r"^\d*$", message="Only digits are allowed."),
+                validate_username_login,
+            ]
+        )
+        self.fields["password"].required = False
+        self.fields["request_id"] = serializers.CharField(max_length=30)
+
+    def validate(self, attrs):
+
+        # check  phone otp exists
+        get_object_or_404(
+            PhoneOtp,
+            phone_number=attrs.get("username"),
+            request_id=attrs.get("request_id"),
+        )
+        self.user = get_object_or_404(User, username=attrs.get("username"))
+        refresh = RefreshToken.for_user(self.user)
+        return {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(validators=[validate_first_name])
     last_name = serializers.CharField(validators=[validate_last_name])
-    password = serializers.CharField()
     username = serializers.CharField(
-        validators=[UniqueValidator(queryset=User.objects.all()), validate_username]
+        validators=[
+            UniqueValidator(queryset=User.objects.all()),
+            MinLengthValidator(10),
+            RegexValidator(regex=r"^\d*$", message="Only digits are allowed."),
+            validate_username_login,
+        ]
     )
     date_of_brith = serializers.DateField(
         source="user_profile.date_of_brith", validators=[validate_atleast_18_age]
@@ -28,21 +68,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "password", "username", "date_of_brith")
+        fields = ("first_name", "last_name", "username", "date_of_brith")
         extra_kwargs = {i: {"required": True} for i in fields}
-
-    def validate_password(self, value):
-        errors = dict()
-        try:
-            validators.validate_password(password=value)
-
-        except exceptions.ValidationError as e:
-            errors["password"] = list(e.messages)
-
-        if errors:
-            raise serializers.ValidationError(errors)
-
-        return super().validate(value)
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -50,9 +77,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
             first_name=validated_data.pop("first_name"),
             last_name=validated_data.pop("last_name"),
         )
-        user.is_active = False
-
-        user.set_password(validated_data.pop("password"))
+        user.is_active = True
+        user.set_unusable_password()
         user.save()
         profile_obj = UserProfile.objects.create(user=user)
         profile_obj.date_of_brith = validated_data.pop("user_profile").pop(
@@ -67,10 +93,12 @@ class UserSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(validators=[validate_last_name])
     email = serializers.EmailField(max_length=50)
     username = serializers.CharField(
-        validators=[validate_username, UniqueValidator(queryset=User.objects.all())],
+        validators=[
+            validate_username_login,
+            UniqueValidator(queryset=User.objects.all()),
+        ],
         read_only=True,
     )
-    # profile_pic = serializers.ImageField(allow_empty_file=True)
 
     class Meta:
         model = User
@@ -81,15 +109,34 @@ class UserSerializer(serializers.ModelSerializer):
 class PhoneOtpSerializer(serializers.ModelSerializer):
     phone_number = serializers.CharField(
         max_length=10,
-        source="user.username",
         validators=[
-            validate_username_exist,
+            MinLengthValidator(10),
+            RegexValidator(regex=r"^\d*$", message="Only digits are allowed."),
         ],
     )
 
     class Meta:
         model = PhoneOtp
         fields = ("phone_number",)
+
+
+class ValidatePhoneOtpSerializer(serializers.Serializer):
+    phone_number = serializers.CharField(
+        max_length=10,
+        validators=[
+            MinLengthValidator(10),
+            RegexValidator(regex=r"^\d*$", message="Only digits are allowed."),
+            validate_phone_number_otp_send,
+        ],
+    )
+    request_id = serializers.CharField(max_length=30)
+    otp_code = serializers.CharField(
+        max_length=10,
+        validators=[
+            MinLengthValidator(6),
+            RegexValidator(regex=r"^\d*$", message="Only 6 digits are allowed."),
+        ],
+    )
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -109,52 +156,3 @@ class AddressSerializer(serializers.ModelSerializer):
             "updated",
             "created",
         )
-
-
-class UserProfileSerializer(serializers.ModelSerializer):
-    """
-    A student serializer to return the student details
-    """
-
-    user = UserSerializer()
-    location = AddressSerializer()
-
-    class Meta:
-        model = UserProfile
-        fields = ("user", "location")
-
-    def update(self, instance, validated_data):
-        user_data = validated_data.get("user")
-        location_data = validated_data.get("location")
-        if instance.location:
-            address = AddressSerializer.update(
-                AddressSerializer(),
-                validated_data=location_data,
-                instance=instance.location,
-            )
-
-        else:
-            address = AddressSerializer.create(
-                AddressSerializer(), validated_data=location_data
-            )
-        instance.location = address
-
-        user = UserSerializer.update(
-            UserSerializer(), validated_data=user_data, instance=instance.user
-        )
-        instance.user = user
-        instance.save()
-        userprofile_obj = UserProfile.objects.get(user=user)
-        userprofile_obj.save()
-
-        return userprofile_obj
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        request = self.context.get("request")
-        if request.method == "GET":
-            representation["profile_picture"] = request.build_absolute_uri(
-                instance.profile_pic.url
-            )
-
-        return representation
