@@ -11,6 +11,7 @@ from .views import (
     ListCreateItemImageView,
     ListCategoryView,
     ListSubCategoryView,
+    ListCategoryTypeView,
     CreateSellerReplyView,
     ListRecommendItemView,
 )
@@ -75,6 +76,9 @@ urlpatterns = [
     # CATGOIRES AND SUBCATGOIRES
     path("all-category/", ListCategoryView.as_view(), name="all_categoty"),
     path("all-subcategory/", ListSubCategoryView.as_view(), name="all_subcategoty"),
+    path(
+        "all-category-type/", ListCategoryTypeView.as_view(), name="all_category_type"
+    ),
     # CREATE ITEM BAGS
     path(
         "create-item-bag/",

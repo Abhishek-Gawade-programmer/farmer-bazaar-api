@@ -26,6 +26,7 @@ from .serializers import (
     CategorySerializer,
     SubCategorySerializer,
     SellerReplySerializer,
+    CategoryTypeSerializer,
 )
 from .models import (
     Item,
@@ -35,6 +36,7 @@ from .models import (
     ItemBag,
     SubCategory,
     SellerReply,
+    CategoryType,
 )
 from users.permissions import (
     IsOwnerOrReadOnly,
@@ -43,17 +45,33 @@ from users.permissions import (
     IsAbleToSellItem,
 )
 from django_filters import rest_framework as filters
-from .filters import ItemFilter
+from .filters import ItemFilter, CategoryTypeFilter
+from rest_framework.filters import OrderingFilter
 
 # OPERATION ON ITEMS
 class ListCreateItemView(generics.ListCreateAPIView):
-    """Listing the item with pagination of 5 item with create"""
+    """Listing the item with pagination of 5 item with create
+    -Filtering Items
+
+     Title name
+     category name
+     sub category name
+     quantity unit and quantity
+
+    -Ordering By
+     average ratings
+     quantity
+     pricing for items bags
+
+    """
 
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticated, IsAbleToSellItem]
     queryset = Item.objects.filter(can_able_to_sell=True)
     parser_classes = (MultiPartParser, FormParser)
-    filter_backends = (filters.DjangoFilterBackend,)
+
+    filter_backends = (filters.DjangoFilterBackend, OrderingFilter)
+    ordering_fields = ["average_rating", "quantity"]
     filterset_class = ItemFilter
 
     def get_permissions(self):
@@ -155,6 +173,15 @@ class ListSubCategoryView(generics.ListAPIView):
     pagination_class = None
     queryset = SubCategory.objects.all()
     serializer_class = SubCategorySerializer
+
+
+#  CATEGORY TYPE LIST
+class ListCategoryTypeView(generics.ListAPIView):
+    pagination_class = None
+    queryset = CategoryType.objects.all()
+    serializer_class = CategoryTypeSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = CategoryTypeFilter
 
 
 # ITEM REVIEW

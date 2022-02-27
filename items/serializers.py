@@ -8,6 +8,7 @@ from .models import (
     ItemBag,
     SubCategory,
     SellerReply,
+    CategoryType,
 )
 from users.models import Address
 
@@ -51,6 +52,14 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("id", "name", "image", "discount_percentage")
+
+
+class CategoryTypeSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+
+    class Meta:
+        model = CategoryType
+        fields = ("category", "name", "image")
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
@@ -135,9 +144,12 @@ class ItemSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     category = serializers.CharField(max_length=10, source="category.name")
     seller_name = serializers.SerializerMethodField(read_only=True)
-    sub_category = serializers.CharField(max_length=10, source="sub_category.name")
+    sub_category = serializers.CharField(max_length=20, source="sub_category.name")
+    category_type = serializers.CharField(max_length=20, source="category_type.name")
     discount_percentage = serializers.SerializerMethodField(read_only=True)
-    average_rating = serializers.SerializerMethodField(read_only=True)
+    average_rating = serializers.DecimalField(
+        max_digits=2, decimal_places=1, read_only=True
+    )
 
     class Meta:
         model = Item
@@ -145,6 +157,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "id",
             "category",
             "sub_category",
+            "category_type",
             "title",
             "description",
             "quantity",
@@ -165,15 +178,19 @@ class ItemSerializer(serializers.ModelSerializer):
     def get_seller_name(self, obj):
         return obj.user.user_profile.seller_name
 
-    def get_average_rating(self, obj):
-        return obj.get_average_rating()
-
     def validate_category(self, value):
         qs = Category.objects.filter(name=value)
         if qs.exists():
             return super().validate(value)
         else:
             raise serializers.ValidationError("Category Name is not valid")
+
+    def validate_category_type(self, value):
+        qs = CategoryType.objects.filter(name=value)
+        if qs.exists():
+            return super().validate(value)
+        else:
+            raise serializers.ValidationError("CategoryType Name is not valid")
 
     def validate_sub_category(self, value):
         qs = SubCategory.objects.filter(name=value)
@@ -192,8 +209,12 @@ class ItemSerializer(serializers.ModelSerializer):
         get_sub_category = SubCategory.objects.get(
             name=validated_data.get("sub_category").get("name")
         )
+        get_category_type = CategoryType.objects.get(
+            name=validated_data.get("category_type").get("name")
+        )
         item_object = Item.objects.create(
             category=get_category,
+            category_type=get_category_type,
             sub_category=get_sub_category,
             title=validated_data.get("title"),
             description=validated_data.get("description"),
@@ -213,8 +234,11 @@ class ItemSerializer(serializers.ModelSerializer):
         get_sub_category = SubCategory.objects.get(
             name=validated_data.get("sub_category").get("name")
         )
-
+        get_category_type = CategoryType.objects.get(
+            name=validated_data.get("category_type").get("name")
+        )
         instance.category = get_category
+        instance.category_type = get_category_type
         instance.sub_category = get_sub_category
         instance.title = validated_data.get("title")
         instance.description = validated_data.get("description")

@@ -29,7 +29,7 @@ class Category(models.Model):
     def get_discount_percentage(self):
         item_discount_percentage = 0
         count = 0
-        for item in self.products_included.all():
+        for item in self.category_items.all():
             if item.get_discount_percentage():
                 item_discount_price = item.get_discount_percentage()
                 count += 1
@@ -42,8 +42,21 @@ class Category(models.Model):
         return self.name
 
 
+class CategoryType(models.Model):
+    """CategoryType haves fk with Category type and image associated with timestamp"""
+
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, unique=True)
+    image = models.ImageField(upload_to="category_type_images/", null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.category.name }-- {self.name}"
+
+
 class SubCategory(models.Model):
-    """SubCategory which haves the name user who creates and color created and updated timestamp"""
+    """SubCategory name especially(organic exotic or normal)"""
 
     name = models.CharField(max_length=50, unique=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -93,13 +106,14 @@ class ItemBag(models.Model):
             return None
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
         # item can't  able to sell if they don't have item bags
         if self.item.bags.all() != []:
             self.item.can_able_to_sell = True
         else:
             self.item.can_able_to_sell = False
+
         self.item.save()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return (
@@ -113,8 +127,10 @@ class ItemBag(models.Model):
 class Item(models.Model):
     """
     Category(fk)
+    category_type(fk)
     Title(text)
     Description(text)
+    Average_rating(int)
     Quantity(int)
     Quantity unit(int)
     Expected Price(decimal)
@@ -126,13 +142,19 @@ class Item(models.Model):
         "Category",
         on_delete=models.SET_NULL,
         null=True,
-        related_name="products_included",
+        related_name="category_items",
+    )
+    category_type = models.ForeignKey(
+        "CategoryType",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="category_type_items",
     )
     sub_category = models.ForeignKey(
         "SubCategory",
         on_delete=models.SET_NULL,
         null=True,
-        related_name="items_included",
+        related_name="sub_category_items",
     )
     title = models.CharField(max_length=100)
     description = models.TextField(null=True)
@@ -147,16 +169,9 @@ class Item(models.Model):
     )
     available_status = models.BooleanField(default=False)
     can_able_to_sell = models.BooleanField(default=False)
+    average_rating = models.DecimalField(max_digits=2, decimal_places=1)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
-    def get_average_rating(self):
-        all_messages = ItemRating.objects.filter(item=self)
-        rate_list = []
-        for message in all_messages:
-            if message.rating != 0:
-                rate_list.append(message.rating)
-        return int(round(sum(rate_list) / (len(rate_list) or 1), 1))
 
     def convert_item_quantity_gram(self):
         return convert_quantity_gram(self.quantity_unit, self.quantity)
@@ -174,7 +189,7 @@ class Item(models.Model):
         return round(item_discount_percentage / count, 2)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} {self.category.name} {self.category_type.name}"
 
 
 class ItemImage(models.Model):
@@ -201,12 +216,22 @@ class ItemRating(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        all_messages = ItemRating.objects.filter(item=self.item)
+        rate_list = []
+        for message in all_messages:
+            if message.rating != 0:
+                rate_list.append(message.rating)
+        self.item.average_rating = round(sum(rate_list) / (len(rate_list) or 1), 1)
+        self.item.save()
+
     class Meta:
         unique_together = ("user", "item")
         ordering = ("-created",)
 
     def __str__(self):
-        return str(self.body[:30]) + self.user.username
+        return f"{self.item.title} + {self.user.username}+ rates {self.rating} "
 
 
 class SellerReply(models.Model):
