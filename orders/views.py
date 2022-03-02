@@ -2,12 +2,16 @@ from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import Order, OrderItem, OrderDetail
+from items.models import ItemBag
 from users.models import Address
-from users.permissions import IsOwnerOfObject, IsAbleToSellItem, IsOwnerOfOrder
+from users.permissions import (
+    IsOwnerOfObject,
+    IsAbleToSellItem,
+    IsOwnerOfOrder,
+)
 from .serializers import (
     OrderSerializer,
     OrderItemSerializer,
@@ -47,9 +51,9 @@ class GetCartStatusView(generics.ListCreateAPIView):
             order_instance = order_or_null
         else:
             order_instance = Order.objects.create(user=request.user)
+            order_instance.save()
             request.user.user_profile.current_order = order_instance
             request.user.user_profile.save()
-            order_instance.save()
         return Response(OrderSerializer(order_instance).data, status.HTTP_201_CREATED)
 
 
@@ -57,12 +61,13 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
     serializer_class = CreateOrderItemSerializer
     permission_classes = [IsAuthenticated, IsOwnerOfObject]
 
+    @property
     def get_user_order(self):
         # try to get the current order or null
         return self.request.user.user_profile.current_order
 
     def post(self, request, *args, **kwargs):
-        if self.get_user_order():
+        if self.get_user_order:
             return super().post(request, *args, **kwargs)
         else:
             return Response(
@@ -73,14 +78,22 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        item_bag_obj = get_object_or_404(ItemBag, id=serializer.data.get("item_bag"))
+
+        if item_bag_obj.item.user == request.user:
+            return Response(
+                {"detail": "You Can't Add ItemBag Of Your Item On Your Order"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         check_item_exists = OrderItem.objects.filter(
-            order=self.get_user_order(), item_bag_id=serializer.data.get("item_bag")
+            order=self.get_user_order, item_bag=item_bag_obj
         )
         if not check_item_exists.exists():
             # creating the new order item
             order_item_instance = OrderItem.objects.create(
-                order=self.get_user_order(),
-                item_bag_id=serializer.data.get("item_bag"),
+                order=self.get_user_order,
+                item_bag=item_bag_obj,
                 quantity=serializer.data.get("quantity"),
             )
         else:
@@ -137,6 +150,7 @@ class CheckOutOrderView(generics.CreateAPIView):
         # saving the order  to order detail to we can track the order
         order_or_null = self.request.user.user_profile.current_order
         address_obj = self.check_user_permission(self.request.POST.get("address"))
+        print("perform", order_or_null, self.request.user)
         serializer.save(order=order_or_null)
 
     def post(self, request, *args, **kwargs):
@@ -149,7 +163,7 @@ class CheckOutOrderView(generics.CreateAPIView):
             )
 
         # is order is empty or don't have any items
-        if order_or_null.can_ableto_place():
+        if order_or_null.can_able_to_place():
             return super().post(request, *args, **kwargs)
 
         return Response(
@@ -158,6 +172,18 @@ class CheckOutOrderView(generics.CreateAPIView):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+
+# list the order of user that has not placed yet
+class ListUserOrdersView(generics.ListAPIView):
+    queryset = OrderDetail.objects.all()
+    serializer_class = OrderDetailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(order__user=self.request.user)
+
+        return queryset
 
 
 # get order detail by id that have permission

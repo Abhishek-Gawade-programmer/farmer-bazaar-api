@@ -6,6 +6,7 @@ from .views import (
     CheckOutOrderView,
     RetrieveOrderDetailView,
     RetrieveOrderInvoiceView,
+    ListUserOrdersView,
 )
 
 urlpatterns = [
@@ -13,6 +14,8 @@ urlpatterns = [
     path(
         "get-create-cart-status/", GetCartStatusView.as_view(), name="get_cart_status"
     ),
+    # user order list (my orders)
+    path("user-orders-list/", ListUserOrdersView.as_view(), name="user-orders-list"),
     # checkout user order
     path("check-out-order/", CheckOutOrderView.as_view(), name="check_out_order"),
     # add or update order item from order

@@ -10,5 +10,7 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("items/", include("items.urls")),
     path("orders/", include("orders.urls")),
+    path("farmers/", include("farmers.urls")),
+    path("administrations/", include("administrations.urls")),
     path("", ApiRoot.as_view(), name="api_root"),
 ]

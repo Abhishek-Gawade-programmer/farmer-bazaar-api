@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "items",
     "api",
     "orders",
+    "farmers",
+    "administrations",
 ]
 
 MIDDLEWARE = [

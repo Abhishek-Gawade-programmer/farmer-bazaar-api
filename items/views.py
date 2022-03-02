@@ -9,10 +9,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 
-from users.serializers import (
-    CreateUserSerializer,
-    UserSerializer,
-)
+from users.serializers import CreateUserSerializer, UserSerializer
 from users.models import (
     User,
     PhoneOtp,
@@ -43,6 +40,7 @@ from users.permissions import (
     IsOwnerOfObject,
     IsOwnerOfItemBelongs,
     IsAbleToSellItem,
+    IsUnableRatingItem,
 )
 from django_filters import rest_framework as filters
 from .filters import ItemFilter, CategoryTypeFilter
@@ -131,11 +129,10 @@ class ListCreateItemImageView(generics.ListCreateAPIView):
         # checking that item belongs to that ser
         if self.get_object().user == request.user:
             return self.create(request, *args, **kwargs)
-        else:
-            return Response(
-                {"detail": "You permission to perform this action"},
-                status=status.HTTP_403_FORBIDDEN,
-            )
+        return Response(
+            {"detail": "You permission to perform this action"},
+            status=status.HTTP_403_FORBIDDEN,
+        )
 
     def perform_create(self, serializer):
         serializer.save(item=self.get_object())
@@ -188,7 +185,7 @@ class ListCategoryTypeView(generics.ListAPIView):
 class GetCreateReviewItemView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemRatingSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsUnableRatingItem]
     lookup_field = "pk"
 
     def list(self, request, *args, **kwargs):
@@ -217,16 +214,6 @@ class GetCreateReviewItemView(generics.ListCreateAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class CreateSellerReplyView(generics.CreateAPIView):
-    serializer_class = SellerReplySerializer
-    queryset = ItemRating.objects.all()
-    permission_classes = [IsAuthenticated, IsAbleToSellItem]
-
-    def perform_create(self, serializer):
-        # creating the seller reply on item review
-        serializer.save(user=self.request.user)
-
-
 class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView):
     """Is user able to RUD item with permission"""
 
@@ -238,6 +225,16 @@ class RetrieveUpdateDestroyItemRatingView(generics.RetrieveUpdateDestroyAPIView)
         if self.request.method == "GET":
             return []
         return [permission() for permission in self.permission_classes]
+
+
+class CreateSellerReplyView(generics.CreateAPIView):
+    serializer_class = SellerReplySerializer
+    queryset = ItemRating.objects.all()
+    permission_classes = [IsAuthenticated, IsOwnerOfItemBelongs, IsAbleToSellItem]
+
+    def perform_create(self, serializer):
+        # creating the seller reply on item review
+        serializer.save(user=self.request.user)
 
 
 # ITEM BAGS

@@ -7,16 +7,6 @@ from .utils import convert_quantity_gram
 
 LABEL_UNIT_CHOICES = (("To", "Ton"), ("Kg", "Kg"), ("Gr", "Gram"))
 
-CATEGORY_COLOR_CHOICES = (
-    ("primary", "blue"),
-    ("secondary", "purple"),
-    ("danger", "red"),
-    ("info", "lightblue"),
-    ("warning", "yellow"),
-    ("dark", "black"),
-    ("default", "default"),
-)
-
 
 class Category(models.Model):
     """Category which haves the name user who creates and color and image and created and updated timestamp"""
@@ -94,7 +84,7 @@ class ItemBag(models.Model):
     class Meta:
         # bag must unique with respect  item  quantity quantity_unit price
         unique_together = ("item", "quantity", "quantity_unit", "price")
-        ordering = ("item",)
+        ordering = ("price",)
 
     def convert_item_quantity_gram(self):
         return convert_quantity_gram(self.quantity_unit, self.quantity)
@@ -169,9 +159,12 @@ class Item(models.Model):
     )
     available_status = models.BooleanField(default=False)
     can_able_to_sell = models.BooleanField(default=False)
-    average_rating = models.DecimalField(max_digits=2, decimal_places=1)
+    average_rating = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-average_rating", "-created")
 
     def convert_item_quantity_gram(self):
         return convert_quantity_gram(self.quantity_unit, self.quantity)
@@ -201,6 +194,9 @@ class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="images")
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.item.title} {self.created} {self.id}"
+
 
 class ItemRating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="my_comments")
@@ -228,7 +224,7 @@ class ItemRating(models.Model):
 
     class Meta:
         unique_together = ("user", "item")
-        ordering = ("-created",)
+        ordering = ("-created", "-rating")
 
     def __str__(self):
         return f"{self.item.title} + {self.user.username}+ rates {self.rating} "

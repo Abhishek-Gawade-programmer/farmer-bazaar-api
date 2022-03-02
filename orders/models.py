@@ -41,6 +41,9 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ("-updated",)
+
     def clean(self):
 
         if not self.placed:
@@ -55,8 +58,12 @@ class Order(models.Model):
         if self.paid and self.rejected:
             raise ValidationError("Order can't be rejected if its paid")
 
-    def can_ableto_place(self):
-        if int(self.get_total_cost()) == 0 or (not self.order_items.all()):
+    def can_able_to_place(self):
+        if (
+            int(self.get_total_cost()) == 0
+            or (not self.order_items.all())
+            or (self.placed)
+        ):
             return False
         return True
 
@@ -97,6 +104,9 @@ class OrderItem(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ("-updated",)
+
     def save(self, *args, **kwargs):
         # checks that is product have the discount price then apply it
         if self.item_bag.discount_price:
@@ -128,6 +138,7 @@ class OrderDetail(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        ordering = ("updated",)
         verbose_name = "order details"
         verbose_name_plural = "order details"
 

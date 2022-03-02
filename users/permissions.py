@@ -1,10 +1,12 @@
 from rest_framework import exceptions, permissions
 
-# messages user terms conditions not accepted
+
 USER_T_C_NOT_ACCEPTED = "User Don't have Accepted Terms And conditions"
+CANT_ADD_RATINGS_OUR_ITEM = "You Can't Add Ratings On Your Item"
+DONT_HAVE_ADMIN_PERMISSION = "You Don't Have Administrations Permission"
 
 
-# checks that is requested user is owner of item
+# Checks That Is Requested User Is Owner Of Item
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
@@ -12,19 +14,19 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return obj.user == request.user
 
 
-# checks that is requested user is same as to edit itembag which have it
+# Checks That Is Requested User Is Same As To Edit Itembag Which Have It
 class IsOwnerOfItemBelongs(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.item.user == request.user
 
 
-# checks that is requested user is same as to edit profile
+# Checks That Is Requested User Is Same As To Edit Profile
 class IsOwnerOfObject(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user
 
 
-# checks that is requested user is same as to edit profile
+# Checks That Is Requested User Is Same As To Edit Profile
 class IsAbleToSellItem(permissions.BasePermission):
     message = USER_T_C_NOT_ACCEPTED
 
@@ -32,7 +34,23 @@ class IsAbleToSellItem(permissions.BasePermission):
         return request.user.user_profile.can_able_to_sell_product()
 
 
-# checks the user ownwer of order
+# Checks The User Owner Of Order
 class IsOwnerOfOrder(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.order.user == request.user
+
+
+# Checks User Unable To Add Ratings On His/her Items
+class IsUnableRatingItem(permissions.BasePermission):
+    message = CANT_ADD_RATINGS_OUR_ITEM
+
+    def has_object_permission(self, request, view, obj):
+        return not (obj.user == request.user)
+
+
+# Checks Whether User Admin User
+class IsAdministerUser(permissions.BasePermission):
+    message = DONT_HAVE_ADMIN_PERMISSION
+
+    def has_permission(self, request, view):
+        return request.user.user_profile.admin_access

@@ -50,7 +50,6 @@ class OrderSerializer(serializers.ModelSerializer):
             "delivered",
             "rejected",
             "reject_reason",
-            "current_order",
             "updated",
             "created",
         )

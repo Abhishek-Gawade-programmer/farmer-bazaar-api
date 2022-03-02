@@ -103,6 +103,9 @@ class Address(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
+    class Meta:
+        ordering = ["-updated"]
+
     def __str__(self):
         return self.full_address
 
@@ -114,6 +117,7 @@ class UserProfile(models.Model):
     seller_name = models.CharField(max_length=50, blank=True, null=True)
     date_of_brith = models.DateField(default="2002-10-12")
     email_verified = models.BooleanField(default=False)
+    admin_access = models.BooleanField(default=False)
 
     can_sell_product = models.BooleanField("Can Sell Product", default=False)
     # Seller t and c
