@@ -1,5 +1,7 @@
 */__pycache__/
 media_root/
+migrations
+migrations/
 .env
 db.sqlite3
 db.sqlite3-journal
