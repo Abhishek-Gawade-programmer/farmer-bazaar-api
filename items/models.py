@@ -95,16 +95,6 @@ class ItemBag(models.Model):
         else:
             return None
 
-    def save(self, *args, **kwargs):
-        # item can't  able to sell if they don't have item bags
-        if self.item.bags.all() != []:
-            self.item.can_able_to_sell = True
-        else:
-            self.item.can_able_to_sell = False
-
-        self.item.save()
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return (
             self.item.title
@@ -168,6 +158,10 @@ class Item(models.Model):
 
     def convert_item_quantity_gram(self):
         return convert_quantity_gram(self.quantity_unit, self.quantity)
+    
+    def change_quantity(self,quantity_in_grams):
+        # change to that quantity of item with qunuioty 
+        pass
 
     def get_discount_percentage(self):
         # this will be exclude the items that don't have discount price
@@ -180,6 +174,29 @@ class Item(models.Model):
         if count == 0:
             return None
         return round(item_discount_percentage / count, 2)
+
+
+    # def save(self, *args, **kwargs):
+    #     # item can't  able to sell if they don't have item bags
+    #     if self.item.bags.all() != []:
+    #         self.item.can_able_to_sell = True
+    #     else:
+    #         self.item.can_able_to_sell = False
+
+    #     self.item.save()
+    #     super().save(*args, **kwargs)
+
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        for item_bag in self.bags.all():
+            if item_bag.convert_item_quantity_gram() >self.convert_item_quantity_gram():
+                item_bag.available_status=False
+            else:
+                item_bag.available_status=True
+            item_bag.save()
+
+
 
     def __str__(self):
         return f"{self.title} {self.category.name} {self.category_type.name}"

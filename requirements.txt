@@ -11,5 +11,5 @@ requests==2.26.0
 sqlparse==0.4.2
 urllib3==1.26.7
 python-dotenv==0.19.2
-django-cors-headers=3.10.1
-django-filter=21.1
+django-cors-headers==3.10.1
+django-filter==21.1

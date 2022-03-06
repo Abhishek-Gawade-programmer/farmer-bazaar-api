@@ -71,7 +71,23 @@ class Order(models.Model):
         # removing the current order from cart
         if self.placed:
             self.user.user_profile.current_order = None
+        if self.is_order_completed:
+            # decrese the item quantity can change turned  item bag status to un-available if required
+            for order_item in self.order_items.all():
+                remaning_quantity = (
+                    order_item.item_bag.item.convert_item_quantity_gram()
+                    - order_item.item_bag.convert_item_quantity_gram()
+                )
+                order_item.item_bag.item.change_quantity(remaning_quantity)
+
         super().save(*args, **kwargs)
+
+    @property
+    def is_order_completed(self):
+        # is order is completed
+        if bool(self.placed and self.paid and self.dispatched and self.delivered):
+            return True
+        return False
 
     def get_total_cost(self):
         # calculating the total cost of item by order items

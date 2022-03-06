@@ -7,9 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 
 # serializers imports
 from .serializers import ShortItemStatisticSerializer
+from orders.serializers import OrderItemSerializer
 
 # model imports
 from items.models import Item
+from orders.models import OrderItem
 
 # permissions imports
 
@@ -23,4 +25,24 @@ class ListItemStatisticsView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
+        return queryset
+
+
+# Customer Orders (Orders in which the item of farmers ) OrderItem
+class CustomerOrderViews(generics.ListAPIView):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [IsAuthenticated, IsAbleToSellItem]
+
+    def get_queryset(self):
+        queryset = (
+            super()
+            .get_queryset().filter(item_bag__item__user=self.request.user)
+            .exclude(
+                order__placed=None,
+                order__paid=None,
+                order__dispatched=None,
+                order__delivered=None,
+            )
+        )
         return queryset

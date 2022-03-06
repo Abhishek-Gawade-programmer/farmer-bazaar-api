@@ -102,6 +102,9 @@ class ItemBagSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         # checking the if quantity exceeds the item quantity
+        if data.get("discount_price") > data.get("price"):
+            raise serializers.ValidationError("Discount Price Can't Greater then Price")
+
         current_item = data.get("item")
 
         item_gram_value = current_item.convert_item_quantity_gram()
