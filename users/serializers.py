@@ -22,6 +22,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.validators import RegexValidator, MinLengthValidator
 
 
+
+
+
+
+
 class TokenObtainPairWithoutPasswordSerializer(TokenObtainPairSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -86,7 +91,16 @@ class CreateUserSerializer(serializers.ModelSerializer):
         )
         profile_obj.save()
         return user
-
+class UserSellerNameSerializer(serializers.ModelSerializer):
+    seller_name = serializers.CharField(max_length=50,source="user_profile.seller_name")
+    class Meta:
+        model = User
+        fields = ("seller_name",)
+        extra_kwargs = {i: {"required": True} for i in fields}
+    def update(self, instance, validated_data):
+        instance.user_profile.seller_name=validated_data.get("user_profile").get("seller_name")
+        instance.user_profile.save()
+        return instance
 
 class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(validators=[validate_first_name])

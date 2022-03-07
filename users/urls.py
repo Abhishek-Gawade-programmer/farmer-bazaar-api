@@ -15,7 +15,7 @@ from .views import (
     GetSetUserDefaultAddress,
     RetrieveUpdateDestroyAddressView,
     ChangeUsernameView,
-    TokenObtainPairWithoutPasswordView,
+    TokenObtainPairWithoutPasswordView,RetrieveUpdateUserSellerNameView
 )
 
 urlpatterns = [
@@ -35,6 +35,9 @@ urlpatterns = [
         GetAcceptSellerTermCondition.as_view(),
         name="get_accept_seller_term_condition",
     ),
+    #change or get user seller name 
+    path("get-update-user-seller-name/", RetrieveUpdateUserSellerNameView.as_view(), name="get_update_user_seller_name"),
+
     # change Username(mobile number ) Password
     path("change-username/", ChangeUsernameView.as_view(), name="change_username"),
     path(

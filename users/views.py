@@ -16,6 +16,7 @@ from .serializers import (
     PhoneOtpSerializer,
     ValidatePhoneOtpSerializer,
     TokenObtainPairWithoutPasswordSerializer,
+    UserSellerNameSerializer,
 )
 from .models import User, PhoneOtp, UserProfile, TermsAndCondition, Address
 from .permissions import IsOwnerOrReadOnly, IsAbleToSellItem, IsOwnerOfObject
@@ -121,13 +122,19 @@ class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
         return obj
 
 
-# def perform_update(self, serializer):
-#     serializer.save()
-
 # get the other user profile
 class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class RetrieveUpdateUserSellerNameView(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [IsAuthenticated, IsAbleToSellItem]
+    lookup_field=None
+    serializer_class = UserSellerNameSerializer
+    def get_object(self):
+        return self.request.user
 
 
 # accept the t and c for seller

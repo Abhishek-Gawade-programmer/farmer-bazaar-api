@@ -62,7 +62,7 @@ class ItemBag(models.Model):
     """
 
     item = models.ForeignKey("Item", related_name="bags", on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField(
+    quantity = models.PositiveIntegerField(
         validators=[MinValueValidator(1)], default=1
     )
     quantity_unit = models.CharField(
@@ -138,7 +138,7 @@ class Item(models.Model):
     )
     title = models.CharField(max_length=100)
     description = models.TextField(null=True)
-    quantity = models.PositiveSmallIntegerField(
+    quantity = models.PositiveIntegerField(
         validators=[MinValueValidator(1)], default=1
     )
     quantity_unit = models.CharField(
@@ -187,14 +187,7 @@ class Item(models.Model):
     #     super().save(*args, **kwargs)
 
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        for item_bag in self.bags.all():
-            if item_bag.convert_item_quantity_gram() >self.convert_item_quantity_gram():
-                item_bag.available_status=False
-            else:
-                item_bag.available_status=True
-            item_bag.save()
+
 
 
 
