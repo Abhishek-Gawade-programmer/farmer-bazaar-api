@@ -15,12 +15,16 @@ from .views import (
     GetSetUserDefaultAddress,
     RetrieveUpdateDestroyAddressView,
     ChangeUsernameView,
-    TokenObtainPairWithoutPasswordView,RetrieveUpdateUserSellerNameView
+    LogoutUserAPIView,
+    TokenObtainPairWithoutPasswordView,
+    RetrieveUpdateUserSellerNameView,
 )
 
 urlpatterns = [
     # register the user
     path("register/", CreateUserView.as_view(), name="user_register"),
+    # logout the user
+    path("logout/", LogoutUserAPIView.as_view(), name="logout_user"),
     # login the user
     path(
         "token/", TokenObtainPairWithoutPasswordView.as_view(), name="token_obtain_pair"
@@ -35,9 +39,12 @@ urlpatterns = [
         GetAcceptSellerTermCondition.as_view(),
         name="get_accept_seller_term_condition",
     ),
-    #change or get user seller name 
-    path("get-update-user-seller-name/", RetrieveUpdateUserSellerNameView.as_view(), name="get_update_user_seller_name"),
-
+    # change or get user seller name
+    path(
+        "get-update-user-seller-name/",
+        RetrieveUpdateUserSellerNameView.as_view(),
+        name="get_update_user_seller_name",
+    ),
     # change Username(mobile number ) Password
     path("change-username/", ChangeUsernameView.as_view(), name="change_username"),
     path(

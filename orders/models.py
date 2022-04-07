@@ -7,9 +7,8 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 PAYMENT_CHOICES = (
-    ("OP", "NetBanking Payment"),
+    ("OP", "Online Payment"),
     ("COD", "Cash On Delivery"),
-    ("UP", "UPI Payment"),
 )
 
 
@@ -150,6 +149,7 @@ class OrderDetail(models.Model):
     payment_method = models.CharField(
         choices=PAYMENT_CHOICES, max_length=3, default="OP"
     )
+
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 

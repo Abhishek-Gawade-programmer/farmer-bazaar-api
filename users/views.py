@@ -21,6 +21,7 @@ from .serializers import (
 from .models import User, PhoneOtp, UserProfile, TermsAndCondition, Address
 from .permissions import IsOwnerOrReadOnly, IsAbleToSellItem, IsOwnerOfObject
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.contrib.auth import logout
 
 
 class TokenObtainPairWithoutPasswordView(TokenObtainPairView):
@@ -131,8 +132,9 @@ class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
 class RetrieveUpdateUserSellerNameView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated, IsAbleToSellItem]
-    lookup_field=None
+    lookup_field = None
     serializer_class = UserSellerNameSerializer
+
     def get_object(self):
         return self.request.user
 
@@ -234,3 +236,14 @@ class RetrieveUpdateDestroyAddressView(generics.RetrieveUpdateDestroyAPIView):
 
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class LogoutUserAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+
+        logout(request)
+        return Response(
+            {"success": "Successfully logged out."}, status=status.HTTP_200_OK
+        )

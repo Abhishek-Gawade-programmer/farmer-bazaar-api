@@ -102,8 +102,12 @@ class ItemBagSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         # checking the if quantity exceeds the item quantity
-        if data.get("discount_price") > data.get("price"):
-            raise serializers.ValidationError("Discount Price Can't Greater then Price")
+        if (data.get("discount_price")) and (
+            data.get("discount_price") >= data.get("price")
+        ):
+            raise serializers.ValidationError(
+                "Discount Price Can't  Greater or equals then Price"
+            )
 
         current_item = data.get("item")
 

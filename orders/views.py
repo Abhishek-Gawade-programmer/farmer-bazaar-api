@@ -11,6 +11,7 @@ from users.permissions import (
     IsOwnerOfObject,
     IsAbleToSellItem,
     IsOwnerOfOrder,
+    IsAdministerUser,
 )
 from .serializers import (
     OrderSerializer,

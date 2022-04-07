@@ -10,6 +10,8 @@ from .views import (
 )
 
 urlpatterns = [
+    # path("pay/", start_payment, name="payment"),
+    # path("payment/success/", handle_payment_success, name="payment_success"),
     # get the the user item bag status
     path(
         "get-create-cart-status/", GetCartStatusView.as_view(), name="get_cart_status"

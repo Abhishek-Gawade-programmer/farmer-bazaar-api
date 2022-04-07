@@ -183,3 +183,5 @@ THUMBNAIL_ALIASES = {
         },
     },
 }
+RAZOR_KEY_ID = os.getenv("RAZOR_KEY_ID")
+RAZOR_KEY_SECRET = os.getenv("RAZOR_KEY_SECRET")
