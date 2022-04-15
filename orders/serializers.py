@@ -82,3 +82,9 @@ class OrderDetailSerializer(serializers.ModelSerializer):
                 "You can't Use Same Order For Order Details"
             )
         return super().create(validated_data)
+
+
+class RazorpayPayloadSerializer(serializers.Serializer):
+    razorpay_payment_id = serializers.CharField(max_length=30)
+    razorpay_order_id = serializers.CharField(max_length=30)
+    razorpay_signature = serializers.CharField(max_length=80)

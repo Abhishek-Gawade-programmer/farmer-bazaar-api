@@ -3,9 +3,9 @@ from users.models import User, Address
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import IntegrityError
 from django.forms import ValidationError
-from .utils import convert_quantity_gram
+from .utils import convert_quantity_kg
 
-LABEL_UNIT_CHOICES = (("To", "Ton"), ("Kg", "Kg"), ("Gr", "Gram"))
+LABEL_UNIT_CHOICES = (("To", "Ton"), ("Kg", "Kg"))
 
 
 class Category(models.Model):
@@ -62,9 +62,7 @@ class ItemBag(models.Model):
     """
 
     item = models.ForeignKey("Item", related_name="bags", on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(
-        validators=[MinValueValidator(1)], default=1
-    )
+    quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)], default=1)
     quantity_unit = models.CharField(
         max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
     )
@@ -77,17 +75,15 @@ class ItemBag(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def number_of_available(self):
-        return (
-            self.item.convert_item_quantity_gram() // self.convert_item_quantity_gram()
-        )
+        return self.item.convert_quantity_kg() // self.convert_quantity_kg()
 
     class Meta:
         # bag must unique with respect  item  quantity quantity_unit price
         unique_together = ("item", "quantity", "quantity_unit", "price")
         ordering = ("price",)
 
-    def convert_item_quantity_gram(self):
-        return convert_quantity_gram(self.quantity_unit, self.quantity)
+    def convert_quantity_kg(self):
+        return convert_quantity_kg(self.quantity_unit, self.quantity)
 
     def get_discount_percentage(self):
         if self.discount_price:
@@ -138,9 +134,7 @@ class Item(models.Model):
     )
     title = models.CharField(max_length=100)
     description = models.TextField(null=True)
-    quantity = models.PositiveIntegerField(
-        validators=[MinValueValidator(1)], default=1
-    )
+    quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)], default=1)
     quantity_unit = models.CharField(
         max_length=9, choices=LABEL_UNIT_CHOICES, default="Kg"
     )
@@ -156,11 +150,16 @@ class Item(models.Model):
     class Meta:
         ordering = ("-average_rating", "-created")
 
-    def convert_item_quantity_gram(self):
-        return convert_quantity_gram(self.quantity_unit, self.quantity)
-    
-    def change_quantity(self,quantity_in_grams):
-        # change to that quantity of item with qunuioty 
+    def convert_quantity_kg(self):
+        return convert_quantity_kg(self.quantity_unit, self.quantity)
+
+    def change_quantity(self, quantity_in_kg):
+        print("CHANGING TH QTY TO ", self.quantity, "TO CHANGE")
+        self.quantity = quantity_in_kg
+        self.quantity_unit = "Kg"
+        self.save()
+        print("CHANGING TO", self.quantity)
+        # change to that quantity of item with qunuioty
         pass
 
     def get_discount_percentage(self):
@@ -175,7 +174,6 @@ class Item(models.Model):
             return None
         return round(item_discount_percentage / count, 2)
 
-
     # def save(self, *args, **kwargs):
     #     # item can't  able to sell if they don't have item bags
     #     if self.item.bags.all() != []:
@@ -185,11 +183,6 @@ class Item(models.Model):
 
     #     self.item.save()
     #     super().save(*args, **kwargs)
-
-
-
-
-
 
     def __str__(self):
         return f"{self.title} {self.category.name} {self.category_type.name}"
@@ -251,3 +244,19 @@ class SellerReply(models.Model):
 
     def __str__(self):
         return str(self.reply_on.id) + self.message[:20]
+
+
+class AdminCategory(models.Model):
+    """
+    Categories Created by Admin w.r.t Item
+    """
+
+    image = models.ImageField(upload_to="admin_category_images/")
+    name = models.CharField(max_length=50)
+    category_types = models.ManyToManyField(
+        "CategoryType", related_name="admin_category"
+    )
+    is_banner = models.BooleanField("Add To Home Screen", default=False)
+
+    def __str__(self):
+        return self.name + "::: AdminCategory "

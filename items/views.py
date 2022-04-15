@@ -78,7 +78,7 @@ class ListCreateItemView(generics.ListCreateAPIView):
         return [permission() for permission in self.permission_classes]
 
     def perform_create(self, serializer):
-        # creating the item review
+        # creating the item
         serializer.save(user=self.request.user)
 
 

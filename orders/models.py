@@ -73,10 +73,13 @@ class Order(models.Model):
         if self.is_order_completed:
             # decrese the item quantity can change turned  item bag status to un-available if required
             for order_item in self.order_items.all():
+                print("SOCK OF ITEM", order_item.item_bag.item.convert_quantity_kg())
+                print("DEMAND OF ITEMBAG", order_item.item_bag.convert_quantity_kg())
                 remaning_quantity = (
-                    order_item.item_bag.item.convert_item_quantity_gram()
-                    - order_item.item_bag.convert_item_quantity_gram()
+                    order_item.item_bag.item.convert_quantity_kg()
+                    - order_item.item_bag.convert_quantity_kg()
                 )
+                print("ndkjnsjkfjsdj", remaning_quantity, order_item.item_bag.item)
                 order_item.item_bag.item.change_quantity(remaning_quantity)
 
         super().save(*args, **kwargs)
@@ -94,6 +97,16 @@ class Order(models.Model):
         for order_item in self.order_items.all():
             total_cost += order_item.cost
         return total_cost
+
+    def get_item_quantity(self, item_instance):
+        quantity_of_item_in_order = 0
+        for order_item in self.order_items.all():
+            # item bags of same item
+            if order_item.item_bag.item == item_instance:
+                quantity_of_item_in_order += (
+                    order_item.item_bag.convert_quantity_kg() * order_item.quantity
+                )
+        return quantity_of_item_in_order
 
     def __str__(self):
         return self.user.username + "  Order -->   " + str(self.id)

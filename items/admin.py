@@ -8,9 +8,11 @@ from .models import (
     SubCategory,
     SellerReply,
     CategoryType,
+    AdminCategory,
 )
 
 admin.site.register(ItemImage)
+admin.site.register(AdminCategory)
 admin.site.register(Category)
 admin.site.register(CategoryType)
 admin.site.register(SubCategory)

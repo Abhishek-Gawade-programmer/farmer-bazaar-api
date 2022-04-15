@@ -14,7 +14,7 @@ from users.models import Address
 
 from rest_framework.reverse import reverse
 from easy_thumbnails.templatetags.thumbnail import thumbnail_url
-from .utils import convert_quantity_gram
+from .utils import convert_quantity_kg
 
 
 class SellerReplySerializer(serializers.ModelSerializer):
@@ -111,8 +111,8 @@ class ItemBagSerializer(serializers.ModelSerializer):
 
         current_item = data.get("item")
 
-        item_gram_value = current_item.convert_item_quantity_gram()
-        item_bag_gram_value = convert_quantity_gram(
+        item_gram_value = current_item.convert_quantity_kg()
+        item_bag_gram_value = convert_quantity_kg(
             data.get("quantity_unit"), data.get("quantity")
         )
         if item_bag_gram_value > item_gram_value:

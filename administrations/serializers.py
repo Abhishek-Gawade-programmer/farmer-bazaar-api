@@ -1,5 +1,11 @@
 from rest_framework import serializers
+
+# django models
 from orders.models import OrderDetail
+from items.models import AdminCategory
+
+# apps serializers imports
+from items.serializers import CategoryTypeSerializer
 
 
 class OrderDetailOperationSerializer(serializers.ModelSerializer):
@@ -29,3 +35,11 @@ class OrderDetailForCODSerializer(serializers.ModelSerializer):
         if order_detail_instance.order.paid:
             raise serializers.ValidationError("Order Is Already Paid")
         return data
+
+
+class AdminCategorySerializer(serializers.ModelSerializer):
+    category_types = CategoryTypeSerializer(many=True)
+
+    class Meta:
+        model = AdminCategory
+        fields = ("id", "image", "name", "category_types", "is_banner")

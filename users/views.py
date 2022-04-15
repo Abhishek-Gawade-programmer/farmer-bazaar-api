@@ -57,14 +57,15 @@ class SendUserOtpView(APIView):
         )
 
 
-# validate the Otp
+# validate the Otp Payment serializer
+
+
 class ValidateOtpView(APIView):
     serializer_class = ValidatePhoneOtpSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.data
         qs_phone_otp = get_object_or_404(
             PhoneOtp,
             phone_number=serializer.data.get("phone_number"),
@@ -242,7 +243,10 @@ class LogoutUserAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-
+        # unverified the user phonenumber
+        phoneotp_obj = get_object_or_404(PhoneOtp, phone_number=request.user.username)
+        phoneotp_obj.is_verified = False
+        phoneotp_obj.save()
         logout(request)
         return Response(
             {"success": "Successfully logged out."}, status=status.HTTP_200_OK

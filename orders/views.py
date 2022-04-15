@@ -1,25 +1,38 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+
+# rest imports
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from django.http import HttpResponse
+from django.conf import settings
+
+# models imports
 from .models import Order, OrderItem, OrderDetail
 from items.models import ItemBag
 from users.models import Address
+
 from users.permissions import (
     IsOwnerOfObject,
     IsAbleToSellItem,
     IsOwnerOfOrder,
     IsAdministerUser,
 )
+
+# serializer imports
 from .serializers import (
     OrderSerializer,
     OrderItemSerializer,
     CreateOrderItemSerializer,
     OrderDetailSerializer,
+    RazorpayPayloadSerializer,
 )
-from django.http import HttpResponse
+
+# other
+import razorpay
 
 # HTML TO PDF
 import os
@@ -73,7 +86,7 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
         else:
             return Response(
                 {"detail": "User Don't Have Any Active Orders"},
-                status=status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
     def create(self, request, *args, **kwargs):
@@ -86,11 +99,22 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
                 {"detail": "You Can't Add ItemBag Of Your Item On Your Order"},
                 status=status.HTTP_403_FORBIDDEN,
             )
+        # getting order items
+        item_quantity_order = self.get_user_order.get_item_quantity(
+            item_bag_obj.item
+        ) + (item_bag_obj.convert_quantity_kg() * serializer.data.get("quantity"))
 
         check_item_exists = OrderItem.objects.filter(
             order=self.get_user_order, item_bag=item_bag_obj
         )
         if not check_item_exists.exists():
+
+            if item_quantity_order > item_bag_obj.item.convert_quantity_kg():
+                return Response(
+                    {"detail": "You can't Purchase More Then Stock Available "},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
             # creating the new order item
             order_item_instance = OrderItem.objects.create(
                 order=self.get_user_order,
@@ -98,8 +122,18 @@ class AddUpdateItemToCartView(generics.CreateAPIView):
                 quantity=serializer.data.get("quantity"),
             )
         else:
-            # updating the same order item
+            # getting order items
             order_item_instance = check_item_exists[0]
+            item_quantity_order = item_quantity_order - (
+                order_item_instance.item_bag.convert_quantity_kg()
+                * order_item_instance.quantity
+            )
+            if item_quantity_order > item_bag_obj.item.convert_quantity_kg():
+                return Response(
+                    {"detail": "You can't Purchase More Then Stock Available "},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            # updating the same order item
             order_item_instance.quantity = serializer.data.get("quantity")
         order_item_instance.save()
         headers = self.get_success_headers(serializer.data)
@@ -128,13 +162,13 @@ class OrderItemRemoveCartView(APIView):
             else:
                 return Response(
                     {"detail": "Order Item Number is Wrong "},
-                    status=status.HTTP_404_NOT_FOUND,
+                    status=status.HTTP_400_BAD_REQUEST,
                 )
 
         else:
             return Response(
                 {"detail": "Order Number is Wrong Or User is invalid"},
-                status=status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
 
@@ -183,7 +217,6 @@ class ListUserOrdersView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(order__user=self.request.user)
-
         return queryset
 
 
@@ -202,7 +235,6 @@ class RetrieveOrderInvoiceView(generics.RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        from django.utils import timezone
 
         now_date = timezone.now()
 
@@ -219,7 +251,84 @@ class RetrieveOrderInvoiceView(generics.RetrieveAPIView):
 
         # create a pdf
         pisa_status = pisa.CreatePDF(html, dest=response)
-        # if error then show some funy view
+        # if error then show message
         if pisa_status.err:
             return HttpResponse("We had some errors <pre>" + html + "</pre>")
         return response
+
+
+# authorize razorpay client with API Keys.
+razorpay_client = razorpay.Client(
+    auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET)
+)
+# get order detail by id that have permission
+class SetupPaymentClientView(generics.RetrieveAPIView):
+    queryset = OrderDetail.objects.filter(payment_method="OP")
+    serializer_class = OrderDetailSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOfOrder]
+
+    # setup of razorpay order
+    def retrieve(self, request, *args, **kwargs):
+        order_detail_instance = self.get_object()
+        # if online order is not paid
+        print("HOW ISN NOW WORKING", order_detail_instance.order.paid)
+        if not order_detail_instance.order.paid:
+
+            serializer = self.get_serializer(order_detail_instance)
+            # create razorpay order
+            amount = order_detail_instance.order.get_total_cost()
+            payment = razorpay_client.order.create(
+                {"amount": int(amount) * 100, "currency": "INR"}
+            )
+            ## TODO create Payment Model to store online payments orders
+
+            return Response(
+                {"payment": payment, "order_detail": serializer.data},
+                status=status.HTTP_200_OK,
+            )
+        else:
+            return Response(
+                {"detail": "Order Has Been Already Paid"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class HandlePaymentSuccessView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = RazorpayPayloadSerializer
+
+    def post(self, request, *args, **kwargs):
+        # {'razorpay_payment_id': '567', 'razorpay_order_id': '56756', 'razorpay_signature': '657567567'}
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer_data = serializer.data
+        # TODO payment if exists in model
+        order_detail_qs = OrderDetail.objects.filter(
+            id=serializer_data.get("razorpay_order_id"), order__user=request.user
+        )
+        # allow payment
+        if order_detail_qs.exists():
+            # TRY AND EXCEPT CONDITION
+            # checking the signature
+            # check = razorpay_client.utility.verify_payment_signature(serializer_data)
+
+            # if check is not None:
+            #     print("Redirect to error url or error page")
+            #     return Response(
+            #         {"error": "Something went wrong"},
+            #         status=status.HTTP_400_BAD_REQUEST,
+            #     )
+
+            # # if payment is successful that means check is None then we will turn isPaid=True
+            # print("ORDER DETAIL serializer", .paid)
+            order_obj = order_detail_qs[0].order
+            order_obj.paid = timezone.now()
+            order_obj.save()
+            return Response(
+                {"detail": "Payment Received Successfully"}, status=status.HTTP_200_OK
+            )
+
+        else:
+            return Response(
+                {"detail": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST
+            )

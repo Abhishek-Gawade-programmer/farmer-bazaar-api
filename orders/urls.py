@@ -7,10 +7,24 @@ from .views import (
     RetrieveOrderDetailView,
     RetrieveOrderInvoiceView,
     ListUserOrdersView,
+    # payments
+    SetupPaymentClientView,
+    HandlePaymentSuccessView,
 )
 
 urlpatterns = [
-    # path("pay/", start_payment, name="payment"),
+    # handle the payments
+    path(
+        "handle-payment-success/",
+        HandlePaymentSuccessView.as_view(),
+        name="handle_payment_success",
+    ),
+    # setuping the payments
+    path(
+        "setup-payment-client/<int:pk>/",
+        SetupPaymentClientView.as_view(),
+        name="setup_payment_client",
+    ),
     # path("payment/success/", handle_payment_success, name="payment_success"),
     # get the the user item bag status
     path(
