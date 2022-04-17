@@ -12,6 +12,14 @@ TERMS_CONDITIONS_CHOICES = (
     ("can_sell_product", "can_sell_product"),
 )
 
+LANGUAGE_CHOICES = (
+    ("english", "english"),
+    ("hindi", "hindi"),
+    ("marathi", "marathi"),
+    ("gujarati", "gujarati"),
+    ("bengali", "bengali"),
+)
+
 
 class User(AbstractUser):
     username = models.CharField(
@@ -136,6 +144,9 @@ class UserProfile(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    language = models.CharField(
+        "Language", max_length=8, choices=LANGUAGE_CHOICES, default="english"
+    )
 
     def can_able_to_sell_product(self):
         return self.can_sell_product and self.seller_tc_accepted

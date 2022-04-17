@@ -18,6 +18,7 @@ from .views import (
     LogoutUserAPIView,
     TokenObtainPairWithoutPasswordView,
     RetrieveUpdateUserSellerNameView,
+    RetrieveUpdateUserLanguageView,
 )
 
 urlpatterns = [
@@ -47,6 +48,12 @@ urlpatterns = [
     ),
     # change Username(mobile number ) Password
     path("change-username/", ChangeUsernameView.as_view(), name="change_username"),
+    # user langauage
+    path(
+        "get-set-user-language/",
+        RetrieveUpdateUserLanguageView.as_view(),
+        name="get_set_user_language",
+    ),
     path(
         "create-get-address/",
         ListCreateAddressView.as_view(),

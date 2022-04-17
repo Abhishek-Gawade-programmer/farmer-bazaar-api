@@ -174,3 +174,9 @@ class AddressSerializer(serializers.ModelSerializer):
             "updated",
             "created",
         )
+
+
+class UserLanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ("language",)

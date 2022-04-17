@@ -73,13 +73,10 @@ class Order(models.Model):
         if self.is_order_completed:
             # decrese the item quantity can change turned  item bag status to un-available if required
             for order_item in self.order_items.all():
-                print("SOCK OF ITEM", order_item.item_bag.item.convert_quantity_kg())
-                print("DEMAND OF ITEMBAG", order_item.item_bag.convert_quantity_kg())
                 remaning_quantity = (
                     order_item.item_bag.item.convert_quantity_kg()
                     - order_item.item_bag.convert_quantity_kg()
                 )
-                print("ndkjnsjkfjsdj", remaning_quantity, order_item.item_bag.item)
                 order_item.item_bag.item.change_quantity(remaning_quantity)
 
         super().save(*args, **kwargs)

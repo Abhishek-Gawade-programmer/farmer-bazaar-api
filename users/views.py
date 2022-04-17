@@ -1,14 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+from django.contrib.auth import logout
 
+# rest imports
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import status
-from .utils import validate_send_otp
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework_simplejwt.views import TokenObtainPairView
 
+# serializers import
 from .serializers import (
     CreateUserSerializer,
     UserSerializer,
@@ -17,11 +20,15 @@ from .serializers import (
     ValidatePhoneOtpSerializer,
     TokenObtainPairWithoutPasswordSerializer,
     UserSellerNameSerializer,
+    UserLanguageSerializer,
 )
+
+# models imports
 from .models import User, PhoneOtp, UserProfile, TermsAndCondition, Address
+
+# other
+from .utils import validate_send_otp
 from .permissions import IsOwnerOrReadOnly, IsAbleToSellItem, IsOwnerOfObject
-from rest_framework_simplejwt.views import TokenObtainPairView
-from django.contrib.auth import logout
 
 
 class TokenObtainPairWithoutPasswordView(TokenObtainPairView):
@@ -112,19 +119,23 @@ class ChangeUsernameView(APIView):
         )
 
 
-# get update or edit user profile of request user
+# get update or edit user profile of request user( requst.user)
 class RetrieveUserProfileView(generics.RetrieveUpdateAPIView):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        queryset = self.get_queryset()
-        obj = queryset.get(id=self.request.user.id)
-        return obj
+        return self.request.user
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        newdict = {"seller_access": instance.user_profile.can_able_to_sell_product()}
+        newdict.update(serializer.data)
+        return Response(newdict, status=status.HTTP_200_OK)
 
 
-# get the other user profile
+# get the other user profile (not being used)
 class RetrieveOtherUserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -219,6 +230,7 @@ class GetSetUserDefaultAddress(APIView):
             )
 
 
+# get update delelte the address
 class RetrieveUpdateDestroyAddressView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AddressSerializer
     queryset = Address.objects.all()
@@ -239,6 +251,7 @@ class RetrieveUpdateDestroyAddressView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# logout user
 class LogoutUserAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -251,3 +264,11 @@ class LogoutUserAPIView(APIView):
         return Response(
             {"success": "Successfully logged out."}, status=status.HTTP_200_OK
         )
+
+
+class RetrieveUpdateUserLanguageView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserLanguageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.user_profile
