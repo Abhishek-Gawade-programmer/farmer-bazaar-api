@@ -103,6 +103,7 @@ class ValidateOtpView(APIView):
             )
 
 
+# TO DO IN CHANGE USER
 class ChangeUsernameView(APIView):
     serializer_class = PhoneOtpSerializer
     permission_classes = [IsAuthenticated]

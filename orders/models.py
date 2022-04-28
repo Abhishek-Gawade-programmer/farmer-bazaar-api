@@ -179,3 +179,20 @@ class OrderDetail(models.Model):
 
     def __str__(self):
         return f"{self.order} Details"
+
+
+class PurchaseOnlineOrder(models.Model):
+    order_detail = models.ForeignKey("OrderDetail", on_delete=models.CASCADE)
+    razorpay_order_id = models.CharField(max_length=100)
+    razorpay_payment_id = models.CharField(max_length=100, blank=True)
+    razorpay_signature = models.CharField(max_length=100, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    paid_on = models.DateTimeField(null=True, blank=True)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-paid_on",)
+
+    def __str__(self):
+        return f"Payment for order detail {self.order_detail.id}"

@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.conf import settings
 
 # models imports
-from .models import Order, OrderItem, OrderDetail
+from .models import Order, OrderItem, OrderDetail, PurchaseOnlineOrder
 from items.models import ItemBag
 from users.models import Address
 
@@ -39,6 +39,12 @@ import os
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
+from razorpay.errors import (
+    SignatureVerificationError,
+    BadRequestError,
+    GatewayError,
+    ServerError,
+)
 
 
 class GetCartStatusView(generics.ListCreateAPIView):
@@ -185,7 +191,6 @@ class CheckOutOrderView(generics.CreateAPIView):
         # saving the order  to order detail to we can track the order
         order_or_null = self.request.user.user_profile.current_order
         address_obj = self.check_user_permission(self.request.POST.get("address"))
-        print("perform", order_or_null, self.request.user)
         serializer.save(order=order_or_null)
 
     def post(self, request, *args, **kwargs):
@@ -267,11 +272,16 @@ class SetupPaymentClientView(generics.RetrieveAPIView):
     serializer_class = OrderDetailSerializer
     permission_classes = [IsAuthenticated, IsOwnerOfOrder]
 
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return self.serializer_class
+        elif self.request.method == "POST":
+            return RazorpayPayloadSerializer
+
     # setup of razorpay order
     def retrieve(self, request, *args, **kwargs):
         order_detail_instance = self.get_object()
         # if online order is not paid
-        print("HOW ISN NOW WORKING", order_detail_instance.order.paid)
         if not order_detail_instance.order.paid:
 
             serializer = self.get_serializer(order_detail_instance)
@@ -280,7 +290,11 @@ class SetupPaymentClientView(generics.RetrieveAPIView):
             payment = razorpay_client.order.create(
                 {"amount": int(amount) * 100, "currency": "INR"}
             )
-            ## TODO create Payment Model to store online payments orders
+            ## Payment Model to store online payments orders
+            purchase_obj = PurchaseOnlineOrder.objects.create(
+                order_detail=order_detail_instance, razorpay_order_id=payment["id"]
+            )
+            purchase_obj.save()
 
             return Response(
                 {"payment": payment, "order_detail": serializer.data},
@@ -292,43 +306,49 @@ class SetupPaymentClientView(generics.RetrieveAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-
-class HandlePaymentSuccessView(APIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = RazorpayPayloadSerializer
-
     def post(self, request, *args, **kwargs):
-        # {'razorpay_payment_id': '567', 'razorpay_order_id': '56756', 'razorpay_signature': '657567567'}
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer_data = serializer.data
-        # TODO payment if exists in model
-        order_detail_qs = OrderDetail.objects.filter(
-            id=serializer_data.get("razorpay_order_id"), order__user=request.user
-        )
-        # allow payment
-        if order_detail_qs.exists():
-            # TRY AND EXCEPT CONDITION
+
+        try:
             # checking the signature
-            # check = razorpay_client.utility.verify_payment_signature(serializer_data)
+            check_payment_valid = razorpay_client.utility.verify_payment_signature(
+                serializer_data
+            )
 
-            # if check is not None:
-            #     print("Redirect to error url or error page")
-            #     return Response(
-            #         {"error": "Something went wrong"},
-            #         status=status.HTTP_400_BAD_REQUEST,
-            #     )
+            order_detail_instance = self.get_object()
 
-            # # if payment is successful that means check is None then we will turn isPaid=True
-            # print("ORDER DETAIL serializer", .paid)
-            order_obj = order_detail_qs[0].order
-            order_obj.paid = timezone.now()
-            order_obj.save()
+            online_payment_obj = get_object_or_404(
+                PurchaseOnlineOrder,
+                order_detail=order_detail_instance,
+                razorpay_order_id=serializer_data.get("razorpay_order_id"),
+            )
+
+            # saving the payment details to PurchaseOnlineOrder model
+            online_payment_obj.razorpay_payment_id = serializer_data.get(
+                "razorpay_payment_id"
+            )
+            online_payment_obj.razorpay_signature = serializer_data.get(
+                "razorpay_signature"
+            )
+            online_payment_obj.paid_on = timezone.now()
+            online_payment_obj.amount = order_detail_instance.order.get_total_cost()
+            online_payment_obj.save()
+            # saving the order detail paid status to the current time
+            order_detail_instance.order.paid = timezone.now()
+            order_detail_instance.save()
+
             return Response(
                 {"detail": "Payment Received Successfully"}, status=status.HTTP_200_OK
             )
-
-        else:
+        # tackle when thees these errors occur
+        except (
+            SignatureVerificationError,
+            BadRequestError,
+            GatewayError,
+            ServerError,
+        ) as e:
             return Response(
-                {"detail": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST
+                {"detail": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST
             )

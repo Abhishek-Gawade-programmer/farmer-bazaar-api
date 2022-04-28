@@ -9,16 +9,9 @@ from .views import (
     ListUserOrdersView,
     # payments
     SetupPaymentClientView,
-    HandlePaymentSuccessView,
 )
 
 urlpatterns = [
-    # handle the payments
-    path(
-        "handle-payment-success/",
-        HandlePaymentSuccessView.as_view(),
-        name="handle_payment_success",
-    ),
     # setuping the payments
     path(
         "setup-payment-client/<int:pk>/",
